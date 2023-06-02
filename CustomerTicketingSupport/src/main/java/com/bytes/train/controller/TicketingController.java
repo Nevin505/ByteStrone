@@ -27,15 +27,17 @@ public class TicketingController {
 		}
 
 	@PostMapping("/query1")
-	public void saveTicket(@RequestBody Ticket ticket) {
-		ticketService.addTicket(ticket);
+	public String saveTicket(@RequestBody Ticket ticket) {
+		ticketService.saveTicket(ticket);
+		return "Ticket is Raised";
 		}
 	
 	@PutMapping("/update/{id}")
-	public void update(@PathVariable("id") String id, @RequestBody Ticket ticket) {
-//		ticketService.UpdateTicket(null);
+	public void update(@PathVariable("id") int id ,@RequestBody Ticket ticket) {
+		ticketService.UpdateTicket(id,ticket);
 		
 	}
+	
 	
 	
 }

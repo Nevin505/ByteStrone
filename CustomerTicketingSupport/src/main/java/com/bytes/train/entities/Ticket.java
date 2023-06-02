@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -27,7 +28,7 @@ public class Ticket {
 	private String subject;
 	private String description;
 	private String priority;
-	private String status;
+	private String status="open";
 	
 	@CreationTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
@@ -36,25 +37,68 @@ public class Ticket {
 	@UpdateTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated_Date; 
+	private Date updated_Date=null; 
 	
+//	@ManyToOne
+
 	@ManyToOne
-	@JoinColumn(name="customerid")
-	Customer customerId;
-	
+	@JoinColumn(name="userId")
+	UserTable userId;
+//	
+//	@OneToOne
+//	@JoinColumn(name="customerid")
+//	UserTable userId;
+//	
+//	public UserTable getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(UserTable userId) {
+//		this.userId = userId;
+//	}
 	@ManyToOne
 	@JoinColumn(name="agentID")
 	Agent agentId;
 	
 	@ManyToOne
 	@JoinColumn(name="categoryId")
-	Category categoryId;
-	
-	
-	
-	
+	Category categoryId;	
+//	public Customer getCustomerId() {
+//		return customerId;
+//	}
+//
+//	public void setCustomerId(Customer customerId) {
+//		this.customerId = customerId;
+//	}
+
+	public Agent getAgentId() {
+		return agentId;
+	}
+
+	public UserTable getUserId() {
+		return userId;
+	}
+
+	public void setUserId(UserTable userId) {
+		this.userId = userId;
+	}
+
+	public void setAgentId(Agent agentId) {
+		this.agentId = agentId;
+	}
+
+	public Category getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Category categoryId) {
+		this.categoryId = categoryId;
+	}
 	private Date closeddate;
-	private String satisfactionRating;
+	private String satisfactionRating=" ";
+	public Ticket() {
+		
+	}
 
 	public int getTicketId() {
 		return ticketId;

@@ -8,5 +8,5 @@ import com.bytes.train.entities.Customer;
 
 @Repository
 public interface CustomerDao extends JpaRepository<Customer,Integer> {
-
+  
 }
