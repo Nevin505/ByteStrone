@@ -1,9 +1,9 @@
 package com.bytes.train.service;
 
-public interface loginService{
+public interface UserLoginService{
 	
 	  
-	public String  checkAccess(String userName,String password);
+	public String checkAccess(String userName,String password);
 	
 
 }

@@ -3,30 +3,27 @@ package com.bytes.train.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.bytes.train.entities.UserTable;
-import com.bytes.train.repos.LoginRepo;
-import com.bytes.train.service.loginService;
-
+import com.bytes.train.entities.UserLogin;
+import com.bytes.train.repos.UserLoginDao;
+import com.bytes.train.service.UserLoginService;
 @Service
-public class loginServiceImpl implements loginService {
-
+class UserloginServiceImpl implements UserLoginService {
+	
 	@Autowired
-	LoginRepo loginRepo;
+	UserLoginDao userLoginDao;
+	@Override
+	public String checkAccess(String userName, String password) {
+		
+		List<UserLogin> userdata=userLoginDao.findAll();
+		for (UserLogin userLogin : userdata) {
+			if((userLogin.getUserName().equals(userName))&&(userLogin.getPassword().equals(password))) {
+				
+				return "UserLogged in";
+			}
+		}
+		return  "Invalid Id";
 
-	public String checkAccess(String userName,String password) {
-    List<UserTable>userList=loginRepo.findAll();
-    System.out.println(userName);
-    System.out.println(userName);
-    System.out.println(password);
-	for(UserTable user:userList) {
-	if(user.getEmail().equals(userName)&&(user.getPassword().equals(password))){
-	return user.getRole();
 	}
-	}
-	return "Invalid User Id";
-	}
-
 }

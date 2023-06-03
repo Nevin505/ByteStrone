@@ -26,9 +26,9 @@ public class TicketingController {
 		return ticketService.getTicket();
 		}
 
-	@PostMapping("/query1")
-	public String saveTicket(@RequestBody Ticket ticket) {
-		ticketService.saveTicket(ticket);
+	@PostMapping("/query1/{id}")
+	public String saveTicket(@PathVariable int id , @RequestBody Ticket ticket) {
+		ticketService.saveTicket(id,ticket);
 		return "Ticket is Raised";
 		}
 	

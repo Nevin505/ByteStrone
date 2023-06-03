@@ -10,6 +10,6 @@ public interface ticketService {
 	 
 	public List<Ticket> getTicket();
 	 public void UpdateTicket(int id,Ticket ticket); //UpdateTicket
-	 public String saveTicket(Ticket ticket);
+	 public String saveTicket(int id, Ticket ticket);
 	
 }

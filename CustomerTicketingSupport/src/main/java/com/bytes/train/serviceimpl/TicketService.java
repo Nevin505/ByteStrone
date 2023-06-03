@@ -6,15 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
+import com.bytes.train.repos.CustomerDao;
 import com.bytes.train.repos.TicketDao;
 import com.bytes.train.service.ticketService;
 
 @Service
 public class TicketService implements ticketService {
 	@Autowired
-
 	TicketDao ticketDao;
+	
+	@Autowired
+	CustomerDao customerdao;
+	
 
 	@Override
 	public List<Ticket> getTicket() {
@@ -22,7 +27,9 @@ public class TicketService implements ticketService {
 	}
 
 	@Override
-	public String saveTicket(@RequestBody Ticket ticket) {
+	public String saveTicket(int id,  Ticket ticket) {
+		Customer customer = customerdao.findById(id).orElseThrow();
+		ticket.setCustomer(customer);
 		ticketDao.save(ticket);
 		return "Ticket raised";
 	}
