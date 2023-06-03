@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bytes.train.dto.CustomerDto;
 import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.service.CustomerService;
@@ -33,6 +34,11 @@ public class CustomerController {
 	@GetMapping("/getCustomerTicketDetails/{id}")
 	public List<Ticket> getTickeDataByCustomerId(@PathVariable int id){
 		return customerService.getTicketDetails(id);
+	}
+	
+	@GetMapping("/getCustomerDtoTicketDetails/{id}")
+	public List<CustomerDto> getCustomerDtoDeatils(@PathVariable int id){
+		return customerService.getCustomerDto(id);
 	}
  	
 }
