@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.bytes.train.entities.Customer;
 
 @Repository
-public interface CustomerDao extends JpaRepository<Customer,Integer> {
+public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+	
+	 
   
 }

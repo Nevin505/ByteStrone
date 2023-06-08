@@ -1,23 +1,39 @@
 package com.bytes.train.dto;
 
-import java.util.Date;
-
-//This will be only displayed To Customer
-
-public class CustomerDto {
-
+public class TicketDto {
+	
+	private int customer_id;
 	private int ticketId;
 	private String subject;
 	private String description;
 	private String priority;
 	private String status;
-	private Date creation_Date;
-	private Date updated_Date;
+	private int agentID;
 	private String agentName;
-	
 
-	public CustomerDto() {
+	public TicketDto() {
 
+	}
+
+	public TicketDto(int customer_id, int ticketId, String subject, String description, String priority, String status,
+			int agentID, String agentName) {
+		super();
+		this.customer_id = customer_id;
+		this.ticketId = ticketId;
+		this.subject = subject;
+		this.description = description;
+		this.priority = priority;
+		this.status = status;
+		this.agentID = agentID;
+		this.agentName = agentName;
+	}
+
+	public int getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
 	}
 
 	public int getTicketId() {
@@ -60,20 +76,12 @@ public class CustomerDto {
 		this.status = status;
 	}
 
-	public Date getCreation_Date() {
-		return creation_Date;
+	public int getAgentID() {
+		return agentID;
 	}
 
-	public void setCreation_Date(Date creation_Date) {
-		this.creation_Date = creation_Date;
-	}
-
-	public Date getUpdated_Date() {
-		return updated_Date;
-	}
-
-	public void setUpdated_Date(Date updated_Date) {
-		this.updated_Date = updated_Date;
+	public void setAgentID(int agentID) {
+		this.agentID = agentID;
 	}
 
 	public String getAgentName() {

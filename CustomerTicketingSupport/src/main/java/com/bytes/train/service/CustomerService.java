@@ -6,6 +6,7 @@ import com.bytes.train.dto.CustomerDto;
 import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
 
+
 public interface CustomerService {
 	public List<Customer> getCustomerDetails();
 

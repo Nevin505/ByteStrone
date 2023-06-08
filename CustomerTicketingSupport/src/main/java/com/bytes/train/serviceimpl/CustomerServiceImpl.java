@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 import com.bytes.train.dto.CustomerDto;
 import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
-import com.bytes.train.repos.CustomerDao;
-import com.bytes.train.repos.TicketDao;
+import com.bytes.train.repos.CustomerRepository;
+import com.bytes.train.repos.TicketRepository;
 import com.bytes.train.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 	@Autowired
-	CustomerDao customerDao;
+	CustomerRepository customerDao;
 	@Autowired
-	TicketDao ticketDao;
+	TicketRepository ticketDao;
 
 	@Override
 	public List<Customer> getCustomerDetails() {
@@ -38,15 +38,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public List<CustomerDto> getCustomerDto(int id) {
 
-		return ticketDao.findByCustomerId(id)
-				.stream()
-				.map(this::convertEntityToDto)
-				.collect(Collectors.toList());
+		return ticketDao.findByCustomerId(id).stream().map(this::convertEntityToDto).collect(Collectors.toList());
 
 	}
 
 	public CustomerDto convertEntityToDto(Ticket ticket) {
 		CustomerDto customerDto = new CustomerDto();
+	
 		customerDto.setTicketId(ticket.getTicketId());
 		customerDto.setSubject(ticket.getSubject());
 		customerDto.setDescription(ticket.getDescription());

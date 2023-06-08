@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table
@@ -27,15 +28,26 @@ public class Ticket {
 	private String description;
 	private String priority;
 	private String status = "open";
+	
+
+
 
 	@CreationTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation_Date;
+	
 	@UpdateTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_Date = null;
+	
+	@UpdateTimestamp
+	@Column(columnDefinition = "timestamp without time zone", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date closed_Date = null;
+	
+	
 
 	@ManyToOne
 	@JoinColumn(name = "customerid")
@@ -49,12 +61,14 @@ public class Ticket {
 	@JoinColumn(name = "categoryId")
 	Category categoryId;
 
+  String  categoryName;
+
 	public Ticket() {
 
 	}
 
 	public Ticket(int ticketId, String subject, String description, String priority, String status, Date creation_Date,
-			Date updated_Date, Customer customer, Agent agentId, Category categoryId) {
+			Date updated_Date, Customer customer, Agent agentId, Category categoryId, String categoryName) {
 		super();
 		this.ticketId = ticketId;
 		this.subject = subject;
@@ -66,6 +80,7 @@ public class Ticket {
 		this.customer = customer;
 		this.agentId = agentId;
 		this.categoryId = categoryId;
+		this.categoryName = categoryName;
 	}
 
 	public int getTicketId() {
@@ -146,6 +161,22 @@ public class Ticket {
 
 	public void setCategoryId(Category categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	@Override
+	public String toString() {
+		return "Ticket [ticketId=" + ticketId + ", subject=" + subject + ", description=" + description + ", priority="
+				+ priority + ", status=" + status + ", creation_Date=" + creation_Date + ", updated_Date="
+				+ updated_Date + ", customer=" + customer + ", agentId=" + agentId + ", categoryId=" + categoryId
+				+ ", categoryName=" + categoryName + "]";
 	}
 
 }

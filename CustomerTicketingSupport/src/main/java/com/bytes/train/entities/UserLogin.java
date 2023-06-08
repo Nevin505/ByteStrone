@@ -9,10 +9,10 @@ import jakarta.persistence.Table;
 public class UserLogin {
 	@Id
 	int userId;
-	
+
 	String userName;
 	String password;
-    
+
 	public UserLogin(int userId, String userName, String password) {
 		super();
 		this.userId = userId;
