@@ -12,6 +12,7 @@ import { AgentComponent } from './agent/agent.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { AgentLoginComponent } from './agent-login/agent-login.component';
 import { AgentdisplayComponent } from './agentdisplay/agentdisplay.component';
+import { ShowDetailsComponent } from './show-details/show-details.component';
 
 
 
@@ -23,7 +24,8 @@ import { AgentdisplayComponent } from './agentdisplay/agentdisplay.component';
     AgentComponent,
     CustomerLoginComponent,
     AgentLoginComponent,
-    AgentdisplayComponent
+    AgentdisplayComponent,
+    ShowDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { AgentComponent } from './agent/agent.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { AgentLoginComponent } from './agent-login/agent-login.component';
 import { AgentdisplayComponent } from './agentdisplay/agentdisplay.component';
+import { ShowDetailsComponent } from './show-details/show-details.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,8 @@ const routes: Routes = [
 { path: 'ticketraisse', component: CustomerComponent},
 { path: 'customerlogin', component: CustomerLoginComponent},
 { path: '', component:ChosePageComponent },
+{ path: 'ticketShow', component:ShowDetailsComponent },
+
 // { path: 'agentreoute', component: AgentdisplayComponent},
 // { path: '**', redirectTo: 'home', pathMatch: 'full' },
 {path:'agentDisplay',component:AgentdisplayComponent}

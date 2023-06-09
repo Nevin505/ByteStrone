@@ -35,32 +35,29 @@ export class AgentdisplayComponent {
 
     })
   }
-  //       for(let i=0;i<this.data.length;i++){
-  //         let ticket=new Ticket();
-  //         ticket.customerid=this.data.customerid;
-  //         ticket.description=this.data.description;
-  //         ticket.status=this.data.status;
-  //         // ticket.category.categoryId=this.data.category.categoryId;
-  //         ticket.priority=this.data.priority;
-  //         // ticket.customer.customerId=this.data.customer.customerId;
-  //         console.log(ticket);
-  //         // this.tickets.push(ticket);
-  //        }
-  //  })
 
 
-  onfilterHigh() {
-    this.data.sort((a: { priority: string; }, b: { priority: any; }) => a.priority.localeCompare(b.priority));
 
-  }
-  onfilterlow() {
-    this.data.sort((a: { priority: string; }, b: { priority: any; }) => b.priority.localeCompare(a.priority));
-
-  }
   getDetails(searchtickId:any) {
    this.all=true;
     this.loginService.getSearchTickets(searchtickId).subscribe(res => {
       this.response = res;
     })
   }
+
+  onfilterHigh(): any[] {
+    return this.data.sort((a: { priority: string; }, b: { priority: string; }) => {
+      const priorityOrder = ['High', 'Medium', 'Low'];
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+    });
+  }
+  onfilterlow(): any[] {
+    return this.data.sort((a: { priority: string; }, b: { priority: string; }) => {
+      const priorityOrder = ['High', 'Medium', 'Low'];
+      return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority);
+    });
+  }
+
+
 }
+

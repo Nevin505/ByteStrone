@@ -12,10 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table
@@ -37,7 +38,7 @@ public class Ticket {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation_Date;
 	
-	@UpdateTimestamp
+//	@UpdateTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_Date = null;
@@ -186,6 +187,25 @@ public class Ticket {
 	public void setClosedDate(Date closedDate) {
 		this.closedDate = closedDate;
 	}
+	
+	
+	 @PrePersist
+	    protected void onCreate() {
+	        this.creation_Date = new Date();
+	    }
+
+	    @PreUpdate
+	    protected void onUpdate() {
+	    	 if (this.closedDate == null) {
+	    	        this.updated_Date = new Date();
+	        this.updated_Date = new Date();
+	    }
+	    }
+	    
+	    public void closeTicket() {
+	        this.status = "Closed";
+	        this.closedDate = new Date();
+	    }
 
 
 

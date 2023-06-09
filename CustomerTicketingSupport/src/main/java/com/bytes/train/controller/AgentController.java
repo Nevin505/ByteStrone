@@ -83,15 +83,6 @@ public class AgentController {
 	}
 	
 
-		
-	
-//	
-////to close a particular
-//	public ResponseEntity<String> closeTickets(){
-//		agentService.closeTicketsAgents();
-//		return null;
-//	}
-	
 // To assign Agents Based on category
 	@PostMapping("/{ticketid}/assigned/{agent}")
 	 public void ticketsssignment(@PathVariable int ticketid,@PathVariable int agent) throws Exception {

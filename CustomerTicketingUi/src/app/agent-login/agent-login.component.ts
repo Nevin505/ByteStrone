@@ -16,11 +16,7 @@ export class AgentLoginComponent {
   agentName!:string;
   agentPassword!:string;
   response:any;
-  // AgentForm!:FormGroup;
-  // data:any;
-  // AgentForm = new FormGroup({
-  //   username: new FormControl('', Validators.required),
-  //   userpassword: new FormControl('', Validators.required)})
+
 
   constructor(private loginService:LoginService, private route: Router) {
 

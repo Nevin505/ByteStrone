@@ -1,6 +1,7 @@
 package com.bytes.train.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +66,17 @@ public class TicketingController {
 		return ticketService.optionsvalue();
 	}
 	
+	
+	//To Get The report
+	@GetMapping("/report/tickets")
+	public Map<String, Integer> getTicketVolumes(){
+		return ticketService.getVolume();
+	}
+	
+//	To Get The Mapping
+	@GetMapping("/report/response")
+	public Map<String, Long> getTicketResponse(){
+		return ticketService.getResponseTime();
+	}
 	
 }

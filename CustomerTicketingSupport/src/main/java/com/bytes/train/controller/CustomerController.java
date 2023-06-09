@@ -49,6 +49,8 @@ public class CustomerController {
 	public List<CustomerDto> getCustomerDtoDeatils(@PathVariable int id){
 		return customerService.getCustomerDto(id);
 	}
+//	To Delete 
+	
 	
  	
 }

@@ -3,6 +3,7 @@ package com.bytes.train.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.bytes.train.entities.Category;
 import com.bytes.train.entities.Ticket;
@@ -18,6 +19,11 @@ public interface TicketService {
 	
 	//To Assign Tickets to The Agents
 	public void assignTickets(int ticketId, int agentId);
+	
 	public List<Category> optionsvalue();
+	
+	public Map<String, Integer> getVolume();
+	
+	public Map<String, Long> getResponseTime();
 	
 }

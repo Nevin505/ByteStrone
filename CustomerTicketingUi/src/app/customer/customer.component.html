@@ -27,7 +27,8 @@
 <hr>
 <div class="container-fluid w-50">
 <div >
-<button (click)="onRaiseTicket()" class="custom-button">Raise Ticket</button>
+<button (click)="onRaiseTicket()" class="custom-button" style="margin-right: 100px;">Raise Ticket</button>
+<button routerLink="/ticketShow" class="btn btn-primary">To View Tickets Raised</button>
 </div>
 <div *ngIf="value" class="container-fluid w-75 mt-4 ml-5 custom-container">
   <form [formGroup]="ticketForm" (ngSubmit)="saveTicketData()" class="custom-form">

@@ -1,20 +1,14 @@
 
-<div   class="container-fluid w-75 mt-4 ml-5" style="margin-left: 20px;">
-    <form    (ngSubmit)="loginAgent()">
-        <input type="text" placeholder="Enter The Agent User Name" id="agentName" name="agentName" [(ngModel)]="agentName" >
-        <input type="text" placeholder="Enter The Password"  id="agentPassword" name="agentPassword" [(ngModel)]="agentPassword" >
-        <button style="margin-left: 50%;">Submit</button>
-    </form>
-</div>
-<!-- HTML -->
-<!-- <div class="container-fluid w-75 mt-4 ml-5" id="login-container">
-    <form (ngSubmit)="loginAgent()" id="login-form">
-      <input type="text" placeholder="Enter The Agent User Name" id="agentName" name="agentName" [(ngModel)]="agentName" class="login-input">
-      <input type="text" placeholder="Enter The Password" id="agentPassword" name="agentPassword" [(ngModel)]="agentPassword" class="login-input">
-      <button type="submit" class="submit-button">Submit</button>
-    </form>
-  </div> -->
   
+  <div class="container-fluid d-flex justify-content-center mt-4">
+    <div class="w-25">
+        <form (ngSubmit)="loginAgent()">
+            <input type="text" class="form-control" placeholder="Enter The Agent User Name" id="agentName" name="agentName" [(ngModel)]="agentName"><br>
+            <input type="text" class="form-control" placeholder="Enter The Password" id="agentPassword" name="agentPassword" [(ngModel)]="agentPassword">
+            <button class="btn btn-primary mt-3 d-block mx-auto">Submit</button>
+        </form>
+    </div>
+</div>
 
 
 
@@ -22,9 +16,3 @@
 
 
 
-
-
-
-<!-- formControlName="agentName" -->
-<!-- name="agentName" [(ngModel)]="agentName" -->
-<!-- name="agentPassword" [(ngModel)]="agentPassword" -->

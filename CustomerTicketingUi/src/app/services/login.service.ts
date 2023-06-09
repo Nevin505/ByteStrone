@@ -11,6 +11,16 @@ import { CustomerLoginComponent } from '../customer-login/customer-login.compone
 })
 export class LoginService {
   customerId!: number;
+
+
+  merId!:number;
+  idSetter(id:number){
+    this.merId=id;
+  }
+  idGetter(){
+    return this.merId;
+  }
+  // customerid!:number;
   aId!: number;
   // getAgentId(){
   //   this.agentId=this.agentId
@@ -34,8 +44,9 @@ export class LoginService {
       (response: number) => {
         if (response !== 0) {
           this.customerId = response;
-          // sessionStorage.setItem('customerId',String(this.customerId));
-          alert(this.customerId);
+
+          
+          // alert(this.customerId);
           // console.log(this.customerId);         
           this.route.navigate(['ticketraisse'])
         } else {
@@ -107,8 +118,8 @@ export class LoginService {
     return this.httpClient.get(`http://localhost:8080/agents/specificticket/${searchtickId}`)
   }
 
-  // getCustomerTicketDetails(customer:number){
-  //   return this.httpClient.get(`http://localhost:8080/customer/getCustomerDtoTicketDetails/${}`)
-  // }
+  getCustomerTicketDetails(){
+    return this.httpClient.get(`http://localhost:8080/customer/getCustomerTicketDetails/${this.customerId}`)
+  }
 
 }

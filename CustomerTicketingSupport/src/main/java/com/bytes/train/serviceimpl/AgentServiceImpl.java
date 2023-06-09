@@ -143,7 +143,8 @@ public void closeTickets(int ticketid, int agentId) throws Exception {
 	if(ticket.getCategoryId().getCategoryId()==agent.getCategory().getCategoryId()) {
 		if(ticket.getStatus().equals("Handled")) {
 			ticket.setStatus("Closed");
-			ticket.setClosedDate(new Date());
+			ticket.closeTicket();
+//			ticket.setClosedDate(new Date());
 			ticketDao.save(ticket);
 		}
 		else {
