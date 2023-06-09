@@ -1,0 +1,56 @@
+<!-- <button (click)="onRaiseTicket()">Raise Ticket</button>
+
+<div *ngIf="value" class="container-fluid w-75 mt-4 ml-5" style="margin-left: 20px;">
+    <form  [formGroup]="ticketForm" (ngSubmit)="saveTicketData()">
+        <input type="text" placeholder="Enter The Subject" formControlName="subject">
+
+        <input type="text" placeholder="Enter The Description" formControlName="description" style="margin-left: 20px;">
+
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <label for="category">Category</label>
+        <select id="category" formControlName="categoryName">
+            <option *ngFor="let options of categoryList" [value]="options.category_name">{{options.category_name}}</option>
+             <option value="Hr">Hr</option>
+            <option value="Software">Software</option>
+            <option value="Hardware">Hardware</option> -
+        </select> <br>
+        <button style="margin-left: 50%;">Submit</button>
+    </form>
+</div>  -->
+
+   
+<hr>
+<div class="container-fluid w-50">
+<div >
+<button (click)="onRaiseTicket()" class="custom-button">Raise Ticket</button>
+</div>
+<div *ngIf="value" class="container-fluid w-75 mt-4 ml-5 custom-container">
+  <form [formGroup]="ticketForm" (ngSubmit)="saveTicketData()" class="custom-form">
+    <input type="text" placeholder="Enter The Subject" formControlName="subject" class="custom-input" > <br>
+    <input type="text" placeholder="Enter The Description" formControlName="description" class="custom-input"  style="margin-left: 20px;">
+    
+    <label for="priority" class="custom-label">Priority</label>
+    <select id="priority" formControlName="priority" class="custom-select">
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+    
+    <label for="category" class="custom-label">Category</label>
+    <select id="category" formControlName="categoryName" class="custom-select">
+      <option *ngFor="let option of categoryList" [value]="option.category_name">{{ option.category_name }}</option>
+    </select>
+    
+    <br>
+    <button type="submit" class="custom-button" (click)="addedValue()">Submit</button>
+  </form>
+</div>
+</div>
+
+
+
