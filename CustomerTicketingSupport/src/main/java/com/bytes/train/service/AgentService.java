@@ -27,10 +27,10 @@ public interface AgentService {
 	
 	public List<Agent> getAgentsList(Category category);
 	
-	public String closeTicketsAgents();
+//	public String closeTicketsAgents();
 
-	public void assignToAgents(int ticketid,int agent);
+	public void assignToAgents(int ticketid,int agent) throws Exception;
 	
-	public void closeTickets(int ticketid,int agentId);
+	public void closeTickets(int ticketid,int agentId) throws Exception;
 	
 }

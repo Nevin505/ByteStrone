@@ -1,6 +1,6 @@
 package com.bytes.train.serviceimpl;
 
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class AgentServiceImpl implements AgentService {
 		return ticketDao.findById(id).orElse(null);
 	}
 
-//To get The Tickets Which belongs to  particular Categories
+//To get the list of Tickets Which belongs to  particular Categories
 	@Override
 	public List<Ticket> getParticularCategoryList(int agentId) {
 
@@ -67,28 +67,20 @@ public class AgentServiceImpl implements AgentService {
 	public void assignTickets(int ticketId, int agentId) {
 		Ticket ticket = ticketDao.findByticketId(ticketId);
 		Agent agent = agentRespo.findById(agentId).orElse(null);
-		if (ticket.getAgentId() == null) {
+		if (ticket.getAgentId()== null) {
 			ticket.setAgentId(agent);
 			ticket.setStatus("Hnadles");
 			ticketDao.save(ticket);
 		}
 			else if(ticket.getStatus().equals("Hnadles")) {
+				ticket.setClosedDate(new Date());
 				ticket.setStatus("Closed");
-				ticketDao.save(ticket);
-				
-			}
-				
+				ticketDao.save(ticket);				
+			}				
 		 else {
 			throw new IllegalArgumentException("Ticket or agent not found.");
 		}
-	}
-
-	@Override
-	public List<Ticket> getPrority() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	}	
 //
 	@Override
 	public List<Agent> getAgentsList(Category category) {
@@ -96,43 +88,77 @@ public class AgentServiceImpl implements AgentService {
 		return null;
 	}
 
-	@Override
-	public String closeTicketsAgents() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public String closeTicketsAgents() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 //  Ticket Assignination
 	
 	
 	
 	@Override
-	public void assignToAgents(int ticketId, int agentId) {
+	public void assignToAgents(int ticketId, int agentId) throws Exception {
 	    Ticket ticket = ticketDao.findById(ticketId).orElse(null);
 	    Ticket ticket2=ticketDao.findById(ticketId).orElse(null);
-	    
+//	    System.out.println("Hai from here");
 	    if (ticket == null) {
 	        System.out.println("No tickets found for that particular details");
-	        return;
+	        throw new Exception("No tickets found for the specified details");
 	    }
 	    
 	    int ticketCategoryId = ticket.getCategoryId().getCategoryId();
-	    System.out.println(ticketCategoryId);
-	    
-	    Agent agent = agentRespo.findById(agentId).orElse(null);
-	    
+	    System.out.println(ticketCategoryId);	    
+	    Agent agent = agentRespo.findById(agentId).orElse(null);	    
 	    if (agent == null) {
 	        System.out.println("Invalid Agent Id");
-	        return;
-	    }
-	    
+	        throw new Exception("No Agents were found ");
+	    }	    
 	    int agentCategoryId = agent.getCategory().getCategoryId();		
 	    if (ticketCategoryId == agentCategoryId) {
-	        System.out.println("Same");
+	        System.out.println("Same");	
+	        if(ticket.getAgentId()==null){
+	        	ticket.setAgentId(agent);
+		        ticket.setStatus("Handled");
+		        ticketDao.save(ticket);
+	        }
+	        else {
+	        	throw new Exception("Agent is already assigned");
+
+	        }
+	        
 	    } else {
 	        System.out.println("Wrong");
+	        throw new Exception("No Agents were found for the particular Category");
 	    }
 	}
+
+
+//To close The Tickets Which has Been Handled By That Agent
+@Override
+public void closeTickets(int ticketid, int agentId) throws Exception {
+	Ticket ticket= ticketDao.findById(ticketid).orElse(null);
+	Agent agent=agentRespo.findById(agentId).orElse(null);
+	if(ticket.getCategoryId().getCategoryId()==agent.getCategory().getCategoryId()) {
+		if(ticket.getStatus().equals("Handled")) {
+			ticket.setStatus("Closed");
+			ticket.setClosedDate(new Date());
+			ticketDao.save(ticket);
+		}
+		else {
+			throw new Exception("This Ticket Was Not Being Handled");
+		}
+	}
+	
+	
+}
+
+@Override
+public List<Ticket> getPrority() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 	
 //	@Override

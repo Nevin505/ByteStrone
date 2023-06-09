@@ -42,13 +42,12 @@ public class Ticket {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_Date = null;
 	
-	@UpdateTimestamp
-	@Column(columnDefinition = "timestamp without time zone", nullable = true)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date closed_Date = null;
+	 
+	 @Column(columnDefinition = "timestamp without time zone", nullable = true)
+	 @Temporal(TemporalType.TIMESTAMP)
+	  private Date closedDate=null;
+    
 	
-	
-
 	@ManyToOne
 	@JoinColumn(name = "customerid")
 	Customer customer;
@@ -67,8 +66,11 @@ public class Ticket {
 
 	}
 
+	
+
 	public Ticket(int ticketId, String subject, String description, String priority, String status, Date creation_Date,
-			Date updated_Date, Customer customer, Agent agentId, Category categoryId, String categoryName) {
+			Date updated_Date, Date closedDate, Customer customer, Agent agentId, Category categoryId,
+			String categoryName) {
 		super();
 		this.ticketId = ticketId;
 		this.subject = subject;
@@ -77,11 +79,14 @@ public class Ticket {
 		this.status = status;
 		this.creation_Date = creation_Date;
 		this.updated_Date = updated_Date;
+		this.closedDate = closedDate;
 		this.customer = customer;
 		this.agentId = agentId;
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 	}
+
+
 
 	public int getTicketId() {
 		return ticketId;
@@ -170,6 +175,19 @@ public class Ticket {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	
+
+	public Date getClosedDate() {
+		return closedDate;
+	}
+
+
+
+	public void setClosedDate(Date closedDate) {
+		this.closedDate = closedDate;
+	}
+
+
 
 	@Override
 	public String toString() {
