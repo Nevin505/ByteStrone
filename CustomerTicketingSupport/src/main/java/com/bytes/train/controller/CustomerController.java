@@ -23,9 +23,7 @@ import com.bytes.train.service.CustomerService;
 public class CustomerController {
 	 @Autowired
 	 CustomerService customerService;
-	
-	 
-	 
+		 
 //	 to get  all the Customer details
 	@GetMapping("/getvalue")
      public List<Customer> getdata() {

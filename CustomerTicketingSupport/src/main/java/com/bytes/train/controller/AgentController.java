@@ -36,7 +36,6 @@ public class AgentController {
 	@Autowired
 	AgentService agentService;
 
-	
 //	To Check Agent Access for login
 	@PostMapping("/Access")
 	public ResponseEntity<Agent> checkAccess(@RequestBody Agent agent) {
@@ -44,7 +43,6 @@ public class AgentController {
 		String password = agent.getAgentPassword();
 		return agentService.checkAccess(userName, password);
 	}
-	
 
 //To Get list of Open Tickets
 	@GetMapping("/tickets")
@@ -54,12 +52,11 @@ public class AgentController {
 
 //
 	@GetMapping("/categorytickets/{agentId}")
-	public List<Ticket> getParticularAgentTickets( @PathVariable int agentId){
+	public List<Ticket> getParticularAgentTickets(@PathVariable int agentId) {
 		return agentService.getParticularCategoryList(agentId);
 
 	}
-	
-	
+
 //	to Search By Using  Ticket Id 
 	@GetMapping("/specificticket/{ticketid}")
 	public Ticket getSpecificTicket(@PathVariable int ticketid) {
@@ -69,40 +66,43 @@ public class AgentController {
 
 //	Not Used
 	@GetMapping("/categoryagents")
-	public List<Agent> getAgents(@RequestParam("category") Category category){
+	public List<Agent> getAgents(@RequestParam("category") Category category) {
 		return agentService.getAgentsList(category);
 	}
-	
-	
-//	to Assign A particular ticket No t regarding the Case
-	@PostMapping("/{ticketid}/assign/{agentId}")
-	public ResponseEntity<String> assignAgents(@PathVariable int ticketid,@PathVariable int agentId) {
-		agentService.assignTickets(ticketid,agentId);
+
+//	to Assign A particular ticket to a agents which belongs to that agent category which a ticket payload
+	@PostMapping("/{ticketid}/assignlimit/{agentId}")
+	public ResponseEntity<String> assignAgents(@PathVariable int ticketid, @PathVariable int agentId) {
+		agentService.assignTicketsLimit(ticketid, agentId);
 		return ResponseEntity.ok("Ticket Assigned Succesfully");
-		
+
 	}
-	
 
-// To assign Agents Based on category
-	@PostMapping("/{ticketid}/assigned/{agent}")
-	 public void ticketsssignment(@PathVariable int ticketid,@PathVariable int agent) throws Exception {
-		 try {
-		        System.out.println("Hai from here");
-		        agentService.assignToAgents(ticketid, agent);
-		    } catch (Exception e) {
-		        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		    }
-	 }
-//	To Close  a Ticket which has been handled by a particular Agent
-	@PostMapping("/{ticketid}/closedticket/{agentId}")
-	public ResponseEntity<String> closeAsignedTickets(@PathVariable int ticketid,@PathVariable int agentId) {
+// To assign Agents Based on category with no ticket Payload
+	@PostMapping("/{ticketid}/assign/{agent}")
+	public void ticketsssignment(@PathVariable int ticketid, @PathVariable int agent) throws Exception {
 		try {
-		agentService.closeTickets(ticketid,agentId);
-		return ResponseEntity.ok("Ticket Closed");
-
-         }
-		catch (Exception e) {
+			System.out.println("Hai from here");
+			agentService.assignToAgents(ticketid, agent);
+		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
+
+//	To Close a Ticket which has been handled by a particular Agent
+	@PostMapping("/{ticketid}/closedticket/{agentId}")
+	public ResponseEntity<String> closeAsignedTickets(@PathVariable int ticketid, @PathVariable int agentId) {
+		try {
+			agentService.closeTickets(ticketid, agentId);
+			return ResponseEntity.ok("Ticket Closed");
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
 	}
+	@GetMapping("/agentsCategory/{agentId}")
+	public List<Agent> agents(@PathVariable int agentId){
+		return agentService.getAgents(agentId);
+		
+	}
+}

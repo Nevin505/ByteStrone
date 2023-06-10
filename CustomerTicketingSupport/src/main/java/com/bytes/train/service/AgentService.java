@@ -19,7 +19,7 @@ public interface AgentService {
 	
 	Ticket getSpecificTicketId(int id);
 	
-	public void assignTickets(int ticketId, int agentId);
+	public void assignTicketsLimit(int ticketId, int agentId);
 
 	public List<Ticket> getParticularCategoryList(int agentId);
 	
@@ -32,5 +32,7 @@ public interface AgentService {
 	public void assignToAgents(int ticketid,int agent) throws Exception;
 	
 	public void closeTickets(int ticketid,int agentId) throws Exception;
+
+	public List<Agent> getAgents(int id);
 	
 }

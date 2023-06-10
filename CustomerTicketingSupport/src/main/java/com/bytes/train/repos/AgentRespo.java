@@ -10,5 +10,7 @@ import com.bytes.train.entities.Category;
 public interface AgentRespo extends JpaRepository<Agent,Integer> {
 	
 	 List<Agent> findByCategory(Category category);
+	 
+//	 List<Agent>  findAgentCate
 
 }

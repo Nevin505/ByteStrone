@@ -30,21 +30,13 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 
 //	Ticket findByCategoryId_CategoryId(int categoryId); 
 	
-	List<Ticket> findByCategoryId_CategoryId(int categoryId); 
+	List<Ticket> findByCategoryId_CategoryId(int categoryId);
+	
+	
+	@Query("SELECT COUNT(t) FROM Ticket t WHERE  t.agentId.id = :agentId")
+	int getCountByAgentId(@Param("agentId") int agentId); 
 
-//	Ticket findByCategoryId(int var);
-	  
-//	 Ticket findByfindTicketIdByCategoryId(Category category);
-////	to sort
-//	List<Ticket> findAllByStatusOrderByPriorityDesc();
-//	
-//	 @Query("SELECT * FROM Ticket WHERE status = 'open' ORDER BY "
-//	            + "CASE priority "
-//	            + "WHEN 'High' THEN 1 "
-//	            + "WHEN 'Medium' THEN 2 "
-//	            + "WHEN 'Low' THEN 3 "
-//	            + "ELSE 4 END, status")
-//	    List<Ticket> findOpenTicketsSortedByPriorityAndStatus();
+
 	
 	
 	

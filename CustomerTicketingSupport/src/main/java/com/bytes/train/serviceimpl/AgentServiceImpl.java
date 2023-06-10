@@ -64,28 +64,42 @@ public class AgentServiceImpl implements AgentService {
 
 //	Assign Tickets To Agent
 	@Override
-	public void assignTickets(int ticketId, int agentId) {
+	public void assignTicketsLimit(int ticketId, int agentId) {
 		Ticket ticket = ticketDao.findByticketId(ticketId);
 		Agent agent = agentRespo.findById(agentId).orElse(null);
-		if (ticket.getAgentId()== null) {
-			ticket.setAgentId(agent);
-			ticket.setStatus("Hnadles");
+		int maxWorkload = 17;
+		if (ticket.getAgentId() == null) {
+			if (getWorkloadForAgent(agentId) < maxWorkload) {
+				System.out.println("hai enterred here");
+				ticket.setAgentId(agent);
+				ticket.setStatus("Handled");
+				ticketDao.save(ticket);
+				System.out.println("Not enterred Here");
+			} else {
+				throw new IllegalStateException(
+						"Agent's workload is already at the maximum limit.Assigin It other Agents");
+			}
+//			ticket.setAgentId(agent);
+//			ticket.setStatus("Hnadles");
+//			ticketDao.save(ticket);
+		} else if (ticket.getStatus().equals("Handled")) {
+			ticket.setClosedDate(new Date());
+			ticket.setStatus("Closed");
 			ticketDao.save(ticket);
-		}
-			else if(ticket.getStatus().equals("Hnadles")) {
-				ticket.setClosedDate(new Date());
-				ticket.setStatus("Closed");
-				ticketDao.save(ticket);				
-			}				
-		 else {
+		} else {
 			throw new IllegalArgumentException("Ticket or agent not found.");
 		}
-	}	
+	}
+
 //
 	@Override
 	public List<Agent> getAgentsList(Category category) {
 		agentRespo.findByCategory(category);
 		return null;
+	}
+
+	public int getWorkloadForAgent(int agentId) {
+		return ticketDao.getCountByAgentId(agentId);
 	}
 
 //	@Override
@@ -95,100 +109,72 @@ public class AgentServiceImpl implements AgentService {
 //	}
 
 //  Ticket Assignination
-	
-	
-	
+
 	@Override
 	public void assignToAgents(int ticketId, int agentId) throws Exception {
-	    Ticket ticket = ticketDao.findById(ticketId).orElse(null);
-	    Ticket ticket2=ticketDao.findById(ticketId).orElse(null);
+		Ticket ticket = ticketDao.findById(ticketId).orElse(null);
+		Ticket ticket2 = ticketDao.findById(ticketId).orElse(null);
 //	    System.out.println("Hai from here");
-	    if (ticket == null) {
-	        System.out.println("No tickets found for that particular details");
-	        throw new Exception("No tickets found for the specified details");
-	    }
-	    
-	    int ticketCategoryId = ticket.getCategoryId().getCategoryId();
-	    System.out.println(ticketCategoryId);	    
-	    Agent agent = agentRespo.findById(agentId).orElse(null);	    
-	    if (agent == null) {
-	        System.out.println("Invalid Agent Id");
-	        throw new Exception("No Agents were found ");
-	    }	    
-	    int agentCategoryId = agent.getCategory().getCategoryId();		
-	    if (ticketCategoryId == agentCategoryId) {
-	        System.out.println("Same");	
-	        if(ticket.getAgentId()==null){
-	        	ticket.setAgentId(agent);
-		        ticket.setStatus("Handled");
-		        ticketDao.save(ticket);
-	        }
-	        else {
-	        	throw new Exception("Agent is already assigned");
+		if (ticket == null) {
+			System.out.println("No tickets found for that particular details");
+			throw new Exception("No tickets found for the specified details");
+		}
 
-	        }
-	        
-	    } else {
-	        System.out.println("Wrong");
-	        throw new Exception("No Agents were found for the particular Category");
-	    }
+		int ticketCategoryId = ticket.getCategoryId().getCategoryId();
+		System.out.println(ticketCategoryId);
+		Agent agent = agentRespo.findById(agentId).orElse(null);
+		if (agent == null) {
+			System.out.println("Invalid Agent Id");
+			throw new Exception("No Agents were found ");
+		}
+		int agentCategoryId = agent.getCategory().getCategoryId();
+		if (ticketCategoryId == agentCategoryId) {
+			System.out.println("Same");
+			if (ticket.getAgentId() == null) {
+				ticket.setAgentId(agent);
+				ticket.setStatus("Handled");
+				ticketDao.save(ticket);
+			} else {
+				throw new Exception("Agent is already assigned");
+
+			}
+
+		} else {
+			System.out.println("Wrong");
+			throw new Exception("No Agents were found for the particular Category");
+		}
 	}
-
 
 //To close The Tickets Which has Been Handled By That Agent
-@Override
-public void closeTickets(int ticketid, int agentId) throws Exception {
-	Ticket ticket= ticketDao.findById(ticketid).orElse(null);
-	Agent agent=agentRespo.findById(agentId).orElse(null);
-	if(ticket.getCategoryId().getCategoryId()==agent.getCategory().getCategoryId()) {
-		if(ticket.getStatus().equals("Handled")) {
-			ticket.setStatus("Closed");
-			ticket.closeTicket();
+	@Override
+	public void closeTickets(int ticketid, int agentId) throws Exception {
+		Ticket ticket = ticketDao.findById(ticketid).orElse(null);
+		Agent agent = agentRespo.findById(agentId).orElse(null);
+		if (ticket.getCategoryId().getCategoryId() == agent.getCategory().getCategoryId()) {
+			if (ticket.getStatus().equals("Handled")) {
+				ticket.setStatus("Closed");
+				ticket.closeTicket();
 //			ticket.setClosedDate(new Date());
-			ticketDao.save(ticket);
+				ticketDao.save(ticket);
+			} else {
+				throw new Exception("This Ticket Was Not Being Handled");
+			}
 		}
-		else {
-			throw new Exception("This Ticket Was Not Being Handled");
-		}
+
 	}
-	
-	
-}
 
-@Override
-public List<Ticket> getPrority() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	public List<Ticket> getPrority() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
-//	@Override
-//	public void assignToAgents(int ticketId, int agentId) {
-//		Ticket ticket = ticketDao.findByticketId(ticketId);
-////		if (ticket == null) {
-////			System.out.println("No tickets Is found for that Particular Details");
-////		}
-//		Integer tickCategory = ticket.getCategoryId().getCategoryId();
-//		System.out.println(tickCategory);
-//		Agent agent = agentRespo.findById(agentId).orElse(null);
-////		to find category of that Agents
-////		if (agent == null) {
-////			System.out.println("Invalid Agent Id");
-////		}
-//		Integer agentCategory = agent.getCategory().getCategoryId();		
-//		if(tickCategory==agentCategory) {
-//			System.out.println("Same");
-//		}
-//		else {
-//			System.out.println("Wrong");
-//		}
-//
-////		Category ticketCategory = ticket.getCategoryId();
-//
-////		if (.contains(agent)) {
-////            return ResponseEntity.badRequest().body("Agent does not belong to the ticket category.");
-////        }
-//
-//	}
+	@Override
+	public List<Agent> getAgents(int id) {
+       Agent agent=agentRespo.findById(id).orElse(null);
+       Category category=agent.getCategory();
+      return agentRespo.findByCategory(category);
+       
+	}
 
 }
