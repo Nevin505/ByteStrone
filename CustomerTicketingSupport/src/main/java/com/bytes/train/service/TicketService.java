@@ -12,7 +12,7 @@ public interface TicketService {
 	 
 	public List<Ticket> getTicket();
 	 public void UpdateTicket(int id,Ticket ticket); //UpdateTicket
-//	 public String saveTicket(int id, Ticket ticket);
+
 	 public void saveTicket(Ticket ticket);
 	 
 	String saveTicketPostman(int id, Ticket ticket);
@@ -22,8 +22,6 @@ public interface TicketService {
 	
 	public List<Category> optionsvalue();
 	
-	public Map<String, Integer> getVolume();
 	
-	public Map<String, Long> getResponseTime();
 	
 }

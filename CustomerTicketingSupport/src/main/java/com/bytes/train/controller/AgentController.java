@@ -23,14 +23,6 @@ import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.service.AgentService;
 
-//As a support agent, I want to view and manage support tickets efficiently so that I can prioritise and resolve them in a timely manner.
-//
-//Acceptance Criteria:
-//
-//Support agents should have a dashboard displaying all open tickets, sorted by priority or status.
-//Agents should be able to assign tickets to themselves or other team members.
-//The system should provide filters and search functionality to locate specific tickets quickly.
-
 @RestController
 @RequestMapping("/agents")
 @CrossOrigin("http://localhost:4200")
@@ -51,27 +43,24 @@ public class AgentController {
 	public List<Ticket> getOpenTickets() {
 		return agentService.findOpen();
 	}
+	
+//	to Search By Using  Ticket Id 
+	@GetMapping("/specificticket/{ticketid}")
+	public ResponseEntity<Ticket> getSpecificTicket(@PathVariable int ticketid) throws Exception {
+		 if(agentService.getSpecificTicketId(ticketid)==null) {
+			 throw new Exception("Ticket With That Id Is Not Found");
+		 }
+		return ResponseEntity.ok((agentService.getSpecificTicketId(ticketid)));
+	}
 
-//
+
+//To get the list of Tickets Which belongs to  particular Categories
 	@GetMapping("/categorytickets/{agentId}")
 	public List<Ticket> getParticularAgentTickets(@PathVariable int agentId) {
 		return agentService.getParticularCategoryList(agentId);
 
 	}
-
-//	to Search By Using  Ticket Id 
-	@GetMapping("/specificticket/{ticketid}")
-	public Ticket getSpecificTicket(@PathVariable int ticketid) {
-		return agentService.getSpecificTicketId(ticketid);
-
-	}
-
-////	Not Used
-//	@GetMapping("/categoryagents")
-//	public List<Agent> getAgents(@RequestParam("category") Category category) {
-//		return agentService.getAgentsList(category);
-//	}
-
+	
 //	to Assign A particular ticket to a agents which belongs to that agent category which has a ticket payload
 	@PostMapping("/{ticketid}/assignlimit/{agentId}")
 	public ResponseEntity<String> assignAgents(@PathVariable int ticketid, @PathVariable int agentId) {
@@ -79,12 +68,10 @@ public class AgentController {
 		return ResponseEntity.ok("Ticket Assigned Succesfully");
 
 	}
-
-// To assign Agents Based on category with no ticket Payload
+// To assign Agents Based on category with no ticket Payload Basis
 	@PostMapping("/{ticketid}/assign/{agent}")
 	public void ticketsssignment(@PathVariable int ticketid, @PathVariable int agent) throws Exception {
 		try {
-			System.out.println("Hai from here");
 			agentService.assignToAgents(ticketid, agent);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -102,6 +89,7 @@ public class AgentController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
+	
 	@GetMapping("/agentsCategory/{agentId}")
 	public List<Agent> agents(@PathVariable int agentId){
 		return agentService.getAgents(agentId);

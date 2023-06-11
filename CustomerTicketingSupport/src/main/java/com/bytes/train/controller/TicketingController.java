@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.repos.CategoryRespository;
@@ -24,13 +23,13 @@ import com.bytes.train.service.TicketService;
 @RequestMapping("/ticket")
 @CrossOrigin("http://localhost:4200")
 public class TicketingController {
-	
+
 	@Autowired
 	TicketService ticketService;
-	
-	 @Autowired
-	 CategoryRespository categoryDao;
-	 
+
+	@Autowired
+	CategoryRespository categoryDao;
+
 	@GetMapping("/query")
 	public List<Ticket> getTicketInfo() {
 		return ticketService.getTicket();
@@ -48,35 +47,21 @@ public class TicketingController {
 
 //Assogination of tickets to a Agent
 	@PostMapping("/{ticketid}/assign/{agentId}")
-	public ResponseEntity<String> assignAgents(@PathVariable int ticketid,@PathVariable int agentId) {
-		ticketService.assignTickets(ticketid,agentId);
+	public ResponseEntity<String> assignAgents(@PathVariable int ticketid, @PathVariable int agentId) {
+		ticketService.assignTickets(ticketid, agentId);
 		return ResponseEntity.ok("Ticket Assigned Succesfully");
-		
+
 	}
-	 
-	
+
 	@PutMapping("/update/{id}")
 	public void update(@PathVariable("id") int id, @RequestBody Ticket ticket) {
 		ticketService.UpdateTicket(id, ticket);
 	}
-	
-	
+
 	@GetMapping("/values")
 	public List<Category> getMapping() {
 		return ticketService.optionsvalue();
 	}
-	
-	
-	//To Get The report
-	@GetMapping("/report/tickets")
-	public Map<String, Integer> getTicketVolumes(){
-		return ticketService.getVolume();
-	}
-	
-//	To Get The Mapping
-	@GetMapping("/report/response")
-	public Map<String, Long> getTicketResponse(){
-		return ticketService.getResponseTime();
-	}
-	
+
+
 }

@@ -14,29 +14,19 @@ public interface AgentService {
 
 	public List<Ticket> findOpen();
 	
-	
-//	public List<Ticket> getOpenTicketsSortedByStatus();
-//	getOpenTicketsSortedByStatus();
-	
 	Ticket getSpecificTicketId(int id);
 	
 	public void assignTicketsLimit(int ticketId, int agentId);
 
 	public List<Ticket> getParticularCategoryList(int agentId);
 	
-	public List<Ticket> getPrority();  
-	
-//	public List<Agent> getAgentsList(Category category);
-	
-//	public String closeTicketsAgents();
-//	getAgentsList
-
 	public void assignToAgents(int ticketid,int agent) throws Exception;
 	
 	public void closeTickets(int ticketid,int agentId) throws Exception;
-
+	
 	public List<Agent> getAgents(int id);
-
+	 
+	
 	public void addCommentService(int ticketId,Comment comment);
 	
 }

@@ -27,7 +27,7 @@ public class AgentServiceImpl implements AgentService {
 
 	@Autowired
 	CategoryRespository categoryRespository;
-	
+
 	@Autowired
 	CommentRepository commentRepoistory;
 
@@ -67,24 +67,30 @@ public class AgentServiceImpl implements AgentService {
 		return ticketDao.findByCategoryId_CategoryId(var1);
 	}
 
-//	Assign Tickets To Agent
+//	Assign Tickets To Agent Based On payLoad
 	@Override
 	public void assignTicketsLimit(int ticketId, int agentId) {
 		Ticket ticket = ticketDao.findByticketId(ticketId);
 		Agent agent = agentRespo.findById(agentId).orElse(null);
-		int maxWorkload = 17;
-		if (ticket.getAgentId() == null) {
-			if (getWorkloadForAgent(agentId) < maxWorkload) {
-				System.out.println("hai enterred here");
-				ticket.setAgentId(agent);
-				ticket.setStatus("Handled");
-				ticketDao.save(ticket);
-				System.out.println("Not enterred Here");
-			} else {
-				throw new IllegalStateException(
-						"Agent's workload is already at the maximum limit.Assigin It other Agents");
+		int maxWorkload = 2;
+		if (ticket.getAgentId() == null && agent != null) {
+			if (ticket.getCategoryId().getCategoryId() == agent.getCategory().getCategoryId()) {
+				if (getWorkloadForAgent(agentId) < maxWorkload) {
+					System.out.println("hai enterred here");
+					ticket.setAgentId(agent);
+					ticket.setStatus("Handled");
+					ticketDao.save(ticket);
+				} else {
+					throw new IllegalStateException(
+							"Agent's workload is already at the maximum limit.Assigin It other Agents");
+				}
 			}
-		} else if (ticket.getStatus().equals("Handled")) {
+
+			else {
+				throw new IllegalStateException("No Agents were found for the particular Category");
+			}
+
+		} else if (ticket.getAgentId().getAgentID() == agentId && ticket.getStatus().equals("Handled")) {
 			ticket.setClosedDate(new Date());
 			ticket.setStatus("Closed");
 			ticketDao.save(ticket);
@@ -95,38 +101,24 @@ public class AgentServiceImpl implements AgentService {
 
 //
 
-
 	public int getWorkloadForAgent(int agentId) {
 		return ticketDao.getCountByAgentId(agentId);
 	}
 
-//	@Override
-//	public String closeTicketsAgents() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-
-
+//Assigin to that Agent
 	@Override
 	public void assignToAgents(int ticketId, int agentId) throws Exception {
+
 		Ticket ticket = ticketDao.findById(ticketId).orElse(null);
 		Ticket ticket2 = ticketDao.findById(ticketId).orElse(null);
 		if (ticket == null) {
-			System.out.println("No tickets found for that particular details");
 			throw new Exception("No tickets found for the specified details");
 		}
-
-		int ticketCategoryId = ticket.getCategoryId().getCategoryId();
-		System.out.println(ticketCategoryId);
 		Agent agent = agentRespo.findById(agentId).orElse(null);
 		if (agent == null) {
-			System.out.println("Invalid Agent Id");
 			throw new Exception("No Agents were found ");
 		}
-		int agentCategoryId = agent.getCategory().getCategoryId();
-		if (ticketCategoryId == agentCategoryId) {
-			System.out.println("Same");
+		if (ticket.getCategoryId().getCategoryId() == agent.getCategory().getCategoryId()) {
 			if (ticket.getAgentId() == null) {
 				ticket.setAgentId(agent);
 				ticket.setStatus("Handled");
@@ -146,41 +138,30 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public void closeTickets(int ticketid, int agentId) throws Exception {
 		Ticket ticket = ticketDao.findById(ticketid).orElse(null);
-		Agent agent = agentRespo.findById(agentId).orElse(null);
-		if (ticket.getCategoryId().getCategoryId() == agent.getCategory().getCategoryId()) {
-			if (ticket.getStatus().equals("Handled")) {
-				ticket.setStatus("Closed");
-				ticket.closeTicket();
-//			ticket.setClosedDate(new Date());
-				ticketDao.save(ticket);
-			} else {
-				throw new Exception("This Ticket Was Not Being Handled");
-			}
+		if (ticket.getAgentId().getAgentID() == agentId && (ticket.getStatus().equals("Handled"))) {
+			ticket.setStatus("Closed");
+			ticket.closeTicket();
+			ticketDao.save(ticket);
+		} else {
+			throw new Exception("This Ticket Was Not Being Closed By That Agent Who Has Handled");
 		}
-
-	}
-
-	@Override
-	public List<Ticket> getPrority() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
 	public List<Agent> getAgents(int id) {
-       Agent agent=agentRespo.findById(id).orElse(null);
-       Category category=agent.getCategory();
-      return agentRespo.findByCategory(category);
-       
+		Agent agent = agentRespo.findById(id).orElse(null);
+		Category category = agent.getCategory();
+		return agentRespo.findByCategory(category);
+
 	}
 
 	@Override
-	public void addCommentService(int ticketId,Comment comment) {
+	public void addCommentService(int ticketId, Comment comment) {
 //       	Comment comment	
-		
+
 //		String comment2=comment.getContent();
 		commentRepoistory.save(comment);
-		
+
 	}
 
 }
