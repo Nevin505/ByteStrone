@@ -1,0 +1,24 @@
+
+<table >
+  <thead>
+    <tr>
+      <th>TICKET ID</th>
+      <!-- <th>customerid</th> -->
+      <th>DESCRIPTION</th>
+      <th>priority</th>
+      <th>status</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td>{{ item.ticketId }}</td>
+      <!-- <td>{{ item.agentId.agentName }}</td> -->
+      <td>{{ item.description}}</td>
+      <td>{{ item.priority}}</td>
+      <td>{{ item.status}}</td>
+       
+    </tr>
+   
+  </tbody>
+</table>
