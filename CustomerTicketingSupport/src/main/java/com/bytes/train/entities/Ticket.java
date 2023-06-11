@@ -30,25 +30,22 @@ public class Ticket {
 	private String priority;
 	private String status = "open";
 	
-
-
+	 private int satisfactionRating;
 
 	@CreationTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation_Date;
-	
+
 //	@UpdateTimestamp
 	@Column(columnDefinition = "timestamp without time zone", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_Date = null;
-	
-	 
-	 @Column(columnDefinition = "timestamp without time zone", nullable = true)
-	 @Temporal(TemporalType.TIMESTAMP)
-	  private Date closedDate=null;
-    
-	
+
+	@Column(columnDefinition = "timestamp without time zone", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date closedDate = null;
+
 	@ManyToOne
 	@JoinColumn(name = "customerid")
 	Customer customer;
@@ -60,8 +57,10 @@ public class Ticket {
 	@ManyToOne
 	@JoinColumn(name = "categoryId")
 	Category categoryId;
+	
+   
 
-  String  categoryName;
+	String categoryName;
 
 	public Ticket() {
 
@@ -71,7 +70,7 @@ public class Ticket {
 
 	public Ticket(int ticketId, String subject, String description, String priority, String status, Date creation_Date,
 			Date updated_Date, Date closedDate, Customer customer, Agent agentId, Category categoryId,
-			String categoryName) {
+			int satisfactionRating, String categoryName) {
 		super();
 		this.ticketId = ticketId;
 		this.subject = subject;
@@ -84,6 +83,7 @@ public class Ticket {
 		this.customer = customer;
 		this.agentId = agentId;
 		this.categoryId = categoryId;
+		this.satisfactionRating = satisfactionRating;
 		this.categoryName = categoryName;
 	}
 
@@ -176,45 +176,50 @@ public class Ticket {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
 
 	public Date getClosedDate() {
 		return closedDate;
 	}
 
-
-
 	public void setClosedDate(Date closedDate) {
 		this.closedDate = closedDate;
 	}
+
+	@PrePersist
+	protected void onCreate() {
+		this.creation_Date = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		if (this.closedDate == null) {
+			this.updated_Date = new Date();
+			this.updated_Date = new Date();
+		}
+	}
+
+	public void closeTicket() {
+		this.status = "Closed";
+		this.closedDate = new Date();
+	}
 	
-	
-	 @PrePersist
-	    protected void onCreate() {
-	        this.creation_Date = new Date();
-	    }
 
-	    @PreUpdate
-	    protected void onUpdate() {
-	    	 if (this.closedDate == null) {
-	    	        this.updated_Date = new Date();
-	        this.updated_Date = new Date();
-	    }
-	    }
-	    
-	    public void closeTicket() {
-	        this.status = "Closed";
-	        this.closedDate = new Date();
-	    }
+	public int getSatisfactionRating() {
+		return satisfactionRating;
+	}
 
-
+	public void setSatisfactionRating(int satisfactionRating) {
+		this.satisfactionRating = satisfactionRating;
+	}
 
 	@Override
 	public String toString() {
 		return "Ticket [ticketId=" + ticketId + ", subject=" + subject + ", description=" + description + ", priority="
 				+ priority + ", status=" + status + ", creation_Date=" + creation_Date + ", updated_Date="
-				+ updated_Date + ", customer=" + customer + ", agentId=" + agentId + ", categoryId=" + categoryId
-				+ ", categoryName=" + categoryName + "]";
+				+ updated_Date + ", closedDate=" + closedDate + ", customer=" + customer + ", agentId=" + agentId
+				+ ", categoryId=" + categoryId + ", satisfactionRating=" + satisfactionRating + ", categoryName="
+				+ categoryName + "]";
 	}
 
+	
 }

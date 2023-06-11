@@ -72,11 +72,10 @@ public class AgentServiceImpl implements AgentService {
 	public void assignTicketsLimit(int ticketId, int agentId) {
 		Ticket ticket = ticketDao.findByticketId(ticketId);
 		Agent agent = agentRespo.findById(agentId).orElse(null);
-		int maxWorkload = 2;
+		int maxWorkload = 22;
 		if (ticket.getAgentId() == null && agent != null) {
 			if (ticket.getCategoryId().getCategoryId() == agent.getCategory().getCategoryId()) {
 				if (getWorkloadForAgent(agentId) < maxWorkload) {
-					System.out.println("hai enterred here");
 					ticket.setAgentId(agent);
 					ticket.setStatus("Handled");
 					ticketDao.save(ticket);
@@ -90,17 +89,17 @@ public class AgentServiceImpl implements AgentService {
 				throw new IllegalStateException("No Agents were found for the particular Category");
 			}
 
-		} else if (ticket.getAgentId().getAgentID() == agentId && ticket.getStatus().equals("Handled")) {
-			ticket.setClosedDate(new Date());
-			ticket.setStatus("Closed");
-			ticketDao.save(ticket);
+//		} else if (ticket.getAgentId().getAgentID() == agentId && ticket.getStatus().equals("Handled")) {
+//			ticket.setClosedDate(new Date());
+//			ticket.setStatus("Closed");
+//			ticketDao.save(ticket);
 		} else {
 			throw new IllegalArgumentException("Ticket or agent not found.");
 		}
 	}
 
+	
 //
-
 	public int getWorkloadForAgent(int agentId) {
 		return ticketDao.getCountByAgentId(agentId);
 	}
