@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
+import com.bytes.train.entities.Comment;
 import com.bytes.train.entities.Ticket;
 
 public interface AgentService {
@@ -25,14 +26,17 @@ public interface AgentService {
 	
 	public List<Ticket> getPrority();  
 	
-	public List<Agent> getAgentsList(Category category);
+//	public List<Agent> getAgentsList(Category category);
 	
 //	public String closeTicketsAgents();
+//	getAgentsList
 
 	public void assignToAgents(int ticketid,int agent) throws Exception;
 	
 	public void closeTickets(int ticketid,int agentId) throws Exception;
 
 	public List<Agent> getAgents(int id);
+
+	public void addCommentService(int ticketId,Comment comment);
 	
 }

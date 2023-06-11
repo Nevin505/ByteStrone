@@ -18,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
+import com.bytes.train.entities.Comment;
+import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.service.AgentService;
 
@@ -64,13 +66,13 @@ public class AgentController {
 
 	}
 
-//	Not Used
-	@GetMapping("/categoryagents")
-	public List<Agent> getAgents(@RequestParam("category") Category category) {
-		return agentService.getAgentsList(category);
-	}
+////	Not Used
+//	@GetMapping("/categoryagents")
+//	public List<Agent> getAgents(@RequestParam("category") Category category) {
+//		return agentService.getAgentsList(category);
+//	}
 
-//	to Assign A particular ticket to a agents which belongs to that agent category which a ticket payload
+//	to Assign A particular ticket to a agents which belongs to that agent category which has a ticket payload
 	@PostMapping("/{ticketid}/assignlimit/{agentId}")
 	public ResponseEntity<String> assignAgents(@PathVariable int ticketid, @PathVariable int agentId) {
 		agentService.assignTicketsLimit(ticketid, agentId);
@@ -104,5 +106,9 @@ public class AgentController {
 	public List<Agent> agents(@PathVariable int agentId){
 		return agentService.getAgents(agentId);
 		
+	}
+	 @GetMapping("/addComments")
+	public void addComments(int ticketId,@RequestBody Comment comment) {
+		 agentService.addCommentService(ticketId,comment);
 	}
 }

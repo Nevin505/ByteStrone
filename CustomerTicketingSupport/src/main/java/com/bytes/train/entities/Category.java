@@ -10,6 +10,7 @@ public class Category {
 	@Id
 	private int categoryId;
 	private String categoryName;
+	
 //	@OneToOne
 //	@JoinColumn(name = "agentID")
 //	Agent agentId;

@@ -15,8 +15,11 @@ export class AgentLoginComponent {
 
   agentName!:string;
   agentPassword!:string;
+  // agentId!:number;
   response:any;
+  setAgent(){
 
+  }
 
   constructor(private loginService:LoginService, private route: Router) {
 
@@ -29,6 +32,7 @@ export class AgentLoginComponent {
       this.loginService.agentloginService(this.agent1).subscribe(res=>{
         this.response=res;
         const agentid=this.response.agentID
+        this.loginService.agentIdSetter(this.response.agentID)
         if(this.response!=null){
           this.route.navigate(['/agentDisplay',{ queryParams:  agentid  } ]);
         }

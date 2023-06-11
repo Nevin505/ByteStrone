@@ -22,13 +22,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 	@Query("SELECT t FROM Ticket t WHERE t.status = 'open' ORDER BY t.priority ASC")
 	List<Ticket> findOpenTickets();
 	
-//	@Query("SELECT t.ticketId FROM Ticket t WHERE t.categoryId.categoryId = :categoryId")
-//	Ticket  findByfindTicketIdByCategoryId(@Param("categoryId") Integer categoryId);
-	
-//	int findByCategoryId(var1);
-	
 
-//	Ticket findByCategoryId_CategoryId(int categoryId); 
 	
 	List<Ticket> findByCategoryId_CategoryId(int categoryId);
 	

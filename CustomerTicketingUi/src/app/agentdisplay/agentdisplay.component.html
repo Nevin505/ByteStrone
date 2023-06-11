@@ -5,8 +5,8 @@
   <button (click)="getDetails(searchtickId)">Search</button>
 </div>
 
-
-<div *ngIf="!all">
+<div>
+<div *ngIf="!all" >
   <h2>{{data[0].categoryId.category_name}}</h2>
 <table class="ticket-table">
   <thead>
@@ -29,11 +29,16 @@
       <td>{{ item.description }}</td>
       <td>{{ item.priority }}</td>
       <td>{{ item.status }}
-        <select>
+        <select *ngIf="item.status=='open'" style="margin-left: 20px;">
           <option value="option1">Option 1</option>
           <option value="option2">Option 2</option>
           <option value="option3">Option 3</option>
         </select>
+
+        <!-- <select   style="margin-left: 20px;">
+          <option  *ngFor="let agent of agentData" [value]="agent.agentName">{{agent.agentName}} </option>
+         
+        </select> -->
     </tr>
    
   </tbody>
@@ -75,4 +80,5 @@
       
   </tbody>
 </table>
+</div>
 </div>

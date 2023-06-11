@@ -12,7 +12,7 @@ import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
 import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.Ticket;
-import com.bytes.train.repos.AgentRespo;
+import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.repos.CategoryRespository;
 import com.bytes.train.repos.CustomerRepository;
 import com.bytes.train.repos.TicketRepository;
@@ -31,7 +31,7 @@ public class TicketServiceImpl implements TicketService {
 	UserloginServiceImpl UserloginServiceImpl;
 	
 	@Autowired
-	AgentRespo agentRespo;
+	AgentRepository agentRespo;
 	
 	@Autowired
 	CategoryRespository categoryRespository;

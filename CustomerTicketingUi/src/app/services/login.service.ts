@@ -14,17 +14,16 @@ export class LoginService {
 
 
   merId!:number;
+
   idSetter(id:number){
     this.merId=id;
   }
   idGetter(){
     return this.merId;
   }
-  // customerid!:number;
+
   aId!: number;
-  // getAgentId(){
-  //   this.agentId=this.agentId
-  // }
+
   constructor(private httpClient: HttpClient, private route: Router) {
 
   }
@@ -70,30 +69,6 @@ export class LoginService {
      return this.httpClient.post('http://localhost:8080/agents/Access',agentlog)
   }
 
-  // agentloginService(agentlog: any) {
-  //   console.log("Hi From Here");
-  //   this.httpClient.post('http://localhost:8080/agents/Access',agentlog).subscribe(
-  //     (response:any) => {
-  //       if (response != 0) {
-  //         this.agentId = response;
-  //         console.log(this.agentId); 
-
-  //         // sessionStorage.setItem('customerId',String(this.customerId));
-  //         // alert(this.agentId);
-  //         // console.log(this.customerId);         
-  //         // this.route.navigate(['Customer'])
-
-  //       } else {
-  //         // Invalid username or password
-  //         alert('Invalid username or password');
-  //         this.route.navigate(['agentreoute']);
-  //       }
-
-  //     })
-  // }
-
-
-
   // To Add Tickets which is being Raised By a Particular Customer
   createTicket(ticket: Ticket) {
     ticket.customerid = this.customerId
@@ -121,5 +96,8 @@ export class LoginService {
   getCustomerTicketDetails(){
     return this.httpClient.get(`http://localhost:8080/customer/getCustomerTicketDetails/${this.customerId}`)
   }
+  // getParticularAgent(){
+  //   return this.httpClient.get(`http://localhost:8080/agents/agentsCategory/${this.aId}`)
+  // }
 
 }

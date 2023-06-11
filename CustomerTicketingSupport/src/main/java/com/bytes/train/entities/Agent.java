@@ -15,7 +15,7 @@ public class Agent {
 	private String agentName;
 
 	private String agentPassword;
-	
+
 	@Embedded
 	private Address address;
 
@@ -25,6 +25,7 @@ public class Agent {
 	public Agent() {
 
 	}
+
 	public Agent(int agentID, String agentName, String agentPassword, Address address, Category category) {
 		super();
 		this.agentID = agentID;

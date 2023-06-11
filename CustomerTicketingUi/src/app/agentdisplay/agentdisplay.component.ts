@@ -18,6 +18,7 @@ export class AgentdisplayComponent {
   agentid: any;
   searchtickId!: any;
   all: boolean=false;
+  agentData!:any;
   constructor(private loginService: LoginService, private route: ActivatedRoute) {
 
   }
@@ -34,9 +35,14 @@ export class AgentdisplayComponent {
       console.log(this.data);
 
     })
+
+    // this.loginService.getParticularAgent().subscribe((res:any)=>{
+    //   this.agentData=res;
+    // })
+
+
+    
   }
-
-
 
   getDetails(searchtickId:any) {
    this.all=true;
@@ -57,6 +63,13 @@ export class AgentdisplayComponent {
       return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority);
     });
   }
+
+  // getAgentList(){
+  //   this.loginService. getParticularAgent().subscribe(res=>{
+  //    this.agentData=res;
+     
+  //   })
+  // }
 
 
 }

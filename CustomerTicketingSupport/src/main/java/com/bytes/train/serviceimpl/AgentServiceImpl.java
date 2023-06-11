@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
+import com.bytes.train.entities.Comment;
 import com.bytes.train.entities.Ticket;
-import com.bytes.train.repos.AgentRespo;
+import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.repos.CategoryRespository;
+import com.bytes.train.repos.CommentRepository;
 import com.bytes.train.repos.TicketRepository;
 import com.bytes.train.service.AgentService;
 
@@ -21,10 +23,13 @@ public class AgentServiceImpl implements AgentService {
 	TicketRepository ticketDao;
 
 	@Autowired
-	AgentRespo agentRespo;
+	AgentRepository agentRespo;
 
 	@Autowired
 	CategoryRespository categoryRespository;
+	
+	@Autowired
+	CommentRepository commentRepoistory;
 
 //For Agent Login Purpose
 	@Override
@@ -79,9 +84,6 @@ public class AgentServiceImpl implements AgentService {
 				throw new IllegalStateException(
 						"Agent's workload is already at the maximum limit.Assigin It other Agents");
 			}
-//			ticket.setAgentId(agent);
-//			ticket.setStatus("Hnadles");
-//			ticketDao.save(ticket);
 		} else if (ticket.getStatus().equals("Handled")) {
 			ticket.setClosedDate(new Date());
 			ticket.setStatus("Closed");
@@ -92,11 +94,7 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 //
-	@Override
-	public List<Agent> getAgentsList(Category category) {
-		agentRespo.findByCategory(category);
-		return null;
-	}
+
 
 	public int getWorkloadForAgent(int agentId) {
 		return ticketDao.getCountByAgentId(agentId);
@@ -108,13 +106,12 @@ public class AgentServiceImpl implements AgentService {
 //		return null;
 //	}
 
-//  Ticket Assignination
+
 
 	@Override
 	public void assignToAgents(int ticketId, int agentId) throws Exception {
 		Ticket ticket = ticketDao.findById(ticketId).orElse(null);
 		Ticket ticket2 = ticketDao.findById(ticketId).orElse(null);
-//	    System.out.println("Hai from here");
 		if (ticket == null) {
 			System.out.println("No tickets found for that particular details");
 			throw new Exception("No tickets found for the specified details");
@@ -175,6 +172,15 @@ public class AgentServiceImpl implements AgentService {
        Category category=agent.getCategory();
       return agentRespo.findByCategory(category);
        
+	}
+
+	@Override
+	public void addCommentService(int ticketId,Comment comment) {
+//       	Comment comment	
+		
+//		String comment2=comment.getContent();
+		commentRepoistory.save(comment);
+		
 	}
 
 }
