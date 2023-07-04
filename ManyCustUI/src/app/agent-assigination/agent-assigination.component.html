@@ -1,0 +1,39 @@
+<table>
+    <thead>
+        <tr>
+            <th>Ticket Id</th>
+            <th>Customer Name</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Creation Date</th>
+            <th>Assigin</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ticketData.ticketId }}</td>
+            <td>{{ ticketData.customer.username}}</td>
+            <td>{{ ticketData.subject }}</td>
+            <td>{{ ticketData.description }}</td>
+            <td>{{ ticketData.priority }}</td>
+            <td>{{ ticketData.status }}</td>
+            <td>{{ ticketData.creation_Date | date}}</td>
+            <td> 
+                <!-- (change)="handleSelection($event) -->
+                <select id="" name="categoryName1"  class="custom-select"  #selectedOption>
+                    <option *ngFor="let option of agentData" [value]="option.agentName">{{ option.agentName }}</option>
+                  </select>
+
+                  <button (click)="Assginatin(selectedOption.value)" style="border-radius: 40px;">Asigin</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<!-- <select id="category" name="categoryName"  formControlName="categoryName"class="custom-select">
+          <option *ngFor="let option of categoryList" [value]="option.category_name">{{ option.category_name }}</option>
+        </select> -->

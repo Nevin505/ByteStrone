@@ -1,0 +1,46 @@
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Created Time</th>
+            <th>Updated Time</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>{{sticket.ticketId}}</td>
+            <td>{{sticket.subject}}</td>
+            <td>{{sticket.description}}</td>
+            <td>{{sticket.priority}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<div class="chat-container">
+    <div *ngFor="let item of chatContents" class="chat">
+      <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: right;">
+        <label for="">Customer:</label>
+        <p class="message-text">{{item.content}}</p>
+      </div>
+      <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: left;">
+        <label for="">Agent:</label>
+        <p class="message-text">{{item.content}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="input-container">
+    <label for="">Type Here:</label>
+    <input type="text" name="customerMessage" class="message-input" [(ngModel)]="customerMessage">
+    <button class="send-button" (click)="AddComments()">Submit</button>
+</div>
+  
+<!-- <div class="input-container">
+    <input type="text" class="message-input" placeholder="Type your message...">
+    <button class="send-button">Send</button>
+</div> -->

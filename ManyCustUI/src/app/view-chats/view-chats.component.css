@@ -1,0 +1,66 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .chat-container {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .chat {
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+  }
+  
+  .customer-message {
+    flex-direction: row-reverse;
+  }
+  
+  .agent-message {
+    flex-direction: row;
+  }
+  
+  .message-text {
+    background-color: #f2f2f2;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 0 10px;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .message-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .send-button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,41 @@
+
+  .ticket-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ticket-table th, .ticket-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+} 
+
+
+.chat-container {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.chat {
+  margin-bottom: 10px;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.customer-message {
+  flex-direction: row-reverse;
+}
+
+.agent-message {
+  flex-direction: row;
+}
+
+.message-text {
+  background-color: #f2f2f2;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
