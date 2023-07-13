@@ -1,0 +1,79 @@
+
+  /* Add any additional styling as needed */
+  
+  .container {
+    margin-bottom: 20px;
+  }
+
+  .center-div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .left-div {
+    display: flex;
+    align-items: center;
+  }
+
+  .right-div {
+    display: flex;
+    align-items: center;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  th {
+    cursor: pointer;
+    background-color: green;
+    color: white;
+  }
+
+  th:hover {
+    background-color: darkgreen;
+  }
+
+  .form-control {
+    width: 420px;
+    margin-right: 10px;
+  }
+
+  .round-button {
+    border-radius: 35px;
+    margin-top: 5px;
+  }
+
+  .details-button {
+    border-radius: 35px;
+    margin-top: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+  }
+
+  .details-button i {
+    margin-left: 5px;
+  }
+
+  .details-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .not-found {
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+  }

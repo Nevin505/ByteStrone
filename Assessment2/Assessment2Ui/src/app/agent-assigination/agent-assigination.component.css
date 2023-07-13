@@ -1,0 +1,28 @@
+  th{
+    padding: 10px;
+     border: 1px solid #ddd; 
+     background-color: green; 
+     color: white;
+  }
+  td{
+    padding: 10px;
+     border: 1px solid #ddd;
+  }
+
+  .ticket-details {
+    margin-bottom: 20px;
+  }
+
+  .ticket-details label {
+    font-weight: bold;
+  }
+
+  .ticket-details h6 {
+    margin: 0;
+  }
+
+  .chat-item {
+    background-color: #f2f2f2;
+    padding: 5px;
+    margin-bottom: 5px;
+  }

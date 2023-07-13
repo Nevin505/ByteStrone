@@ -1,0 +1,45 @@
+<div class="main">
+    <h1 style="color: white;">TicketEase</h1>
+    <p style="color: white;">TicketEase is a user-friendly customer ticket support system that streamlines issue
+        resolution. It enables
+        businesses to efficiently track, assign, and collaborate on support tickets for timely customer support. With
+        features like ticket categorization and status tracking, TicketEase optimizes workflow and enhances
+        communication. It empowers support teams to deliver personalized assistance, resulting in improved customer
+        satisfaction. TicketEase is the solution to simplify customer support and provide exceptional experiences. </p>
+
+     
+    <form [formGroup]="loginForm" (ngSubmit)="loginAgent()">
+        <label for="agentName" style="color: white;">Enter The User Name</label>
+        <input type="text" class="form-control" id="agentName" formControlName="agentName">
+        <div *ngIf="loginForm.get('agentName')?.invalid && loginForm.get('agentName')?.touched" style="color: red;">
+          Username is required.
+        </div>
+      
+        <label for="agentPassword" style="color: white;">Enter The Password :</label>
+        <input type="password" class="form-control" id="agentPassword" formControlName="agentPassword">
+        <div *ngIf="loginForm.get('agentPassword')?.invalid && loginForm.get('agentPassword')?.touched" style="color: red;">
+          Password is required.
+        </div>
+      
+        <label for="" style="color: white;">Select The Role :</label>
+        <select name="role" id="cars" formControlName="role" class="form-control" placeholder="Specify The Role Here">
+          <option value="" disabled selected>Specify The Role Here :</option>
+          <option value="Customer">Customer</option>
+          <option value="Agent">Agent</option>
+        </select>
+        <div *ngIf="loginForm.get('role')?.invalid && loginForm.get('role')?.touched" style="color: red;">
+          Role is required.
+        </div>
+      
+        <button class="btn btn-primary mt-3 d-block mx-auto" [disabled]="loginForm.invalid">Submit</button>
+      </form>
+      
+    
+     
+
+    <div style="display: flex; justify-content: center;" class="container-fluid w-50 mt-5">
+        <!-- <button (click)="goCustomer()" class="btn btn-primary">Customer</button> -->
+        <span style="margin: 0 10px;"></span>
+        <!-- <button (click)="goAgent()" class="btn btn-primary">Agent</button> -->
+    </div>
+</div>

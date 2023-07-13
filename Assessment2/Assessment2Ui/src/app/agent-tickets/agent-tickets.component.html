@@ -1,0 +1,25 @@
+<table style="border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th >ticketId</th>
+            <th >subject</th>
+            <th >description</th>
+            <th>Category</th>
+            <th >priority</th>
+            <th >status</th>
+            <th>Show Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of tickets">
+            <td >{{item.ticketId}}</td>
+            <td >{{item.subject}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.categoryId.category_name}}</td>
+            <td >{{item.priority}} </td>
+            <td >{{item.status}}</td>
+            <td><button  (click)="get(item.ticketId)">Show Details</button></td>
+        </tr>
+        <h4 *ngIf="lengthTickets===0" style="text-align: center;margin-top: 10px;">No Tickets Has Be Assigined</h4>
+    </tbody>
+</table>

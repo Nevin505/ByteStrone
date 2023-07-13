@@ -1,0 +1,145 @@
+<!-- <div class="form-group">
+
+    <label for="salary">Hours:</label>
+
+    <input type="range" id="salary" class="form-control-range" min="0" max="24" step="1" [(ngModel)]="values">
+
+    <p>{{values}}</p>
+
+</div> -->
+
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h6 style="text-align: center;">{{greetingmessage}}, Hello {{superVisorName}}</h6>
+    <button [routerLink]="['/LoginComponent']" style="border-radius: 40px;"><i
+            class="bi bi-box-arrow-right"></i>LogOut</button>
+</div>
+
+<div>
+    Tickets Recieved So Far {{allTicketNumber}}
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+
+            <!-- </div> -->
+            <!-- <div class="col-6"> -->
+
+            <div>
+                <h6>Tickets In Each Category Opened And Assigined All </h6>
+                <div style="height: 400px;width: 600px;">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-3">
+            <div style="display: flex;flex-direction: column;float: right; ">
+                <div style="display: flex;flex-direction: column;">
+                    <h5>Ticket Priorities</h5>
+                    <div>
+                        <label for="file">Low Tickets({{priorityCount.Low}})
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <progress id="file" [max]="priorityCount.All" [value]="priorityCount.Low"></progress>
+                    </div>
+                    <div>
+                        <label for="file">Medium Tickets({{priorityCount.Medium}})</label>
+                        <progress id="file" [max]="priorityCount.All" [value]="priorityCount.Medium"></progress>
+                    </div>
+                    <div>
+                        <label for="file">High
+                            Tickets({{priorityCount.High}})&nbsp;&nbsp;&nbsp;</label>
+                        <progress id="file" [max]="priorityCount.All" [value]="priorityCount.High"></progress>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+
+                    <div style="height: 200px;width: 200px;">
+                        <h6>Ticket Status</h6>
+                        <canvas id="mySolvedUnsolvedTickets"></canvas>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div style="display: flex;">
+
+
+
+    <div style="height: 400px;width: 400px;">
+        <h6>Tickets Raised On a Day</h6>
+        <label for="">Enter The Date</label>
+        <input type="date" [(ngModel)]="dateValue">
+        <button (click)="onSetdata()">View Data</button>
+        <canvas id="myDayTicketChart"></canvas>
+    </div>
+
+
+
+    <div>
+
+        <p>{{ticketlength}}</p>
+
+        <table *ngIf="tableShow">
+            <thead>
+                <tr>
+                    <th>Opened Date</th>
+                    <th>Assigined Time</th>
+                    <th>Closed Date</th>
+                    <th>Response Time</th>
+                    <th>Ticket Category</th>
+                    <th>Handled By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ticket">
+                    <td>{{item.creation_Date|date}}</td>
+                    <td>{{item.updated_Date===null?"Not Being Assigined":item.updated_Date |date}}</td>
+                    <td>{{item.closedDate===null?"Not Being Closed":item.closedDate|date}}</td>
+                    <td>{{item.closedDate===null?"No":getResponseTime(item)}}</td>
+                    <td>{{item.categoryName}}</td>
+                    <td>{{item.agentId===null?"Not Assigined":item.agentId.agentName}}</td>
+                </tr>
+                <div *ngIf="ticket.length===0" style="text-align: center; margin-left:40px ;">
+                    No Records Are There 
+                </div>
+            </tbody>
+            
+        </table>
+    </div>
+
+</div>
+
+
+
+
+<!-- 
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <label for="startdate">Start Date</label>
+            <input type="date" min="2023-01-01" max="2023-12-01" id="startdate" [(ngModel)]="startdate"> 
+        </div>
+        <div class="col-3">
+            <label for="enddate">End Date</label>
+            <input type="date" min="2023-01-01" max="2023-12-01" id="enddate" [(ngModel)]="enddate">
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+    <button (click)="viewChart()">Click</button>
+</div> -->

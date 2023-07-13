@@ -1,0 +1,234 @@
+<!-- 
+<div class="container">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-8">
+      <h2 style="margin-left: 80px;">
+        <span *ngFor="let item of cate; let last = last">
+          <span class="category">{{item.category_name}}</span>
+          <span *ngIf="!last"> | </span>
+        </span>
+        <span class="tickets">Tickets</span>
+      </h2>
+    </div>
+    <div class="col-1">
+      <div style="display: flex; margin-top: 5px;">
+        <button style="margin-left: 10px;border-radius: 40px;"  [routerLink]="['/LoginComponent']"><i
+              class="bi bi-box-arrow-right"></i></button>
+              <span>LogOut</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="center-div" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+
+  <div style="display: flex;flex-direction: column;">
+    <div class="left-div" style="display: flex; align-items: center;">
+
+      <button style="margin-right: 10px;border-radius: 30px;" (click)="getFilter()">Filter By:</button>
+      <br><br>
+
+      <button [routerLink]="['/agentViewTickets']" style="border-radius: 35px; margin-left: 10px;">View Assigned
+        Tickets</button>
+    </div>
+    <div *ngIf="flag">
+      <div style="display: flex; align-items: center; ">
+        <input type="radio" name="filter" (click)="filterByStatus('open')">
+        <label for="radio1">Open</label>
+        <input type="radio" name="filter" (click)="filterByStatus('Closed')">
+        <label for="radio2">Closed</label>
+        <input type="radio" name="filter" (click)="resetFilter()">
+        <label for="radio3">Reset</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-div" style="display: flex; align-items: center;">
+    <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+      style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+    <button (click)="searchTicket(searchtickId)" class="round-button">Search</button>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+<div>
+  <div *ngIf="!all">
+    <div>
+
+      <table class="ticket-table">
+        <thead>
+          <tr>
+            <th>Ticket Id</th>
+            <th>Customer Name</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th (click)="sortColumn()"> Priority </th>
+            <th> Status </th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          <tr *ngFor="let item of data  | paginate:{
+            itemsPerPage:tablesize,
+            currentPage:page,
+            totalItems:count
+        } | filterByStatus:selectedStatus|search : searchtickId "> -->
+<!-- <ng-container *ngIf="item.status === 'open'"> -->
+<!-- <td>{{ item.ticketId }}</td>
+            <td>{{ item.customer.username}}</td>
+            <td>{{ item.subject }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{item.categoryId. categoryName}}</td>
+            <td>{{ item.priority }}</td>
+            <td>{{ item.status }}</td>
+            <button [routerLink]="['/agentTicketAssigination']" (click)="Set(item.ticketId)"
+              [disabled]="item.status==='Assigined'" style="border-radius: 35px; margin-top: 5px;">Show Details<i
+                class="bi bi-eye-fill"></i></button> -->
+<!-- </ng-container>      -->
+<!-- </tr>
+
+        </tbody>
+      </table>
+      <div *ngIf="lengtharray>9">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDataChange($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="all">
+    <h2>{{cate}} hii</h2>
+    <table class="ticket-table">
+      <thead>
+        <tr>
+          <th>Ticket Id</th>
+          <th>Customer Id</th>
+          <th>Description</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="val">
+          <td>{{ searchresult.data.ticketId }}</td>
+          <td>{{ searchresult.data.customer.customerid }}</td>
+          <td>{{ searchresult.data.description }}</td>
+          <td>{{ searchresult.data.priority}}</td>
+          <td>{{ searchresult.data.status  }}
+        </tr>
+        <div *ngIf="!val">
+          No Tickets With The Particular Id is Found
+        </div>
+      </tbody>
+    </table>
+  </div> -->
+
+<!-- Added Values -->
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <h2 style="float: left;margin-left: 10px;">Hello {{agentName}}</h2>
+    </div>
+    <div class="col-8">
+      <h2 style="margin-left:80px;">
+        <span *ngFor="let item of cate; let last = last">
+          <span class="category">{{item.category_name}}</span>
+          <span *ngIf="!last"> | </span>
+        </span>
+        <span class="tickets">Tickets</span>
+      </h2>
+    </div>
+    <div class="col-1">
+      <div style="display: flex; margin-top: 5px;">
+        <button style="margin-left: 10px;border-radius: 40px;" [routerLink]="['/LoginComponent']"><i
+            class="bi bi-box-arrow-right"></i></button>
+        <span>LogOut</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display: flex;justify-content: space-between;">
+  <div class="center-div" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+
+    <div style="display: flex;flex-direction: column;">
+      <div class="left-div" style="display: flex; align-items: center;">
+
+        <button style="margin-right: 10px;border-radius: 30px;" (click)="getFilter()">Filter By:</button>
+        <br><br>
+
+        <button [routerLink]="['/agentViewTickets']" style="border-radius: 35px; margin-left: 10px;">View Assigned
+          Tickets</button>
+      </div>
+      <div *ngIf="Flag">
+        <div style="display: flex; align-items: center; ">
+          <input type="radio" id="radio1" name="filter" (click)="filterByStatus('Open')">
+          <label for="radio1">Open</label>
+          <input type="radio" id="radio2" name="filter" (click)="filterByStatus('Closed')">
+          <label for="radio2">Closed</label>
+          <input type="radio" id="radio3" name="filter" (click)="filterByStatus('')">
+          <label for="radio3">Reset</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="right-div" style="display: flex; align-items: center;">
+    <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+      style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+    <button (click)="searchTicket()" class="round-button">Search</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Ticket Id</th>
+      <th>Customer Name</th>
+      <th>Subject</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th (click)="sortColumn()">Priority</th>
+      <th>Status</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data | dateorder">
+      <ng-container *ngIf="item.status==='Open' || item.status==='Closed'">
+        <td>{{ item.ticketId }}</td>
+        <td>{{ item.customer.name}}</td>
+        <td>{{ item.subject }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{item.categoryId. categoryName}}</td>
+        <td>{{ item.priority }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <button [routerLink]="['/agentTicketAssigination']" (click)="Set(item.ticketId)"
+            [disabled]="item.status==='Assigined'" style="border-radius: 35px; margin-top: 5px;">Show Details<i
+              class="bi bi-eye-fill"></i></button>
+        </td>
+      </ng-container>
+    </tr>
+    <div *ngIf="lengthsearch===0">No Tickets Were Found </div>
+  </tbody>
+</table>

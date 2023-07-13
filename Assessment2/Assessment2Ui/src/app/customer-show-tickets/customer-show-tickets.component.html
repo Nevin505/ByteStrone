@@ -1,0 +1,54 @@
+
+<h2 style="text-align: center;">Tickets Raised</h2>
+<button [routerLink]="['/LoginComponent']" style="float:right;border-radius: 40px;"><i class="bi bi-box-arrow-right"></i>LogOut</button>
+<button (click)="setfilter()" style="margin-left: 10px; border-radius: 40px;">Filter Tickets:</button>
+<div *ngIf="filterOpen" >
+  <div style="display: flex;">
+  <div class="input-radio">
+  <input name="" type="radio" (click)="getFilter('Open')" name="selectHere">
+  <label for="" >Open</label>
+</div>
+<div class="input-radio">
+  <input type="radio" (click)="getFilter('Assigined')" name="selectHere">
+  <label for="">Assigined</label>
+</div>
+<div class="input-radio">
+  <input type="radio" (click)="getFilter('')" name="selectHere">
+  <label for="">Reset</label>
+</div>
+</div>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Ticket Id</th>
+      <th>Subject</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Handled By</th>
+      <th>Info</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data | paginate:{
+        itemsPerPage:tablesize,
+        currentPage:page,
+        totalItems:count
+    }">
+      <td>{{ item.ticketId }}</td>
+      <td>{{ item.subject}}</td>
+      <td>{{ item.description}}</td>
+      <td>{{ item.priority}}</td>
+      <td>{{ item.status}}</td>
+      <td>{{item.agentId?item.agentId.agentName:'Not Assigined'}}</td>
+      <td><button style="border-radius: 40px;" (click)="getMessageData(item.ticketId)">View Details</button></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div *ngIf="lengtharray>9">
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDatachange($event)">
+  </pagination-controls>
+</div>

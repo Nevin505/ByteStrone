@@ -1,0 +1,79 @@
+<table style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr>
+        <th >Ticket Id</th>
+        <th >Customer Name</th>
+        <th >Subject</th>
+        <th >Description</th>
+        <th >Priority</th>
+        <th >Status</th>
+        <th >Creation Date</th>
+        <th *ngIf="ticketDa.status!=='Closed'">Assign</th>
+        <th *ngIf="ticketDa.status==='Closed'">Show More Details</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td >{{ ticketDa.ticketId }}</td>
+        <td >{{ ticketDa.customer.username }}</td>
+        <td >{{ ticketDa.subject }}</td>
+        <td >{{ ticketDa.description }}</td>
+        <td >{{ ticketDa.priority }}</td>
+        <td >{{ ticketDa.status }}</td>
+        <td >{{ ticketDa.creation_Date | date }}</td>
+        <td  *ngIf="ticketDa.status!=='Closed'">
+          <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;">
+            <option *ngFor="let option of agentData" [value]="option.agentName">{{ option.agentName }}</option>
+          </select>
+          <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
+        </td>
+        <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()">Show Details</button> </td>
+        
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- <div *ngIf="closedTicketDetails" class="ticket-details container-fluid w-50">
+    <label style="text-align: center;" for="">Closed Date:</label>
+    <h6 style="text-align: center;">{{ ticketDa.closedDate | date }}</h6>
+    <label style="text-align: center;" for="">Satisfactory Rating</label>
+    <h6 style="text-align: center;">{{ ticketDa.satisfactionRating }}</h6>
+    <label style="text-align: center;" for="">Handled By:</label>
+    <h6 style="text-align: center;">{{ ticketDa.agentId.agentName }}</h6>
+  
+    <div  *ngFor="let item of chat" class="chat-item ">
+
+      <label style="text-align: center;" *ngIf="item.author==='Agent'">{{item.author}}</label>
+      <h6 style="text-align: center;" *ngIf="item.author==='Agent'">{{item.content}}</h6>
+      <label style="text-align: center;" *ngIf="item.author==='Customer'" for="">{{item.author}}</label>
+      <h6 style="text-align: center;" *ngIf="item.author==='Customer'">{{item.content}}</h6>
+    </div>
+  </div> -->
+
+  <div *ngIf="closedTicketDetails" class="ticket-details container-fluid w-50 mt-4">
+    <div style="display: flex; align-items: center;">
+      <label style="text-align: left; flex: 0 0 30%;">Closed Date:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.closedDate | date }}</h6>
+    </div>
+    <div style="display: flex; align-items: center;">
+    <label style="text-align: left; flex: 0 0 30%;">Satisfactory Rating:</label>
+    <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.satisfactionRating }}</h6>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <label style="text-align: left; flex: 0 0 30%;">Handled By:</label>
+    <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.agentId.agentName }}</h6>
+  </div>
+    <div *ngFor="let item of chat" class="chat-item">
+      <div style="display: flex; align-items: center;">
+        <label style="text-align: left; flex: 0 0 30%;" *ngIf="item.author === 'Agent'">{{ item.author }}:</label>
+        <h6 style="text-align: left; flex: 0 0 70%;" *ngIf="item.author === 'Agent'">{{ item.content }}</h6>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <label style="text-align: left; flex: 0 0 30%;" *ngIf="item.author === 'Customer'">{{ item.author }}:</label>
+        <h6 style="text-align: left; flex: 0 0 70%;" *ngIf="item.author === 'Customer'">{{ item.content }}</h6>
+      </div>
+    </div>
+  </div>
+  
+  
