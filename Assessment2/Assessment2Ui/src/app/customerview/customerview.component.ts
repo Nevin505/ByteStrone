@@ -1,3 +1,4 @@
+import { Route, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Category } from '../model/category';
@@ -36,46 +37,67 @@ export class CustomerviewComponent {
   categoryName: new FormControl('',Validators.required),
 })
 
- constructor(private api:ApiService){
+ constructor(private api:ApiService, private route:Router){
 
  }
  agentName:String='';
+ time!:Date;
  ngOnInit(){
-  this.api.getCategory().subscribe((response:Category[])=>{
-    this.categoryList = response;   
+  this.api.getCategory().subscribe((res:any)=>{
+    if(res.success){
+      this.categoryList = res.data;   
+    }else{
+      alert(res.mssg)
+    }
+    
   })
   this.agentName=this.api.getCustomerName();
+  this.time=new Date();
 }
 
   onRaiseTicket(){
-     this.raiseValue=true;
-    //  console.log(this.value1);
-     
+     this.raiseValue=true;   
   }
-  
-  addedValue(){
-    // this.ticket.subject=this.Subject;
-    // this.ticket.description=this.Description;
-    // this.ticket.priority=this.priority;
-    // console.log(this.ticket.subject);
+  removeDate(){
+    this.route.navigate(['/landingPage'])
+    if (localStorage.getItem("customerUserId") !== null) {
+      localStorage.removeItem("customerUserId");
+    }
+    // } 
     
-    // this.ticket.categoryName=this.categoryName;
-    this.api.addTicket(this.ticketForm.value).subscribe((res)=>{
+    if (localStorage.getItem("customerViewTicketId") !== null) {
+      localStorage.removeItem("customerViewTicketId");
+    }
+    // localStorage.removeItem("customerUserId");
+    // localStorage.removeItem("customerTicketId");
+    
+  }
+  addedValue(){
+    this.api.addTicket(this.ticketForm.value).subscribe((res:any)=>{
       this.details=res
       console.log(this.details);
       
-    if(this.details.subject==null || this.details.description==null || this.details.priority==null){
-      alert("Ticket is Not being raised")
-    }
-    else{
-      alert("Ticket Is Raised")
-    }
+      if(res.success){
+       alert(res.mssg)
+      }else{
+        alert(res.mssg)
+      }
+    // if(this.details.subject==null || this.details.description==null || this.details.priority==null){
+    //   alert("Ticket is Not being raised")
+    // }
+    // else{
+    //   alert("Ticket Is Raised")
+    // }
       
     });
+    }
     
+    
+
+   
+
   }
   
  
 
 
-}

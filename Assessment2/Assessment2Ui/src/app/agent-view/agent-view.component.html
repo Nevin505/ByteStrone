@@ -144,7 +144,7 @@
     </div>
     <div class="col-8">
       <h2 style="margin-left:80px;">
-        <span *ngFor="let item of cate; let last = last">
+        <span *ngFor="let item of cates; let last = last">
           <span class="category">{{item.category_name}}</span>
           <span *ngIf="!last"> | </span>
         </span>
@@ -153,7 +153,7 @@
     </div>
     <div class="col-1">
       <div style="display: flex; margin-top: 5px;">
-        <button style="margin-left: 10px;border-radius: 40px;" [routerLink]="['/LoginComponent']"><i
+        <button style="margin-left: 10px;border-radius: 40px;"  (click)="removeValues()"><i
             class="bi bi-box-arrow-right"></i></button>
         <span>LogOut</span>
       </div>
@@ -179,8 +179,8 @@
           <label for="radio1">Open</label>
           <input type="radio" id="radio2" name="filter" (click)="filterByStatus('Closed')">
           <label for="radio2">Closed</label>
-          <input type="radio" id="radio3" name="filter" (click)="filterByStatus('')">
-          <label for="radio3">Reset</label>
+          <!-- <input type="radio" id="radio3" name="filter" (click)="filterByStatus('')">
+          <label for="radio3">Reset</label> -->
         </div>
       </div>
     </div>
@@ -192,9 +192,6 @@
     <button (click)="searchTicket()" class="round-button">Search</button>
   </div>
 </div>
-
-
-
 
 
 
@@ -213,7 +210,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data | dateorder">
+    <tr *ngFor="let item of datas | dateorder">
       <ng-container *ngIf="item.status==='Open' || item.status==='Closed'">
         <td>{{ item.ticketId }}</td>
         <td>{{ item.customer.name}}</td>
@@ -229,6 +226,8 @@
         </td>
       </ng-container>
     </tr>
-    <div *ngIf="lengthsearch===0">No Tickets Were Found </div>
+    <div *ngIf="lengthsearch===0" style="margin-left:200px ;margin-top: 10px; ">
+      <h4>{{messageFilter}}</h4></div>
+    <button  *ngIf="searchButton" (click)=" resetData()" >Back</button>
   </tbody>
 </table>

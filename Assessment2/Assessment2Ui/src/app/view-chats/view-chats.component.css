@@ -9,6 +9,7 @@
 
 .ticket-details {
   margin-bottom: 20px;
+  width: 50%;
 }
 
 .input-container {
@@ -30,7 +31,7 @@
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
+  /* max-width: 550px; */
 }
 
 .ticket-details label {
@@ -45,7 +46,7 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 20px auto;
 }
 
@@ -59,7 +60,7 @@
   display: inline-block;
   padding: 10px;
   border-radius: 5px;
-  max-width: 70%;
+  /* max-width: 70%; */
 }
 
 .customer-message {

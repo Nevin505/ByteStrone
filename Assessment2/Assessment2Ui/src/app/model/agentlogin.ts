@@ -1,7 +1,7 @@
 import { Category } from "./category";
 
 export class Agentlogin {
-    agentName:String='';
+    agentName:string='';
     agentPassword:string='';
     agentID:string='';
     category!:Category;

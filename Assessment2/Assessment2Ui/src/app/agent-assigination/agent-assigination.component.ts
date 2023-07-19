@@ -4,7 +4,7 @@ import { ApiService } from '../services/api.service';
 import { Ticket } from '../model/ticket';
 import { TicketsCategory } from '../model/tickets-category';
 import { Ticketassigination } from '../model/ticketassigination';
-import { flatMap } from 'rxjs';
+import { flatMap, filter } from 'rxjs';
 import { Chat } from '../model/chat';
 
 @Component({
@@ -29,20 +29,40 @@ export class AgentAssiginationComponent {
 
   ticketsCategory: TicketsCategory = new TicketsCategory();
 
+
+  ticketCategory!:any;
   ngOnInit() {
 
 
     this.api.getSpecificTicket().subscribe((res: any) => {
-      this.ticketDa = res;
+      if (res.success) {
+        this.ticketDa = res.data;
+        this.ticketCategory=res.data.categoryId.category_name
+        console.log(this.ticketCategory);
+        
+        console.log(this.ticketDa);
+      }
+      else {
+        alert(res.mssg);
+      }
 
-      console.log(this.ticketDa);
     })
     console.log(this.ticketDa);
 
-    this.api.getAgentList().subscribe(res => {
+    this.api.getAgentList().subscribe((res: any) => {
 
       console.log(res);
-      this.agentData = res;
+      if (res.success) {
+        this.agentData = res.data.filter((value:any)=>{ 
+          return  value.category.some((name:any)=>name.category_name==this.ticketCategory)
+        });
+        console.log(this.agentData);
+        
+      }
+      else {
+        alert(res.mssg);
+      }
+
 
     })
 
@@ -69,15 +89,21 @@ export class AgentAssiginationComponent {
     this.ad = agentIDs[0];
     console.log(this.ad);
 
-    this.api.assignTickets(this.ad).subscribe((res) => {
-      this.apival = res;
-      console.log(this.apival);
-      if (this.apival) {
-        alert(this.apival)
+    this.api.assignTickets(this.ad).subscribe((res: any) => {
+      if (res.success) {
+        alert(res.mssg);
       }
       else {
-        alert(this.apival)
+        alert(res.mssg);
       }
+      // this.apival = res;
+      // console.log(this.apival);
+      // if (this.apival) {
+      //   alert(this.apival)
+      // }
+      // else {
+      //   alert(this.apival)
+      // }
 
     });
 
@@ -85,11 +111,11 @@ export class AgentAssiginationComponent {
 
   closedTicketDetails: boolean = false;
   ticketAllChat: any;
-  chat: Chat[] =[];
+  chat: Chat[] = [];
   showMore() {
     this.closedTicketDetails = true;
     this.api.getAllTicketComments().subscribe((res: any) => {
-      this.chat = res;
+      this.chat = res.data;
       console.log(this.chat);
 
     });

@@ -28,52 +28,65 @@
           </select>
           <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
         </td>
-        <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()">Show Details</button> </td>
-        
+        <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()" style="border-radius: 20px;">Show Details</button> </td>
       </tr>
     </tbody>
   </table>
-  
-  <!-- <div *ngIf="closedTicketDetails" class="ticket-details container-fluid w-50">
-    <label style="text-align: center;" for="">Closed Date:</label>
-    <h6 style="text-align: center;">{{ ticketDa.closedDate | date }}</h6>
-    <label style="text-align: center;" for="">Satisfactory Rating</label>
-    <h6 style="text-align: center;">{{ ticketDa.satisfactionRating }}</h6>
-    <label style="text-align: center;" for="">Handled By:</label>
-    <h6 style="text-align: center;">{{ ticketDa.agentId.agentName }}</h6>
-  
-    <div  *ngFor="let item of chat" class="chat-item ">
 
-      <label style="text-align: center;" *ngIf="item.author==='Agent'">{{item.author}}</label>
-      <h6 style="text-align: center;" *ngIf="item.author==='Agent'">{{item.content}}</h6>
-      <label style="text-align: center;" *ngIf="item.author==='Customer'" for="">{{item.author}}</label>
-      <h6 style="text-align: center;" *ngIf="item.author==='Customer'">{{item.content}}</h6>
-    </div>
-  </div> -->
-
-  <div *ngIf="closedTicketDetails" class="ticket-details container-fluid w-50 mt-4">
-    <div style="display: flex; align-items: center;">
+<div style=" background-color: #f0f0f0; border-radius: 5px;" class="container-fluid w-50">
+  <div *ngIf="closedTicketDetails" class="ticket-details  mt-4" >
+    <div style="display: flex; align-items: center; margin-left: 250px;">
       <label style="text-align: left; flex: 0 0 30%;">Closed Date:</label>
       <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.closedDate | date }}</h6>
     </div>
-    <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center; margin-left: 250px;">
     <label style="text-align: left; flex: 0 0 30%;">Satisfactory Rating:</label>
     <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.satisfactionRating }}</h6>
   </div>
-  <div style="display: flex; align-items: center;">
+  <div style="display: flex; align-items: center; margin-left: 250px;">
     <label style="text-align: left; flex: 0 0 30%;">Handled By:</label>
     <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.agentId.agentName }}</h6>
   </div>
-    <div *ngFor="let item of chat" class="chat-item">
-      <div style="display: flex; align-items: center;">
-        <label style="text-align: left; flex: 0 0 30%;" *ngIf="item.author === 'Agent'">{{ item.author }}:</label>
-        <h6 style="text-align: left; flex: 0 0 70%;" *ngIf="item.author === 'Agent'">{{ item.content }}</h6>
+
+<h5 style="text-align: center;" class="mt-2">Chats</h5>
+    <div *ngFor="let item of chat;" style="display: flex; flex-direction: column;">
+
+      <div class="column">
+        <div class="row">
+          <div class="col-6">
+            <div style="align-self: flex-end; margin-top: 6px;" *ngIf="item.author === 'Agent' ">
+              <label>{{ item.author }}:</label>
+              <h6>{{ item.content }} <sub>{{item.timeStamp|date:'h:mm a'}}</sub></h6>
+            </div>
+          </div>
+          <div class="col-6" >
+            <div style="align-self: flex-start;margin-top: 6px;float: right;" *ngIf="item.author === 'Customer'">
+              <label>{{ item.author }}:</label>
+              <h6>{{ item.content }}</h6>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style="display: flex; align-items: center;">
+      
+     
+    </div>
+    <div *ngIf="chat.length==0" style="text-align: center;">
+      <b>No Chats Were There For This Ticket</b>
+    </div>
+    
+    
+  </div>
+</div>
+  <!-- style="text-align: left; flex: 0 0 70%;" -->
+  <!--  style="text-align: left; flex: 0 0 30%;" -->
+
+      <!-- <div *ngFor="let item of chat;" style="display: flex;flex-direction: column;">
+      <div style="float: right;">
+        <label *ngIf="item.author === 'Agent'">{{ item.author }}:</label>
+        <h6  *ngIf="item.author === 'Agent'">{{ item.content }}</h6>
+      </div>
+      <div style="float: left;">
         <label style="text-align: left; flex: 0 0 30%;" *ngIf="item.author === 'Customer'">{{ item.author }}:</label>
         <h6 style="text-align: left; flex: 0 0 70%;" *ngIf="item.author === 'Customer'">{{ item.content }}</h6>
       </div>
-    </div>
-  </div>
-  
-  
+    </div> -->

@@ -1,3 +1,4 @@
+import { Category } from './../model/category';
 import { Component } from '@angular/core';
 import { Customerlogin } from '../model/customerlogin';
 import { ApiService } from '../services/api.service';
@@ -111,6 +112,7 @@ export class LoginComponent {
           console.log(res);
           if (res.success) {
             this.customerId = res.data.customerid;
+            localStorage.setItem("customerUserId",res.data.customerid);
             this.api.customerIdSetter(res.data.customerid);
             this.router.navigate(['customerview']);
           } else {
@@ -127,6 +129,8 @@ export class LoginComponent {
             console.log(res.data);
             if (res.data.role == 'Agent') {
               this.api.agentIdSetter(res.data.agentID);
+              localStorage.setItem("agentUserId",res.data.agentID);
+              localStorage.setItem("Categorys",JSON.stringify(res.data.category))
               console.log(res.data);
               this.api.agentCategorySetter(res.data.category);
               this.router.navigate(['agentView']);

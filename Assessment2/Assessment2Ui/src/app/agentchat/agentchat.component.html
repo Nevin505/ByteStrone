@@ -35,11 +35,11 @@
       <div *ngFor="let item of chatContents" class="chat">
         <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
           <label for="">Customer:</label>
-          <p class="message-text">{{item.content}}</p>
+          <p class="message-text">{{item.content}} </p><sub>{{item.timeStamp|date:'h:mm a'}}</sub>
         </div>
         <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: right;">
           <label for="">Agent:</label>
-          <p class="message-text">{{item.content}}</p>
+          <p class="message-text">{{item.content}}  </p><sub>{{item.timeStamp|date:'h:mm a'}}</sub>
         </div>
       </div>
     </div>

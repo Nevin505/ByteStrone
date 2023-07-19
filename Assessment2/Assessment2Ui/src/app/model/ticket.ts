@@ -12,6 +12,7 @@ export class Ticket {
     customer!:Customerlogin
     categoryName!:string;
     category!:Category;
+    categoryId:Category=new Category();
     mssg!:string;
     success!:boolean;
     agent:Agentlogin=new Agentlogin();

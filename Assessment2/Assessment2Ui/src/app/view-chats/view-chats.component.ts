@@ -9,67 +9,107 @@ import { SingleTicket } from '../model/single-ticket';
   styleUrls: ['./view-chats.component.css']
 })
 export class ViewChatsComponent {
-  
-  customerMessage!:string;
 
-  constructor(private api:ApiService){
+  customerMessage!: string;
+
+  constructor(private api: ApiService) {
 
   }
-  
-  chatContents!:any;
-  rating:number=0; 
- 
-  chat:Chat=new Chat();
-  singleTicketDetaisl!:any;
-  ngOnInit(){
-    this. getTicketsDetails();
 
-    this.api.getAgentCustomerChat().subscribe((res)=>{
-      console.log(res);
-      this.chatContents=res;
-      
+  chatContents!: any;
+  rating: number = 0;
+
+  chat: Chat = new Chat();
+  singleTicketDetaisl!: any;
+  ngOnInit() {
+    this.getTicketsDetails();
+
+    this.api.getAgentCustomerChat().subscribe((res: any) => {
+      if (res.success) {
+        console.log(res);
+        this.chatContents = res.data;
+      }
+      else {
+        alert(res.mssg);
+      }
+
+
     })
   }
 
- 
-  sticket:SingleTicket=new SingleTicket();
-  getTicketsDetails(){
+
+  sticket: SingleTicket = new SingleTicket();
+  getTicketsDetails() {
     // getCustomerSingleTicketsDetails()
-    this.api.getCustomerSingleTicketsDetails().subscribe((res:any)=>{
-      console.log(res);
-      this.sticket.ticketId=res.ticketId;
-      this.sticket.description=res.description;
-      this.sticket.priority=res.priority;
-      this.sticket.status=res.status
-      this.sticket.creation_Date=res.creation_Date;
-      this.sticket.status=res.status;
-      this.singleTicketDetaisl=res;
-      
+    this.api.getCustomerSingleTicketsDetails().subscribe((res: any) => {
+      if (res.success) {
+        console.log(res);
+        this.sticket.ticketId = res.data.ticketId;
+        this.sticket.subject = res.data.subject;
+        this.sticket.description = res.data.description;
+        this.sticket.priority = res.data.priority;
+        this.sticket.status = res.data.status
+        this.sticket.creation_Date = res.data.creation_Date;
+        this.sticket.status = res.data.status;
+        this.singleTicketDetaisl = res.data;
+      }
+      else {
+        alert(res.mssg)
+      }
+
+
     })
   }
 
-  AddComments(){
-    this.chat.author='Customer';
-    this.chat.content=this.customerMessage;
-    this.api.setCustomerChat(this.chat).subscribe((res)=>{
-      console.log(res);
-      if(res==null){
-        alert("Ticket Is Not Assigined To a Agent")
-      }
-      else{
-        alert("Comment Is Being Added To The Particular Ticket")
-      }
-    })
+  AddComments() {
+    if (this.isCommentEmpty()) {
+      this.chat.author = 'Customer';
+      this.chat.content = this.customerMessage;
+      this.api.setCustomerChat(this.chat).subscribe((res: any) => {
+        console.log(res);
+        if (res.success) {
+          if (res.data == null) {
+            alert(res.mssg)
+          }
+          else {
+            alert(res.mssg)
+          }
+        }
+        else {
+          alert(res.mssg)
+        }
+
+      })
+      window.location.reload();
+    }
+    else {
+      alert("Enter Something")
+    }
+
   }
- 
-  message:String='';
-  setRating(rating:number){
-    this.api.setTicketRating(rating).subscribe((res)=>{
+  isCommentEmpty() {
+    return this.customerMessage.trim().length > 1;
+  }
+  message: String = '';
+  setRating(rating: number) {
+    this.api.setTicketRating(rating).subscribe((res: any) => {
       console.log(res);
-      this.message=res
-      
+
+      if (res.success) {
+        alert(res.mssg);
+      }
+      else {
+        console.log(res.mssg);
+        alert("Not here")
+
+      }
+      // console.log(res);
+      // this.message=res
+
     })
 
   }
+
+
 
 }

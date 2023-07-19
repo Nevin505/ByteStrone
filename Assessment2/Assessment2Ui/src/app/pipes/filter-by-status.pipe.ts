@@ -12,7 +12,7 @@ export class FilterByStatusPipe implements PipeTransform {
     return value.filter((item:any)=>{
       return JSON.stringify(item.status).includes(args)
     });
-    // return value.filter((item:any) => item.args === args);
+   
   }
 
 }

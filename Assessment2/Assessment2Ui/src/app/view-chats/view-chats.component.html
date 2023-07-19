@@ -1,77 +1,4 @@
-<!-- <table>
-    <thead>
-        <tr>
-          <th>Ticket Id</th>
-            <th>Subject</th>
-            <th>Description</th>
-            <th>Created Time</th>
-            <th>Priority</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        <tr>
-            <td>{{sticket.ticketId}}</td>
-            <td>{{sticket.subject}}</td>
-            <td>{{sticket.description}}</td>
-            <td>{{sticket.creation_Date| date}}</td>
-            <td>{{sticket.priority}}</td>
-            <td>{{sticket.status}}</td>
-        </tr>
-    </tbody>
-</table> -->
-
-<!-- <div class="container">
-
-<div class="ticket-details">
-   <label for="">Ticket Id</label>
-   <h6>{{sticket.ticketId}}</h6>
-   <label for="">Subject</label>
-   <h6>{{sticket.subject}}</h6>
-   <label for="">Description</label>
-   <h6>{{sticket.description}}</h6>
-   <label for="">Created Time</label>
-   <h6>{{sticket.creation_Date| date}}</h6>
-   <label for="">Priority</label>
-   <h6>{{sticket.priority}}</h6>
-   <label for="">Status</label>
-   <h6>{{sticket.status}}</h6>
-          
-           
-  
-</div>
-
-
-<div class="chat-container">
-    <div *ngFor="let item of chatContents" class="chat">
-      <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: right;">
-        <label for="">Customer:</label>
-        <p class="message-text">{{item.content}}</p>
-      </div>
-      <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: left;">
-        <label for="">Agent:</label>
-        <p class="message-text">{{item.content}}</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="input-container">
-    <label for="">Type Here:</label>
-    <input type="text" name="customerMessage" class="message-input" [(ngModel)]="customerMessage">
-    <button class="send-button" (click)="AddComments()">Submit</button>
-</div>
-
-<div class="rating-section" *ngIf="sticket.status==='Closed'">
-<label for="">Enter The Satisfactory Rating:</label>
-  <input type="number" [(ngModel)]="rating">
-  <button (click)="setRating(rating)" >Set Rating</button>
-  <h5>{{message}}</h5>
-</div>
-</div>
- -->
-
- <div class="container" style="display: flex;flex-direction: column;">
+<div class="container mt-5">
   <div class="ticket-details">
     <label for="">Ticket Id</label>
     <h6>{{sticket.ticketId}}</h6>
@@ -85,32 +12,39 @@
     <h6>{{sticket.priority}}</h6>
     <label for="">Status</label>
     <h6>{{sticket.status}}</h6>
-  
-  
 
 
 
-  <div class="chat-container">
-    <div *ngFor="let item of chatContents" class="chat">
-      <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: right;">
-        <label for="">Customer:</label>
-        <p class="message-text">{{item.content}}</p>
-      </div>
-      <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: left;">
-        <label for="">Agent:</label>
-        <p class="message-text">{{item.content}}</p>
+
+
+    <div class="chat-container">
+      <div *ngFor="let item of chatContents " class="chat">
+        <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: right;">
+          <label for="">Customer:</label>
+          <p class="message-text">{{item.content}}</p> <sub >{{item.timeStamp |date:'h:mm a'}}</sub>
+        </div>
+        <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: left;">
+          <label for="">Agent:</label>
+          <p class="message-text">{{item.content}}</p><sub >{{item.timeStamp |date:'h:mm a'}}</sub>
+        </div>
       </div>
     </div>
+<!--    
+    <div class="chat">
+      <div *ngIf="customerMessage" class="message customer-message" style="text-align: right;">
+        <label for="">Customer:</label>
+        <p class="message-text">{{customerMessage}}</p>
+      </div>
+    </div> -->
+
+
+    <div class="input-container" *ngIf="sticket.status==='Assigined'">
+      <input type="text" name="customerMessage" class="message-input" [(ngModel)]="customerMessage"
+        placeholder="Type Your Message Here:" >
+      <button class="send-button" (click)="AddComments()">Submit</button>
+    </div>
+
   </div>
-
- 
-
-  <div class="input-container" *ngIf="sticket.status==='Closed'">
-    <input type="text" name="customerMessage" class="message-input" [(ngModel)]="customerMessage" placeholder="Type Your Message Here:">
-    <button class="send-button" (click)="AddComments()">Submit</button>
-  </div>
-
-</div>
 
 
   <div class="rating-section" *ngIf="sticket.status==='Closed'">
@@ -120,4 +54,3 @@
     <h5>{{message}}</h5>
   </div>
 </div>
-

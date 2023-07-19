@@ -9,8 +9,9 @@
      border: 1px solid #ddd;
   }
 
-  .ticket-details {
+  /* .ticket-details {
     margin-bottom: 20px;
+    max-width: 600px;
   }
 
   .ticket-details label {
@@ -26,3 +27,65 @@
     padding: 5px;
     margin-bottom: 5px;
   }
+
+
+
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .chat {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  } */
+
+  .container-fluid {
+    background-color: #f0f0f0;
+  }
+  
+  .ticket-details {
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  .ticket-info {
+    display: flex;
+    align-items: center;
+    margin-left: 250px;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-left: 250px;
+  }
+  
+  .chat-heading {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .chat-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .agent-chat {
+    align-self: flex-end;
+    margin-top: 6px;
+  }
+  
+  .customer-chat {
+    align-self: flex-start;
+    margin-top: 6px;
+  }
+  
+  .no-chats {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

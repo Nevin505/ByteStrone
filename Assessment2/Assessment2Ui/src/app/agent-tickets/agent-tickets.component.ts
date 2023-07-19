@@ -24,26 +24,33 @@ export class AgentTicketsComponent {
 getTicket(){
   this.api.getAssiginedTickets().subscribe((res:any)=>{
     console.log(res);
+    if(res.success){
+      this.agentAssiginedTickets=res.data;
+      this.tickets=res.data;
+      this.lengthTickets=this.tickets.length;
+    }
+    else{
+      alert("res.mssg")
+    }
     
-    this.agentAssiginedTickets=res;
-
-    this.tickets=res;
-    this.lengthTickets=this.tickets.length;
   })
 }
 
    get(data:any){
     this.api.setagentChat(data);
-    
+    localStorage.setItem("agentChatTicketId",data);
+    console.log(this.api.getagentChat());
     
     this.getTicket()
    console.log("Hai");
    
     this.route.navigate(['agentchat'])
 
-
-
-
     this.api.setCustomerTicket(data)
+    console.log("From Customer");
+    console.log(this.api.getCustomerTicketInfo());
+    
+    
+    localStorage.setItem("customerTicketId",data);
    }
 }

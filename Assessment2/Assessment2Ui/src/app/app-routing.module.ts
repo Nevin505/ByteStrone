@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'agentchat', component:AgentchatComponent},
   { path: 'customerchat', component:ViewChatsComponent},
   { path: 'supervisor', component:SuperVisorComponent},
+  {path:'landingPage',component:LoginComponent},
   { path: '', component:LoginComponent}, 
   { path: '**', component:LoginComponent}
   
