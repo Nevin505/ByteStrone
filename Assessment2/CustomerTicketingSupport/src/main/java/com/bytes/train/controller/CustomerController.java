@@ -47,29 +47,43 @@ public class CustomerController {
 	
 	// get the all details of the ticket Raised By the Customer
 		@GetMapping("/getCustomerTicketDetails/{id}")
-		public List<Ticket> getTickeDataByCustomerId(@PathVariable int id) {
-			return customerService.getTicketDetails(id);
+		public ResponseEntity<Response> getTickeDataByCustomerId(@PathVariable int id) {
+//			try {
+				List<Ticket> customerTickets= customerService.getTicketDetails(id);
+				return ResponseEntity.ok(new Response("The Customer Tickets Are", customerTickets, true));
+//			} catch (Exception e) {
+//				return ResponseEntity.ok(new Response(e.getMessage(), null, false));
+//			}
 		}
 		
 		@PutMapping("/setSatisfactoryRating/{ticketId}/{rating}")
-		public ResponseEntity<String> setSatisfactoryRating(@PathVariable("ticketId") int ticketId, @PathVariable("rating") float rating){
-			String mssg= customerService.setTicketSatisfactoryRating(ticketId,rating);
-			return  new ResponseEntity(mssg,HttpStatus.OK);
+		public ResponseEntity<Response> setSatisfactoryRating(@PathVariable("ticketId") int ticketId, @PathVariable("rating") float rating){
+			
+			try {
+				String mssg= customerService.setTicketSatisfactoryRating(ticketId,rating);
+				return ResponseEntity.ok(new Response(mssg,null,true));
+			} catch (Exception e) {
+			  return ResponseEntity.ok(new Response(e.getMessage(),null, false));
+			}
+			
 		}
 		
-//		Customer Closed And Open Tickets Filter
+//		Customer Closed,Assogined And Open Tickets Filter
 		@PostMapping("/filtercustomertickets/{cutsomerId}")
-		public ResponseEntity<List<Ticket>> getOpenTickets(@PathVariable("cutsomerId") int customerId,@RequestBody FilterCreteria filterCreteria){
+		public ResponseEntity<Response> getOpenTickets(@PathVariable("cutsomerId") int customerId,@RequestBody FilterCreteria filterCreteria){
 			String status=filterCreteria.getStatus();		
 			if(status.equalsIgnoreCase("Open")) {
 				System.out.println("Here");
-			return ResponseEntity.ok(customerService.getFilteredCustomerTickets(customerId,status));
+				List<Ticket> customerOpenedTickets=customerService.getFilteredCustomerTickets(customerId,status);
+			return ResponseEntity.ok(new Response("The Opened Tickets Are", customerOpenedTickets, true));
 		}
 			else if(status.equalsIgnoreCase("Assigined")) {
-				return ResponseEntity.ok(customerService.getFilteredCustomerTickets(customerId,status));
+				List<Ticket> customerAssiginedTickets=customerService.getFilteredCustomerTickets(customerId,status);
+				return ResponseEntity.ok(new Response("The Assigined Tickets Are", customerAssiginedTickets, true));
 			}
 			else {
-				return ResponseEntity.ok(customerService.getFilteredCustomerTickets(customerId,status));
+				List<Ticket> getClosedTickets=customerService.getFilteredCustomerTickets(customerId,status);
+				return ResponseEntity.ok(new Response("The Tickets Are", getClosedTickets, true));
 			}
 		}
 		 

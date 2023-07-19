@@ -15,10 +15,10 @@ public interface SupervisorService {
 	
 	public Map<String, Integer> getVolumePerCategory() ;
 
-	public Map<String, Integer> getVolumesTicketDate(Date d);
+//	public Map<String, Integer> getVolumesTicketDate(Date d);
 
 
-	public Map<String, Integer> getVolumesBetweenDate(Date startdate,Date enddate);
+	
 
 	public Map<String, Integer> getSolvedUnsolvedTickets();
 
@@ -26,7 +26,14 @@ public interface SupervisorService {
 
 	public Map<String, Integer> getStatusCounts();
 
-	public List<Ticket> generateHtMlReport(Date d);
+//	public List<Ticket> generateHtMlReport(Date d);
+
+
+
+	public List<Ticket> volumesOpenClosedDate(Date startdate, Date enddate);
+
+
+//	public Map<String, Integer> getVolumesBetweenDate(Date startdate,Date enddate);
 	
 	
 

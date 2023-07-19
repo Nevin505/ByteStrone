@@ -1,5 +1,6 @@
 package com.bytes.train.serviceimpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +27,19 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	CommentRepository commentRepository;
-	
+
 	@Autowired
 	CustomerRepository customerRepository;
 
 	@Override
 	public Comment setComment(int agentId, int ticketId, Comment comment) {
 
-		Agent agent = agentRepository.findById(agentId).orElse(null);
-		Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
-		System.out.println(agentId);
-		System.out.println(ticketId);
-		System.out.println(ticket.getAgentId().getAgentID());
-		System.out.println(agent.getAgentID());
+		Agent agent = agentRepository.findById(agentId).orElseThrow();
+		Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
 		if (ticket.getAgentId().getAgentID() == agent.getAgentID()) {
 			ticket.setAgentId(agent);
 			comment.setTicket(ticket);
+			comment.setTimeStamp(new Date());
 			commentRepository.save(comment);
 			return comment;
 		} else {
@@ -51,39 +49,39 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<Comment> getComment(int ticketId) {
-		 
-		Ticket ticket=ticketRepository.findById(ticketId).orElse(null);
-//		commentRepository.findByTicket_ticketId(ticketId); By using Id
-				return commentRepository.findByTicket(ticket);
-	}
-	
-    @Override
-	public Comment setCustomerComments(int customerId, int ticketId, Comment comment) {
-		
-		Customer customer=customerRepository.findById(customerId).orElse(null);
-		Ticket ticket=ticketRepository.findById(ticketId).orElse(null);
-		
-		if(ticket.getAgentId()!=null && ticket.getCustomer().getCustomerid()==customer.getCustomerid()) {
-			System.out.println("Here");
-			comment.setTicket(ticket);
-			commentRepository.save(comment);	
-			return comment;
-		}
-		System.out.println("Returning");
-		return null;
+
+		Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
+		return commentRepository.findByTicket(ticket);
 	}
 
 	@Override
-	public List<Comment> getAgentCustomerChat( int ticketId) {
-		 
-		Ticket ticket=ticketRepository.findById(ticketId).orElse(null);
-		
-		List<Comment> comment=commentRepository.findByTicket(ticket);
-		
+	public Comment setCustomerComments(int customerId, int ticketId, Comment comment) throws Exception {
+
+		Customer customer = customerRepository.findById(customerId).orElse(null);
+		Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
+		if (customer == null) {
+			throw new Exception("Customer Id Doesn't Exist");
+		}
+		if (ticket == null) {
+			throw new Exception("Ticket Id Doesn't Exist");
+		}
+
+		if (ticket.getAgentId() != null && ticket.getCustomer().getCustomerid() == customer.getCustomerid()) {
+			System.out.println("Here");
+			comment.setTicket(ticket);
+			comment.setTimeStamp(new Date());
+			commentRepository.save(comment);
+			return comment;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Comment> getAgentCustomerChat(int ticketId) {
+		Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
+		List<Comment> comment = commentRepository.findByTicket(ticket);
 		return comment;
 	}
-    
-   
-	
 
 }

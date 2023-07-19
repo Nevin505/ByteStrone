@@ -11,7 +11,7 @@ public interface CustomerService {
 	
 	public List<Ticket> getTicketDetails(int id);
 
-	public String setTicketSatisfactoryRating(int ticketId, Float rating);
+	public String setTicketSatisfactoryRating(int ticketId, Float rating)  ;
 
 	public List<Ticket> getFilteredCustomerTickets(int cutsomerId,String Status);
 

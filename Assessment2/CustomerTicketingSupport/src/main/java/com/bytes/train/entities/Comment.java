@@ -1,6 +1,6 @@
 package com.bytes.train.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 @Entity
 @Table
 public class Comment {
@@ -17,14 +18,12 @@ public class Comment {
 	private int commentID;
 	private String content;
 	private String author;
-	private LocalDate timeStamp;
-	
+	private Date timeStamp;
+
 	@ManyToOne
 	@JoinColumn(name = "ticketId")
 	Ticket ticket;
 
-	
-	
 	public Ticket getTicket() {
 		return ticket;
 	}
@@ -57,11 +56,11 @@ public class Comment {
 		this.author = author;
 	}
 
-	public LocalDate getTimeStamp() {
+	public Date getTimeStamp() {
 		return timeStamp;
 	}
 
-	public void setTimeStamp(LocalDate timeStamp) {
+	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 

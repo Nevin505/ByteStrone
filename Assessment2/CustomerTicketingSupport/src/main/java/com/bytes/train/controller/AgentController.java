@@ -3,7 +3,6 @@ package com.bytes.train.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Response;
@@ -45,77 +43,116 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("Server Error", null, false));
 		}
 	}
-	
-	// To get the list of Tickets Which belongs to Agent Categories
+
+// To get the list of Tickets Which belongs to Agents Categories
 	@GetMapping("/categorytickets/{agentId}")
-	public ResponseEntity<List<Ticket>> getParticularAgentTickets(@PathVariable int agentId) {
-		return ResponseEntity.ok(agentService.getParticularCategoryList(agentId));
-	}
-	
-//	Filters Open and Closed Tickets
-	//To Get Open Tickets Filter
-	@GetMapping("/getOpentickets/{agentId}")
-	public ResponseEntity<List<Ticket>>  getOpentickets(@PathVariable("agentId") int agentId){
-		return ResponseEntity.ok(agentService.getticketsOpen(agentId));
-	}
-	
-	//To Get Open Tickets Filter
-	@GetMapping("/getCloseTickets/{agentId}")
-	public List<Ticket>  closeTickets(@PathVariable("agentId") int agentId){
-		return agentService.getclosedTickets(agentId);
-	}
-	
-//	Search Tickets Based on  Number and Subject
-	@PostMapping("/search/{agentId}")
-	public List<Ticket> searchTickets(@PathVariable("agentId") int agentId ,@RequestBody SearchCriteria searchCriteria) {
-	        return agentService.getSearch(agentId,searchCriteria);
-	}
-	
-			
-	// To assign Agents Based on category 
-	@GetMapping("/{ticketid}/assign/{agent}")
-	public ResponseEntity<String> ticketsssignment(@PathVariable int ticketid, @PathVariable int agent) {
-//		try {
-			String res = agentService.assignToAgents(ticketid, agent);
-			return new ResponseEntity<>(res, HttpStatus.OK);
-//		} catch (Exception e) {
-//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-//		}
+	public ResponseEntity<Response> getParticularAgentTickets(@PathVariable int agentId) {
+		try {
+			List<Ticket> agentsTickets = agentService.getParticularCategoryList(agentId);
+			return ResponseEntity.ok(new Response("The Agents Category Tickets Are", agentsTickets, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+		}
+
 	}
 
-//	To Close a Ticket which has been handled by a particular Agent
-	@PutMapping("/{ticketid}/closedticket/{agentId}")
-	public ResponseEntity<String> closeAsignedTickets(@PathVariable int ticketid, @PathVariable int agentId) {
-		try {		
-			String res=agentService.closeTickets(ticketid, agentId);
-			return new ResponseEntity<>(res,HttpStatus.OK);
-			
+//	Filters Open and Closed Tickets
+	// To Get Open Tickets Filter
+	@GetMapping("/getOpentickets/{agentId}")
+	public ResponseEntity<Response> getOpentickets(@PathVariable("agentId") int agentId) {
+		try {
+			List<Ticket> openTickets = agentService.getticketsOpen(agentId);
+			return ResponseEntity.ok(new Response("The Open Tickets Are", openTickets, true));
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
 		}
 	}
-	
-	
-//	To View Assigined Tickets bY Agents
-	@GetMapping("/assignedTickets/{agentId}")
-	public ResponseEntity<List<Ticket>>  ticketAssigned(@PathVariable int agentId) {
-		return ResponseEntity.ok(agentService.getAssignedTickets(agentId));
+
+//To Get Closed Tickets Filter
+	@GetMapping("/getCloseTickets/{agentId}")
+	public ResponseEntity<Response> closeTickets(@PathVariable("agentId") int agentId) {
+		try {
+			List<Ticket> closedTickets = agentService.getclosedTickets(agentId);
+			return ResponseEntity.ok(new Response("The Closed Tickets Are", closedTickets, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+		}
+
+	}
+
+//	Search Tickets Based on  Number and Subject
+	@PostMapping("/search/{agentId}")
+	public ResponseEntity<Response> searchTickets(@PathVariable("agentId") int agentId,
+			@RequestBody SearchCriteria searchCriteria) {
+		try {
+			List<Ticket> searchTickets = agentService.getSearch(agentId, searchCriteria);
+			return ResponseEntity.ok(new Response("The Search Result Is", searchTickets, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response("Error", null, false));
+		}
 	}
 
 	// To Get The List Of Agent Which belongs To a Categogry
 	@GetMapping("/agentsCategory/{agentId}")
-	public ResponseEntity<List<Agent>> agents(@PathVariable int agentId) {
-		return ResponseEntity.ok(agentService.getAgents(agentId));
+	public ResponseEntity<Response> agents(@PathVariable int agentId) {
+		try {
+			List<Agent> agentList = agentService.getAgents(agentId);
+			return ResponseEntity.ok(new Response("The Agents List Are", agentList, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
+		}
 
 	}
-	
-	
-	
+
+// To assign Agents Based on category 
+	@PutMapping("/{ticketid}/assign/{agent}")
+	public ResponseEntity<Response> ticketsssignment(@PathVariable int ticketid, @PathVariable int agent) {
+		try {
+			String res = agentService.assignToAgents(ticketid, agent);
+			return ResponseEntity.ok(new Response(res, null, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
+		}
+	}
+
+//	To Close a Ticket which has been handled by a particular Agent
+	@PutMapping("/{ticketid}/closedticket/{agentId}")
+	public ResponseEntity<Response> closeAsignedTickets(@PathVariable int ticketid, @PathVariable int agentId) {
+		try {
+			Ticket ticket = agentService.closeTickets(ticketid, agentId);
+			if (ticket == null) {
+				return ResponseEntity.ok(new Response("Ticket is Not Being Assigined", null, false));
+			}
+			return ResponseEntity.ok(new Response("Ticket is  Being Closed ", ticket, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response("No Ticket Is Found", null, false));
+		}
+	}
+
+//	To View Assigined Tickets bY Agents
+	@GetMapping("/assignedTickets/{agentId}")
+	public ResponseEntity<Response> ticketAssigned(@PathVariable int agentId) {
+		try {
+			List<Ticket> agentTicket = agentService.getAssignedTickets(agentId);
+			return ResponseEntity.ok(new Response("The Assigined Tickets Are", agentTicket, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
+		}
+	}
+
+	// To Assigin By Ticket fOR Agents
+	@GetMapping("/specificticket/{ticketid}")
+	public ResponseEntity<Response> getSpecificTicket(@PathVariable int ticketid) {
+		try {
+			Ticket ticket = agentService.getSpecificTicketId(ticketid);
+			return ResponseEntity.ok(new Response("The Ticket Details", ticket, true));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
+		}
+	}
 
 	
-	
-	
-	
+//	Regarding Man to Many RelationShip
 	@GetMapping("/information")
 	public List<Agent> getDetailsAgent() {
 		return agentService.getFullDetais();
@@ -135,49 +172,10 @@ public class AgentController {
 	public List<Agent> getInfo() {
 		return agentService.getFullInfo();
 	}
-	
-	
-	
-	
+
 	@GetMapping("/searchtickets/{agentId}")
-    public List<Ticket> getTicketsForAgent(@PathVariable int agentId, @RequestBody SearchCriteria request) {
-            return agentService.testService(agentId, request);
-    }
-	
-	
-	// To Search By Using Ticket Id For Manager
-		@GetMapping("/specificticket/{ticketid}")
-		public ResponseEntity<Ticket> getSpecificTicket(@PathVariable int ticketid) {
-//			try {
-				Ticket ticket = agentService.getSpecificTicketId(ticketid);
-//				if (agentService.getSpecificTicketId(ticketid) == null) {
-//					return ResponseEntity.ok(new Response("No Ticket With The Particular Id  Is Found", null, false));
-//				} else {
-//					return ResponseEntity.ok(new Response("The Details Of The Ticket With Particular Id is", ticket, true));
-//				}
-//			} catch (Exception e) {
-//				return ResponseEntity.ok(new Response("Error", null, false));
-//			}
-				return ResponseEntity.ok(ticket) ;
-		}
-		
-		
-		// To Search Tickets Based On Categories
-		@GetMapping("/categorytickets/{agentId}/{ticketId}")
-		public ResponseEntity<Response> searchTicketCategories(@PathVariable int agentId, @PathVariable int ticketId) {
-			Ticket ticket = agentService.searchParticularCategoryList(agentId, ticketId);
-			if (ticket == null) {
-				return ResponseEntity.ok(new Response("Not Found", null, false));
-			}
-			return ResponseEntity.ok(new Response("Search SucessFull", ticket, true));
-		}
+	public List<Ticket> getTicketsForAgent(@PathVariable int agentId, @RequestBody SearchCriteria request) {
+		return agentService.testService(agentId, request);
+	}
 
-
-
-	
 }
-
-
-
-
-

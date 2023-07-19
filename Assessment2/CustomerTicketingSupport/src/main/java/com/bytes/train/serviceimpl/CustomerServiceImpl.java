@@ -31,27 +31,27 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	@Override
 	public List<Ticket> getTicketDetails(int id) {
-		// TODO Auto-generated method stub
 		return ticketRepository.findByCustomerId(id);
 	}
 	
 	@Override
 	public String setTicketSatisfactoryRating(int ticketId, Float rating) {
-		Ticket singleTicket=ticketRepository.findById(ticketId).orElse(null);
+		Ticket singleTicket=ticketRepository.findById(ticketId).orElseThrow();
 		if(singleTicket.getStatus().equalsIgnoreCase("Closed")&& singleTicket.getSatisfactionRating()==0) {
 		singleTicket.setSatisfactionRating(rating);
 		ticketRepository.save(singleTicket);
 		return "Ticket Rating is Being Sucessfully Added";
 	}
 		else {
-			return "Rating Has Already Being Registered";
+			return "Rating Has  Being Added Already";
 		}
 	}
 	
 	
 	//Customer Open and Close Tickets
 	@Override
-	public List<Ticket> getFilteredCustomerTickets(int cutsomerId,String status) {		
+	public List<Ticket> getFilteredCustomerTickets(int cutsomerId,String status) {	
+		System.out.println(cutsomerId);
 		List<Ticket> filterTickets=ticketRepository.findByCustomer_customeridAndStatus(cutsomerId,status);
 		return filterTickets;
 	}

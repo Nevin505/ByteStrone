@@ -27,6 +27,8 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 	@Query("SELECT t FROM Ticket t WHERE t.status = 'Assigined' ORDER BY t.priority ASC")
 	List<Ticket> findAssiginedTickets();
 	
+	List<Ticket> findByAgentIdAndStatus(Agent agent,String status);
+	
 	@Query("Select Count(*) from Ticket t Where t.categoryId.categoryName=:category and t.status in ('Open','Assigined')  ")
     int countTicketPerCategory(@Param("category") String category);
 	
@@ -42,9 +44,10 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 	 List<Ticket> getTicketVolumesAndCategoryCountsByDate(@Param("date") Date date);
 	 
 	 @Query("SELECT t FROM Ticket t WHERE DATE(t.creation_Date) BETWEEN :startDate AND :endDate")
-	    List<Ticket> findTicketsByDateRange(Date startDate,Date endDate);
+	  List<Ticket> findTicketsByDateRange(Date startDate,Date endDate);
 	 
-
+	 
+	
 	 
 	 List<Ticket> findAllByCategoryIdIn(List<Category> ids);
 	 
@@ -61,6 +64,10 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 	
 	@Query("Select t  from Ticket t Where t.status in ('Open','Assigined') and priority = :priority")
 	List<Ticket> findStatusPriorityTickets(String priority);
+	
+	
+	 @Query("SELECT t FROM Ticket t WHERE DATE(t.creation_Date) BETWEEN :startDate AND :endDate OR DATE(t.closedDate) BETWEEN :startDate AND :endDate")
+	  List<Ticket> findTicketsByClosedOpenedDateRange(Date startDate,Date endDate);
 	
 
 

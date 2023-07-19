@@ -19,13 +19,12 @@ public interface TicketService {
 	public List<Category> optionsvalue();
 
 
-	//To Assign Tickets to The Agents
-	public void assignTickets(int ticketId, int agentId);
+
 
 
 	public Ticket getCustomerSingleTicket(int ticketId);
 
-
-	
 	
 }
+
+

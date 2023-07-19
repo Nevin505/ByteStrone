@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bytes.train.entities.Response;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.repos.TicketRepository;
 import com.bytes.train.service.SupervisorService;
@@ -26,55 +28,41 @@ public class SuperVisorController {
 	
 	@Autowired
 	SupervisorService supervisorService;
-	
-
-	
+		
 	//To Get All The Tickets Recieved
 	@GetMapping("/report/tickets")
-	public int getTicketVolumes() {
-		return supervisorService.getVolume();
+	public ResponseEntity<Response> getTicketVolumes() {
+		int ticketCount=supervisorService.getVolume();
+		return  ResponseEntity.ok(new Response("The Total Number Of Tickets", ticketCount, true));
 	}
 	
 	
 	//To find the Tickets Volumes in each Category Open And Assigined 
 	@GetMapping("/report/percategoriestickets")
-	public Map<String, Integer> getTicketVolume() {
-		return supervisorService.getVolumePerCategory();
+	public ResponseEntity<Response> getTicketVolume() {
+		Map<String,Integer> ticketVolumes=supervisorService.getVolumePerCategory();
+		return ResponseEntity.ok(new Response("The Tickets In Category", ticketVolumes, true));
 	}
-	
-	
-//	To Find The Tickets On A Particular Date
-	@GetMapping("/date/{date}")
-	public Map<String, Integer> getVolumeDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date date){
-		return supervisorService.getVolumesTicketDate(date);
-	}
-	
-//	To Find The Tickets Between Two Dates
-	@GetMapping("/date/{startdate}/{enddate}")
-	public Map<String,Integer> getVolumeTicketBetweenDate(@PathVariable("startdate") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date startdate,@PathVariable("enddate") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date enddate){
-		return supervisorService.getVolumesBetweenDate(startdate,enddate);
-	}
-	
+		
 	@GetMapping("/agents/alltickets")
-	public Map<String,Integer> getallTickets(){
-		return supervisorService.getSolvedUnsolvedTickets();
+	public ResponseEntity<Response> getallTickets(){		
+		 Map<String,Integer> solvedUnsolvedTicketCounts=supervisorService.getSolvedUnsolvedTickets();
+		return ResponseEntity.ok(new Response("The Solved Unsolved Ticket Counts", solvedUnsolvedTicketCounts, true));
 	}
-
-	
 	
 	@GetMapping("/priotityCounts")
-	public Map<String,Integer> getStatusCount(){
-		return supervisorService.getStatusCounts();
+	public  ResponseEntity<Response> getStatusCount(){
+		
+		Map<String,Integer> priorityCounts=supervisorService.getStatusCounts();
+		return  ResponseEntity.ok(new Response("The Counts Are", priorityCounts, true));
 	}
-	
-	@GetMapping("/htmlreportdate/{date}")
-	public List<Ticket> getHtmlReport(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date date){
-		return supervisorService.generateHtMlReport(date);
+		
+//	To Find The Open Tickets Between Two Dates
+	@GetMapping("/date/{startdate}/{enddate}")
+	public ResponseEntity<Response> getTicketBetweenDate(@PathVariable("startdate") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date startdate,@PathVariable("enddate") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date enddate){
+		List<Ticket> ticketVolumes=supervisorService.volumesOpenClosedDate(startdate,enddate);
+		return ResponseEntity.ok(new Response("The Tickets On This Date", ticketVolumes, true));
 	}
-	
-	
-
-	
+		
 }
-
 
