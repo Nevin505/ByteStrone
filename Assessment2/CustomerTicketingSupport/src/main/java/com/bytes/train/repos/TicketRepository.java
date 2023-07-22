@@ -34,6 +34,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 	
 	List<Ticket> findByCategoryId_CategoryId(int categoryId);
 	
+	List<Ticket> findAllByCategoryIdInAndStatusIn(List<Category> ids,String[] Status);
 	
 	@Query("SELECT COUNT(t) FROM Ticket t WHERE  t.agentId.id = :agentId")
 	int getCountByAgentId(@Param("agentId") int agentId); 

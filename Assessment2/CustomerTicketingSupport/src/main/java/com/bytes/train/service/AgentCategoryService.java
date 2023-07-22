@@ -8,7 +8,7 @@ import com.bytes.train.entities.Ticket;
 
 public interface AgentCategoryService {
 
-	public Agent checkAccess(String userName, String password);
+	public Agent checkAccess(String userName, String password) throws Exception;
 
 	public List<Agent> getFullDetais();
 

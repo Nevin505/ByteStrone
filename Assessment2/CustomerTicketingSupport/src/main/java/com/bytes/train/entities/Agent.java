@@ -38,7 +38,7 @@ public class Agent {
 	private List<Category> category = new LinkedList<>();
 
 	public Agent() {
-
+    
 	}
 
 	public Agent(int agentID, String agentName, String email, String agentPassword, Address address, String role,

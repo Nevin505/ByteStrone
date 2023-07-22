@@ -29,7 +29,7 @@ public class Category {
 //	@ManyToMany(mappedBy ="category")
 	
 	public Category() {
-		
+		 
 	}
 
 	public Category(int categoryId, String categoryName, List<Agent> agentId) {
@@ -39,13 +39,13 @@ public class Category {
 		this.agentId = agentId;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
+//	public String getCategoryName() {
+//		return categoryName;
+//	}
+//
+//	public void setCategoryName(String categoryName) {
+//		this.categoryName = categoryName;
+//	}
 
 	public List<Agent> getAgentId() {
 		return agentId;

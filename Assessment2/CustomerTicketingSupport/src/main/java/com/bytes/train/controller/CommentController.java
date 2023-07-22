@@ -28,7 +28,7 @@ public class CommentController {
 	public ResponseEntity<Response> addAgentComment(@PathVariable int agentId, @PathVariable int ticketId,
 			@RequestBody Comment comment) {
 		try {
-			Comment comment2 = commentService.setComment(agentId, ticketId, comment);
+			Comment comment2 = commentService.setComment(agentId, ticketId, comment); 
 			if (comment2 == null) {
 				return ResponseEntity.ok(new Response("The Comment Was Not Added", comment2, false));
 			}

@@ -31,16 +31,16 @@ public class AgentController {
 	// To Check Agent Access for login
 	@PostMapping("/Access")
 	public ResponseEntity<Response> checkLogin(@RequestBody Agent agent) {
-		try {
-			String userName = agent.getAgentName();
+		try {  
+			String userName = agent.getAgentName(); 
 			String password = agent.getAgentPassword();
 			Agent response = agentService.checkAccess(userName, password);
-			if (response == null) {
+			if (response == null) { 
 				return ResponseEntity.ok(new Response("Invalid Login", null, false));
-			}
+			} 
 			return ResponseEntity.ok(new Response("Login Successfull", response, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("Server Error", null, false));
+			return ResponseEntity.ok(new Response("Invalid Login", null, false));
 		}
 	}
 
@@ -152,13 +152,13 @@ public class AgentController {
 	}
 
 	
-//	Regarding Man to Many RelationShip
+//	Regarding Many to Many RelationShip
 	@GetMapping("/information")
 	public List<Agent> getDetailsAgent() {
 		return agentService.getFullDetais();
 	}
 
-	@PostMapping("/{agentId}/categories/{categoryId}")
+	@PostMapping("/agents/{agentId}/categories/{categoryId}")
 	public void addCategoryToAgent(@PathVariable int agentId, @PathVariable int categoryId) {
 		agentService.addCategoryToAgent(agentId, categoryId);
 	}

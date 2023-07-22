@@ -54,6 +54,7 @@ public class TicketingController {
 	@GetMapping("/values")
 	public ResponseEntity<Response> getMapping() {
 		List<Category> category = ticketService.optionsvalue();
+		System.out.println(category);
 		return ResponseEntity.ok(new Response("The Tickets Category Are", category, true));
 	}
 

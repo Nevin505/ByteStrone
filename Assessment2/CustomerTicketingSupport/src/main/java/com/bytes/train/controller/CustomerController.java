@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bytes.train.entities.Customer;
 import com.bytes.train.entities.FilterCreteria;
 import com.bytes.train.entities.Response;
+import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.service.CustomerService;
 
@@ -84,6 +85,17 @@ public class CustomerController {
 			else {
 				List<Ticket> getClosedTickets=customerService.getFilteredCustomerTickets(customerId,status);
 				return ResponseEntity.ok(new Response("The Tickets Are", getClosedTickets, true));
+			}
+		}
+		
+		@GetMapping("/search/{agentId}")
+		public ResponseEntity<Response> searchTickets(@PathVariable("agentId") int agentId,
+				@RequestBody SearchCriteria searchCriteria) {
+			try {
+				List<Ticket> searchTickets = customerService.getSearch(agentId, searchCriteria);
+				return ResponseEntity.ok(new Response("The Search Result Is", searchTickets, true));
+			} catch (Exception e) {
+				return ResponseEntity.ok(new Response("Error", null, false));
 			}
 		}
 		 

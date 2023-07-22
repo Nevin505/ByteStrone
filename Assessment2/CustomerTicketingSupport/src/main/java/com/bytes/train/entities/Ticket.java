@@ -26,6 +26,7 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ticketId;
 	private String subject;
+	@Column(length = 2000)
 	private String description;
 	private String priority;
 	private String status = "Open";
