@@ -45,69 +45,13 @@ export class LoginComponent {
   
   
 
-  // loginAgent(){
-  //   console.log(this.Role);
-  //   if(this.Role==='Customer'){
-  //     this.customerlogin.username=this.UserName
-  //     this.customerlogin.userpassword=this.Password;     
-  //     this.api.validateCustomer(this.customerlogin).subscribe(res=>{ 
-  //       console.log(res)
-  //         if(res.success){
-  //           this.customerId=res.data.customerid;
-  //           this.api.customerIdSetter(res.data.customerid);
-  //           this.router.navigate(['customerview'])
-  //         }
-  //         else{
-  //           alert(res.mssg);
-  //         }
-
-           
-  //     })  
-  //   }
-  //   else if(this.Role==='Agent'){
-   
-  //       this.agent.agentName=this.UserName;
-  //       this.agent.agentPassword=this.Password;
-  //        this.api.agentloginService(this.agent).subscribe((res:any)=>{           
-  //          if(res.data!=null){
-  //            console.log(res.data.agentID);
-  //            console.log(res.data);
-             
-  //            if(res.data.role=='Agent'){
-  //            this.api.agentIdSetter(res.data.agentID);
-  //            console.log(res.data);
-            
-  //            this.api.agentCategorySetter(res.data.category);
-  //            this.router.navigate(['agentView']);
-  //            }
-  //            else{
-  //             // this.api.agentCategorySetter(res.data.category);
-  //             console.log(res.data);
-              
-  //             this.router.navigate(['supervisor']);
-  //            }
-             
-             
-  //          }
-  //          else{
-  //              alert(res.mssg);
-  //          }
-        
-  //        })
-     
-  //      }
-
-  //   }
-
-
-
-
     loginAgent() {
       console.log(this.loginForm.value.role);
       if (this.loginForm.value.role === 'Customer') {
         this.customerlogin.username = this.loginForm.value.agentName;
         this.customerlogin.userpassword = this.loginForm.value.agentPassword;
         this.api.setCustomerName( this.customerlogin.username);
+        localStorage.setItem("customerName",this.loginForm.value.agentName)
         this.api.validateCustomer(this.customerlogin).subscribe(res => { 
           console.log(res);
           if (res.success) {

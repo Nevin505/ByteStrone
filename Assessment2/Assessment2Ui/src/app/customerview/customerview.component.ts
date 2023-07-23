@@ -53,6 +53,8 @@ export class CustomerviewComponent {
   })
   this.agentName=this.api.getCustomerName();
   this.time=new Date();
+
+  this.agentName=localStorage.getItem("customerName") as String;
 }
 
   onRaiseTicket(){
@@ -60,6 +62,8 @@ export class CustomerviewComponent {
   }
   removeDate(){
     this.route.navigate(['/landingPage'])
+
+    // localStorage.clear();
     if (localStorage.getItem("customerUserId") !== null) {
       localStorage.removeItem("customerUserId");
     }
@@ -68,8 +72,10 @@ export class CustomerviewComponent {
     if (localStorage.getItem("customerViewTicketId") !== null) {
       localStorage.removeItem("customerViewTicketId");
     }
-    // localStorage.removeItem("customerUserId");
-    // localStorage.removeItem("customerTicketId");
+   
+    if(localStorage.getItem("customerName")!=null){
+      localStorage.removeItem("customerName");
+    }
     
   }
   addedValue(){
@@ -82,12 +88,7 @@ export class CustomerviewComponent {
       }else{
         alert(res.mssg)
       }
-    // if(this.details.subject==null || this.details.description==null || this.details.priority==null){
-    //   alert("Ticket is Not being raised")
-    // }
-    // else{
-    //   alert("Ticket Is Raised")
-    // }
+
       
     });
     }

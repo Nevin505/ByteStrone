@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-9">
             <div>
-                <h6>Tickets In All Categogryies</h6>
+                <h6 style="margin-left:60px;">Tickets Opened In All Category</h6>
                 <div style="height: 400px;width: 600px;">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -78,6 +78,12 @@
         <button (click)="viewVolumes()" style="margin-left: 10px;border-radius: 10px;">Click</button>
     </div>
     <!-- <div *ngIf=""> -->
+ <div *ngIf="graphDisplay">
+     <div *ngFor="let item of agentss">
+     <!-- {{item.name}}  and the Tickets {{item.count}} -->
+     </div>
+ </div>
+
     <div *ngIf="graphDisplay" >
         <div style="display: flex;justify-content: center;">
             <div style="height: 300px;width: 600px;">
