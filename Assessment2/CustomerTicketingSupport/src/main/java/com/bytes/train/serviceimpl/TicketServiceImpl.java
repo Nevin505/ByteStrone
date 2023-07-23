@@ -23,7 +23,7 @@ public class TicketServiceImpl implements TicketService {
 	TicketRepository ticketRepository;
 
 	@Autowired
-	CustomerRepository customerdao;
+	CustomerRepository customerRepository;
 
 	@Autowired
 	AgentRepository agentRespo;
@@ -38,9 +38,12 @@ public class TicketServiceImpl implements TicketService {
 
 	// Via Postman
 	@Override
-	public Ticket saveTicketPostman(int id, Ticket ticket) {
-		Customer customer = customerdao.findById(id).orElseThrow();
+	public Ticket saveTicketPostman(int id, Ticket ticket) throws Exception {
+		Customer customer = customerRepository.findById(id).orElseThrow();
 		Category category = categoryRespository.findByCategoryName(ticket.getCategoryName());
+		if(ticket.getPriority()==null || ticket.getSubject()==null || ticket.getDescription()==null) {
+			throw new Exception("Please Enter Details");
+		}
 		System.out.println(customer);
 		System.out.println(category);
 		ticket.setCategoryId(category);

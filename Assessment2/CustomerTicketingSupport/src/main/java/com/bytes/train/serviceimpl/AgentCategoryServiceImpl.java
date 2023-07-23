@@ -48,6 +48,7 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 		System.out.println(agentCategories);
 		String[] status={"Open","Closed"};
 		List<Ticket> agentsTicketCatgory = ticketRepository.findAllByCategoryIdInAndStatusIn(agentCategories,status);
+		System.out.println(agentsTicketCatgory);
 		return agentsTicketCatgory;
 	}
 

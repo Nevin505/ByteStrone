@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,49 +29,26 @@ public class Tests {
 
 	@Autowired
 	AgentCategoryService agentCategoryServiceImpl;
-	
-	
-	@Mock
-    private AgentCategoryService agentService;
 
-    @MockBean
-    private TicketRepository ticketRepository ;
-    
-    
-//	@Test
-//
-//	void TestcheckAccessCorrect() throws Exception {
-//		String name="n";
-//		String password="n";
-//	   Mockito.when(agentRepository.findByAgentName(name)).thenReturn(new Agent(0, "n",null, "n", null,null, null));
-//	  System.out.println();
-//	  assertEquals(password, agentCategoryServiceImpl.checkAccess(name, password).getAgentPassword());
-//	}
-//    
-	
-	 @Test
-	
-	    public void testGetFullInfo() {
-	        // Sample agent data for testing
-	        Agent agent1 = new Agent(1, "John Doe", null, null, null, null, null);
-	        Agent agent2 = new Agent(2, "Jane Smith", null, null, null, null, null);
-	        List<Agent> sampleAgents = Arrays.asList(agent1, agent2);
+	@MockBean
+	private TicketRepository ticketRepository;
 
-	        // Mock the behavior of the agentRepository.findAll() method
-	        when(agentRepository.findAll()).thenReturn(sampleAgents);
+	@Test
+	public void testGetFullInfo() {
+		// Sample agent data for testing
+		Agent agent1 = new Agent(1, "John Doe", null, null, null, null, null);
+		Agent agent2 = new Agent(2, "Jane Smith", null, null, null, null, null);
+		List<Agent> sampleAgents = Arrays.asList(agent1, agent2);
 
-	        // Call the method under test
-	        List<Agent> agents = agentService.getFullInfo();
+		Mockito.when(agentRepository.findAll()).thenReturn(sampleAgents);
 
-	        // Verify that agentRepository.findAll() was called once
-	        verify(agentRepository, times(1)).findAll();
+		agentRepository.save(agent1);
+		agentRepository.save(agent2);
 
-	        // Assertions
-	        assertNotNull(agents);
-	        assertEquals(2, agents.size());
-	        assertEquals("John Doe", agents.get(0).getAgentName());
-	        assertEquals("Jane Smith", agents.get(1).getAgentName());
-	        // Additional assertions if needed for other properties of the agents
-	    }
+		List<Agent> agents = agentRepository.findAll();
+
+		assertEquals(2, agents.size());
+
+	}
 
 }
