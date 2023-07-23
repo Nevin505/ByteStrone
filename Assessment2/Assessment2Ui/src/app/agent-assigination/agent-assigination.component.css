@@ -3,45 +3,18 @@
      border: 1px solid #ddd; 
      background-color: green; 
      color: white;
+     text-align: center;
   }
   td{
     padding: 10px;
      border: 1px solid #ddd;
+     text-align: center;
   }
-
-  /* .ticket-details {
-    margin-bottom: 20px;
+  .description-cell {
     max-width: 600px;
+    word-wrap: normal;
   }
 
-  .ticket-details label {
-    font-weight: bold;
-  }
-
-  .ticket-details h6 {
-    margin: 0;
-  }
-
-  .chat-item {
-    background-color: #f2f2f2;
-    padding: 5px;
-    margin-bottom: 5px;
-  }
-
-
-
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: 20px auto;
-  }
-  
-  .chat {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-  } */
 
   .container-fluid {
     background-color: #f0f0f0;
@@ -68,6 +41,20 @@
     text-align: center;
     margin-top: 20px;
   }
+
+  .description-cell {
+    word-wrap: break-word;
+  }
+
+  .assignment-cell {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 5px;
+  }
+
+  .assignment-cell select {
+    width: 80px;
+  }
   
   .chat-item {
     display: flex;
@@ -88,4 +75,4 @@
     text-align: center;
     margin-top: 20px;
   }
-  
+

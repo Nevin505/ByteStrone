@@ -35,7 +35,6 @@ export class SuperVisorComponent {
   ngOnInit() {
 
     this.date = new Date();
-
     this.index = this.date.getHours() < 17 && this.date.getHours() >= 12 ? 1 : this.date.getHours() >= 17 ? 2 : 0;
     this.greetingmessage = this.greetings[this.index];
 
@@ -97,16 +96,19 @@ export class SuperVisorComponent {
             ticks: {
               stepSize: 1
             },
-            
-            title:{
-              display:true,
-              text:'Number Of Tickets '
+
+            title: {
+              display: true,
+              text: 'Number Of Tickets '
             }
           }
         }
         , plugins: {
           tooltip: {
             enabled: false
+          }, legend: {
+            position: 'bottom',
+            onClick: function () { }
           }
         },
         interaction: {
@@ -158,8 +160,10 @@ export class SuperVisorComponent {
               usePointStyle: true,
             },
             onClick: function () { }
-          }
-        }
+          },
+
+        },
+
 
       }
     });
@@ -192,10 +196,10 @@ export class SuperVisorComponent {
   assignedCounts: number[] = [];
   closedCounts: number[] = [];
   graphDisplay: boolean = false;
-  agentss:any=[];
-  agentCounts:any=[];
-  agentNames:String='';
-  agentIndex:number=0;
+  agentss: any = [];
+  agentCounts: any = [];
+  agentNames: String = '';
+  agentIndex: number = 0;
 
   viewVolumes() {
 
@@ -204,78 +208,76 @@ export class SuperVisorComponent {
       this.api.generateHtmlReportBetweenDates(this.startdate, this.enddate).subscribe((res: any) => {
         if (res.success) {
           this.ticketFullData = res.data;
-          // console.log(this.ticketFullData[4].agentId.agentName);
-          this.categories = [];
-          this.openCounts = [];
-          this.assignedCounts = [];
-          this.closedCounts = [];
-          this.agentss=[];
-          this.agentCounts=[];
-          console.log(res);
-          for (let ticket of this.ticketFullData) {
-            let category = ticket.categoryId.category_name;
-            let status = ticket.status;
+          if (this.ticketFullData.length != 0) {
 
-           
+            // console.log(this.ticketFullData[4].agentId.agentName);
+            this.categories = [];
+            this.openCounts = [];
+            this.assignedCounts = [];
+            this.closedCounts = [];
+            this.agentss = [];
+            this.agentCounts = [];
+            console.log("Here");
+
+            console.log(this.ticketFullData);
+
+            console.log(res);
+            for (let ticket of this.ticketFullData) {
+              let category = ticket.categoryId.category_name;
+              let status = ticket.status;
 
 
-             if(ticket.agentId!==null){
-              console.log("Here");             
-              this.agentNames=ticket.agentId.agentName;
-              console.log(this.agentNames);
-              // this.agentIndex=this.agentss.indexOf(this.agentNames);
-               this.agentIndex = this.agentss.findIndex((agent:any) => agent.name === this.agentNames);
-              if (this.agentIndex === -1) {
-                this.agentss.push({ name: this.agentNames, count: 0 });
-                this.agentIndex = this.agentss.length - 1;
+
+
+              if (ticket.agentId !== null) {
+                console.log("Here");
+                this.agentNames = ticket.agentId.agentName;
+                console.log(this.agentNames);
+                // this.agentIndex=this.agentss.indexOf(this.agentNames);
+                this.agentIndex = this.agentss.findIndex((agent: any) => agent.name === this.agentNames);
+                if (this.agentIndex === -1) {
+                  this.agentss.push({ name: this.agentNames, count: 0 });
+                  this.agentIndex = this.agentss.length - 1;
+                }
+                this.agentss[this.agentIndex].count++;
               }
-          
-              this.agentss[this.agentIndex].count++;            
-            //    if(this.agentIndex==-1){
-            //     this.agentss.push(this.agentNames)
-            //     this.agentCounts.push(0);
-            //     this.agentIndex=this.agentss.length-1;
-            //  }  
-            //  else{
-            //   this.agentCounts[this.agentIndex]++;
-            //  }           
-             }
-            let index = this.categories.indexOf(category);
+              let index = this.categories.indexOf(category);
 
-            if (index === -1) {
-              this.categories.push(category);
-              this.openCounts.push(0);
-              this.assignedCounts.push(0);
-              this.closedCounts.push(0);
-              index = this.categories.length - 1;
+              if (index === -1) {
+                this.categories.push(category);
+                this.openCounts.push(0);
+                this.assignedCounts.push(0);
+                this.closedCounts.push(0);
+                index = this.categories.length - 1;
+              }
+              if (status === 'Open') {
+                this.openCounts[index]++;
+              } else if (status === 'Assigined') {
+                this.assignedCounts[index]++;
+              } else if (status === 'Closed') {
+                this.closedCounts[index]++;
+              }
             }
-            if (status === 'Open') {
-              this.openCounts[index]++;
-            } else if (status === 'Assigined') {
-              this.assignedCounts[index]++;
-            } else if (status === 'Closed') {
-              this.closedCounts[index]++;
+            console.log(this.categories);
+            console.log(this.openCounts);
+            console.log(this.assignedCounts);
+            console.log(this.closedCounts);
+            console.log(this.agentss);
+
+            var chartId = "myBetweenDayTicketCharts";
+            var chart = Chart.getChart(chartId);
+            if (chart) {
+              chart.destroy();
             }
+            // this.chart;
+            this.getChart();
           }
-          console.log(this.categories);
-          console.log(this.openCounts);
-          console.log(this.assignedCounts);
-          console.log(this.closedCounts);
-          // console.log(this.agentss);
-          console.log(this.agentss);
-          
-          
-          var chartId = "myBetweenDayTicketCharts";
-          var chart = Chart.getChart(chartId);
-          if (chart) {
-            chart.destroy();
-          }
-          // this.chart;
-          this.getChart();
+
         }
-         
+
+
       })
-    
+
     }
     else {
       alert("Enter a Valid Date");
@@ -318,9 +320,9 @@ export class SuperVisorComponent {
               stepSize: 1
             }
           },
-          x:{
-            title:{
-              display:true,
+          x: {
+            title: {
+              display: true,
             }
           }
         }, plugins: {
@@ -402,19 +404,19 @@ export class SuperVisorComponent {
     }
   }
 
-  sortClosedDate(){
-    this.ticketFullData.sort((a,b)=>{
-      const dateA=a.closedDate!==null? new Date(a.closedDate).getTime():null;
-      const dateB=b.closedDate!==null? new Date(b.closedDate).getTime():null;
-      if(dateA &&dateB){
-          return dateA-dateB;
+  sortClosedDate() {
+    this.ticketFullData.sort((a, b) => {
+      const dateA = a.closedDate !== null ? new Date(a.closedDate).getTime() : null;
+      const dateB = b.closedDate !== null ? new Date(b.closedDate).getTime() : null;
+      if (dateA && dateB) {
+        return dateA - dateB;
       }
-      else if(dateA && !dateB){
-          return -1;
-      }else if(!dateA && dateB){
+      else if (dateA && !dateB) {
+        return -1;
+      } else if (!dateA && dateB) {
         return 1;
       }
-      else{
+      else {
         return 0;
       }
     })

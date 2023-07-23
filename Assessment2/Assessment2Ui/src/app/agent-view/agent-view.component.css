@@ -1,6 +1,7 @@
 
   /* Add any additional styling as needed */
   
+   
   .container {
     margin-bottom: 20px;
   }
@@ -32,6 +33,7 @@
   td {
     padding: 10px;
     border: 1px solid #ccc;
+    text-align: center;
   }
 
   th {
@@ -76,4 +78,20 @@
     margin-top: 10px;
     text-align: center;
     color: red;
+  } 
+
+  .column-100 {
+    width: 140px; 
   }
+  .column-200{
+    width: 180px;
+  }
+  
+  .column-600 {
+      max-width: 600px;
+      word-wrap: break-word;     
+  }
+  .column-150{
+   width: 180px;
+  }
+ 

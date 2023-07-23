@@ -130,3 +130,6 @@
 .rating-section h5 {
   margin-top: 10px;
 }
+.description-text {
+  word-wrap: break-word;
+}

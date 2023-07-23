@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import { Filter } from '../model/filter';
+import { SearchCriteria } from '../model/search-criteria';
 
 @Component({
   selector: 'app-customer-show-tickets',
@@ -34,10 +35,8 @@ export class CustomerShowTicketsComponent {
 
     })
   }
-  onDatachange(event: any) {
-    this.page = event;
-    this.getCustomerTickets()
-  }
+ 
+
   getMessageData(item: any) {
     this.router.navigate(['customerchat']);
     this.api.setCustomerTicket(item);
@@ -48,11 +47,16 @@ export class CustomerShowTicketsComponent {
 
   }
 
+  selectedStatus:String='';
   filter: Filter = new Filter();
    flag:boolean=false;
-  getFilter(status: string) {
+   Status:String='';
+  getFilter(status: String) {
     if (status === 'Open') {
+    //  this.page=1;
+      this.selectedStatus=status
       this.filter.status = 'Open';
+      // this.Status=status
       this.flag=true;
       this.api.getCustomerFilterTickets(this.filter).subscribe((res:any) => {
         if(res.success){
@@ -66,7 +70,12 @@ export class CustomerShowTicketsComponent {
       })
     }
     else if (status === 'Assigined') {
+      // this.page=1
       this.filter.status = 'Assigined'
+      this.Status=status
+
+      this.selectedStatus=status
+
       this.flag=true;
       this.api.getCustomerFilterTickets(this.filter).subscribe((res:any) => {
         if(res.success){
@@ -81,7 +90,12 @@ export class CustomerShowTicketsComponent {
       })
     }
     else if (status == 'Closed') {
+      // this.page=1
       this.filter.status = 'Closed'
+      this.Status=status
+    
+      this.selectedStatus=status
+      
       this.flag=true;
       this.api.getCustomerFilterTickets(this.filter).subscribe((res:any) => {
         if(res.success){
@@ -97,8 +111,14 @@ export class CustomerShowTicketsComponent {
     }
     else { 
       this.flag=false
+      this.selectedStatus=''
       this.getCustomerTickets();
     }
+  }
+
+  onDatachange(event: any) {
+    this.page = event;
+    this.getFilter(this.selectedStatus);
   }
 
 
@@ -112,6 +132,40 @@ export class CustomerShowTicketsComponent {
     }
 
   }
+  searchtickId:any;
+
+  search:SearchCriteria=new SearchCriteria();
+  
+  searchTicket(){
+
+      console.log("Value of searchtickId:", this.searchtickId);
+      console.log("Type of searchtickId:", typeof this.searchtickId);
+      
+      this.search.subject=this.searchtickId;
+      this.search.status=this.Status
+      console.log(this.search);
+      
+      this.api.getSearch(this.search).subscribe((res:any)=>{
+        if(res.success){
+          console.log(res);
+          this.data=res.data;
+          this.lengtharray=this.data.length; 
+          // this.messageFilter="No Tickets Are There"
+        }
+        else{
+          alert(res.mssg)
+        }
+        
+      })
+  
+      // this.searchButton=true;
+  
+    }
 
 
-}
+   
+    
+
+  }
+
+// }

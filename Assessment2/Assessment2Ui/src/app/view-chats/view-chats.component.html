@@ -5,7 +5,7 @@
     <label for="">Subject</label>
     <h6>{{sticket.subject}}</h6>
     <label for="">Description</label>
-    <h6>{{sticket.description}}</h6>
+    <h6 class="description-text">{{sticket.description}}</h6>
     <label for="">Created Time</label>
     <h6>{{sticket.creation_Date | date}}</h6>
     <label for="">Priority</label>
@@ -29,15 +29,6 @@
         </div>
       </div>
     </div>
-<!--    
-    <div class="chat">
-      <div *ngIf="customerMessage" class="message customer-message" style="text-align: right;">
-        <label for="">Customer:</label>
-        <p class="message-text">{{customerMessage}}</p>
-      </div>
-    </div> -->
-
-
     <div class="input-container" *ngIf="sticket.status==='Assigined'">
       <input type="text" name="customerMessage" class="message-input" [(ngModel)]="customerMessage"
         placeholder="Type Your Message Here:" >

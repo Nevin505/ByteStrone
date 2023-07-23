@@ -1,3 +1,4 @@
+<h6 style="text-align: center;">Agent Assigination</h6>
 <table style="border-collapse: collapse; width: 100%;">
     <thead>
       <tr>
@@ -18,15 +19,17 @@
         <td >{{ ticketDa.ticketId }}</td>
         <td >{{ ticketDa.customer.username }}</td>
         <td >{{ ticketDa.subject }}</td>
-        <td >{{ ticketDa.description }}</td>
+        <td class="description-cell " >{{ ticketDa.description }}</td>
         <td >{{ ticketDa.priority }}</td>
         <td >{{ ticketDa.status }}</td>
         <td >{{ ticketDa.creation_Date | date }}</td>
         <td  *ngIf="ticketDa.status!=='Closed'">
+          <div style="display: flex;flex-direction: row;">
           <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;">
             <option *ngFor="let option of agentData" [value]="option.agentName">{{ option.agentName }}</option>
           </select>
           <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
+        </div>
         </td>
         <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()" style="border-radius: 20px;">Show Details</button> </td>
       </tr>

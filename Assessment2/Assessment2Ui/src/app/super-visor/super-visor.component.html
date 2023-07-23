@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="container mt-2">
+<div class="container mt-2" style="background-color: aliceblue;border-radius: 8px;">
     <div class="row">
         <div class="col-9">
             <div>
@@ -44,7 +44,7 @@
                 </div>
                 
                 
-                <div class="mt-2">
+                <div class="mt-4">
 
                     <div style="height: 200px;width: 200px;">
                         <h6>Ticket Status</h6>
@@ -77,15 +77,8 @@
             style="margin-left: 10px;border-radius: 10px;">
         <button (click)="viewVolumes()" style="margin-left: 10px;border-radius: 10px;">Click</button>
     </div>
+    <!-- <div *ngIf=""> -->
     <div *ngIf="graphDisplay" >
-        <!-- <div style="display: flex;flex-direction: row;">
-            <div *ngFor="let item of agentss">
-                    <p>{{item}}</p>
-            </div>
-            <div *ngFor="let item of agentCounts ">
-                        <p>{{item}}</p>
-            </div> -->
-        <!-- </div> -->
         <div style="display: flex;justify-content: center;">
             <div style="height: 300px;width: 600px;">
                 <canvas id="myBetweenDayTicketCharts"></canvas>
@@ -109,7 +102,7 @@
                 <tr *ngFor="let item of ticketFullData | dateorder">
                     <td>{{item.ticketId}}</td>
                     <td>{{item.subject}}</td>
-                    <td>{{item.Prioritiy}}</td>
+                    <td>{{item.priority}}</td>
                     <td>{{item.creation_Date|date}}</td>
                     <td>{{item.updated_Date===null?"--":item.updated_Date |date}}</td>
                     <td>{{item.closedDate===null?"--":item.closedDate|date}}</td>
@@ -125,7 +118,9 @@
         </table>
 
     </div>
+
 </div>
+<!-- </div> -->
 
 
 

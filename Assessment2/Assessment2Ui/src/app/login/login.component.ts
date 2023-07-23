@@ -131,6 +131,7 @@ export class LoginComponent {
               this.api.agentIdSetter(res.data.agentID);
               localStorage.setItem("agentUserId",res.data.agentID);
               localStorage.setItem("Categorys",JSON.stringify(res.data.category))
+              localStorage.setItem("agentName",JSON.stringify(res.data.agentName))
               console.log(res.data);
               this.api.agentCategorySetter(res.data.category);
               this.router.navigate(['agentView']);

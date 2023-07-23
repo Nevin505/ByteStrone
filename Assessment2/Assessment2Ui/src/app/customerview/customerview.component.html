@@ -27,7 +27,7 @@
           Enter The Subject
         </div>
         <br>
-        <input type="text" placeholder="Enter The Description" class="form-control" formControlName="description">
+        <textarea type="text" placeholder="Enter The Description" class="form-control description-height" formControlName="description"></textarea>
         <div class="valid" *ngIf="ticketForm.controls.description.invalid && ticketForm.controls.description.touched">
           Enter The Description
         </div>
@@ -39,14 +39,14 @@
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
       </select>
-      <div class="valid" *ngIf="ticketForm.controls.description.invalid && ticketForm.controls.description.touched">
+      <div class="valid" *ngIf="ticketForm.controls.priority.invalid && ticketForm.controls.priority.touched">
         Enter The Priority
       </div>
       <label for="category" class="custom-label">Category</label>
       <select id="category" name="categoryName" formControlName="categoryName" class="custom-select">
         <option *ngFor="let option of categoryList" [value]="option.category_name">{{ option.category_name }}</option>
       </select>
-      <div class="valid" *ngIf="ticketForm.controls.description.invalid && ticketForm.controls.description.touched">
+      <div class="valid" *ngIf="ticketForm.controls.categoryName.invalid && ticketForm.controls.categoryName.touched">
         Enter The Category
       </div> <br>
       <button style="margin-left: 50%;" class="btn btn-success" [disabled]="ticketForm.invalid">Submit</button>

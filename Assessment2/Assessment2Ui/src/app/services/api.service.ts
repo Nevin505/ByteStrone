@@ -99,6 +99,14 @@ export class ApiService {
   setCustomerName(name: String) {
     this.customerName = name;
   }
+  selectedd:String='';
+  saveFilterStatus(Status:String){
+   this.selectedd=Status;
+  }
+
+  getFilterStatus(){
+    return this.selectedd
+  }
 
   getCategory() {
     return this.http.get<Category[]>('http://localhost:8080/ticket/values');

@@ -8,6 +8,7 @@ table {
 th, td {
     border: 1px solid #ccc;
     padding: 8px;
+    text-align: center;
 }
 
 th {
@@ -24,8 +25,25 @@ th {
     background-color: green;
     color: white;
     cursor: pointer;
+    
   }
 
   th:hover {
     background-color: darkgreen;
   }
+
+  .column-100 {
+    width: 100px; 
+  }
+  .column-200{
+    width: 180px;
+  }
+  
+  .column-600 {
+      max-width: 600px;
+      word-wrap: break-word;     
+  }
+  .column-150{
+   width: 180px;
+  }
+  

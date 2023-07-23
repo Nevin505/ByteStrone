@@ -1,28 +1,94 @@
-
 <h2 style="text-align: center;">Tickets Raised</h2>
 <!-- <button [routerLink]="['/customerview']" style="float:right;border-radius: 40px;"><i class="bi bi-arrow-right"></i>Back</button> -->
+
 <button (click)="setfilter()" style="margin-left: 10px; border-radius: 40px;">Filter Tickets:</button>
-<div *ngIf="filterOpen" >
+<div *ngIf="filterOpen">
   <div style="display: flex;">
-  <div class="input-radio">
-  <input name="" type="radio" (click)="getFilter('Open')" name="selectHere">
-  <label for="" >Open</label>
+    <div class="input-radio">
+      <input name="" type="radio" (click)="getFilter('Open')" name="selectHere">
+      <label for="">Open</label>
+    </div>
+    <div class="input-radio">
+      <input type="radio" (click)="getFilter('Assigined')" name="selectHere">
+      <label for="">Assigined</label>
+    </div>
+    <div class="input-radio">
+      <input type="radio" (click)="getFilter('Closed')" name="selectHere">
+      <label for="">Closed</label>
+    </div>
+    <div class="input-radio" *ngIf="flag">
+      <input type="radio" (click)="getFilter('')" name="selectHere">
+      <label for="">View All</label>
+    </div>
+  </div>
 </div>
-<div class="input-radio">
-  <input type="radio" (click)="getFilter('Assigined')" name="selectHere">
-  <label for="">Assigined</label>
+<!-- BootStrap -->
+
+<table class="table">
+  <thead>
+    <tr>
+
+      <th class="column-100" scope="col">Ticket Id</th>
+      <th class="column-100" scope="col">Subject</th>
+      <th class="column-600" scope="col">Description</th>
+      <th class="column-100" scope="col">Priority</th>
+      <th class="column-100" scope="col">Status</th>
+      <th class="column-100" scope="col">Handled By</th>
+      <th class="column-100" scope="col">Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data|dateorder | paginate:{
+      itemsPerPage:tablesize,
+      currentPage:page,
+      totalItems:count 
+  } ">
+      <td class="column-80">{{ item.ticketId }}</td>
+      <td class="column-250">{{ item.subject}}</td>
+      <td class="description-cell column-600" style="width: 850px;">{{ item.description}}</td>
+      <td class="column-100">{{ item.priority}}</td>
+      <td class="column-100">{{ item.status}}</td>
+      <td class="column-100">{{item.agentId?item.agentId.agentName:'Not Assigined'}}</td>
+      <td class="column-100"><button style="border-radius: 40px;" (click)="getMessageData(item.ticketId)">View
+          Details</button></td>
+    </tr>
+    <!-- </tr> -->
+  </tbody>
+</table>
+
+<div *ngIf="lengtharray>9">
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDatachange($event)">
+  </pagination-controls>
 </div>
-<div class="input-radio">
-  <input type="radio" (click)="getFilter('Closed')" name="selectHere">
-  <label for="">Closed</label>
-</div>
-<div class="input-radio" *ngIf="flag">
-  <input type="radio" (click)="getFilter('')" name="selectHere">
-  <label for="">View All</label>
-</div>
-</div>
-</div>
-<table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="right-div" style="display: flex; align-items: center;">
+  <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+    style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+  <button (click)="searchTicket()" class="round-button">Search</button>
+</div> -->
+
+
+<!-- <table>
   <thead>
     <tr>
       <th>Ticket Id</th>
@@ -50,9 +116,9 @@
     </tr>
 
   </tbody>
-</table>
-
+</table> -->
+<!-- 
 <div *ngIf="lengtharray>9">
   <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDatachange($event)">
   </pagination-controls>
-</div>
+</div> -->

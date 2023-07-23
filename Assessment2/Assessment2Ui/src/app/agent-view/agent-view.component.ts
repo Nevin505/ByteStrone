@@ -17,6 +17,10 @@ export class AgentViewComponent {
   constructor(private api: ApiService, private router: Router) {
 
   }
+
+  page: number = 1;
+  count: number = 0;
+  tablesize: number = 8;
   datas!: any;
   response!: any;
   cate!: any;
@@ -25,6 +29,7 @@ export class AgentViewComponent {
   AgentName!: string;
   selected!: boolean;
   searchresult!: any;
+
   ngOnInit() {
     this.getTicketDetails()
    
@@ -33,7 +38,8 @@ export class AgentViewComponent {
     })
     this.selected = true;
 
-
+   this.agentName=JSON.parse (localStorage.getItem("agentName") || "") 
+   this.cates=JSON.parse( localStorage.getItem("Categorys") || "")
   }
   lengtharray!: number;
   agentName:String='';
@@ -43,10 +49,11 @@ export class AgentViewComponent {
     this.api.getTicket().subscribe((res:any) => {
       if(res.success){
         this.datas = res.data;
+        this.lengtharray=this.datas.length;
         this.lengthsearch=this.datas.length;
         this.cate = this.api.agentCategoryGetter();
         console.log(this.datas);
-        this.cates=JSON.parse( localStorage.getItem("Categorys") as string)
+       
       }
       else{
         alert(res.mssg)
@@ -55,8 +62,13 @@ export class AgentViewComponent {
     })
   }
 
+ 
+    onDatachange(event: any) {
+      this.page = event;
+      this.getTicketDetails()
+    }
   
-
+   
 
 
   Flag: boolean = false;
@@ -69,17 +81,27 @@ export class AgentViewComponent {
     }
 
   }
+
+  // onData(event:any){
+  //   this.page=event;
+  //   this. filterByStatus(this.currentStaus);
+  //   this.isSearching=false;
+  // }
   currentStaus: String = '';
 
   openTicketData!: any;
   messageFilter:String='';
-  filterByStatus(Status: String) {
+  filterByStatus(Status: String) { 
     this.currentStaus = Status;
+    this.searchButton=false
     if (this.currentStaus === 'Open') {
+      // this.page=1
       this.api.getOpenTicke().subscribe((res:any) => {
         if(res.success){
+          
           this.datas = res.data;
           this.lengthsearch=this.datas.length;
+          this.lengtharray=this.datas.length;
           this.messageFilter="No Open Tickets Are There";
           
         }
@@ -88,21 +110,22 @@ export class AgentViewComponent {
         }
        
       })
+    
     }
     else if (this.currentStaus == 'Closed') {
+      // this.page=1
       this.api.getCloseFullTickets().subscribe((res:any) => {
         if(res.success){
+          
           this.datas = res.data;
           console.log(this.datas);
           this.lengthsearch=this.datas.length; 
+          this.lengtharray=this.datas.length;
           this.messageFilter="No  Close Tickets Are There"
         }
        else{
           alert(res.mssg)
        }
-        
-       
-        // ser
       })
       
     }
@@ -112,6 +135,16 @@ export class AgentViewComponent {
 
   }
 
+
+  onData(event: any) {
+    this.page = event; // Update the current page number
+    if (this.isSearching) {
+      this.searchTicket(); // Re-fetch the search results with the updated page number
+    } else {
+      this.filterByStatus(this.currentStaus); // Re-filter the data based on the current status
+    }
+  }
+
   searchtickId!:any;
 
   search:SearchCriteria=new SearchCriteria();
@@ -119,12 +152,16 @@ export class AgentViewComponent {
   lengthsearch:number=0;
 
    searchButton:boolean=false;
-  searchTicket(){
-
+   na!:any;
+   isSearching:boolean=false;
+   searchTicket(){
+    this.na=true;
+  //  this.page=1;
+    // this.count = this.datas.length;
     console.log("Value of searchtickId:", this.searchtickId);
     console.log("Type of searchtickId:", typeof this.searchtickId);
     
-    this.search.subject=this.searchtickId;
+    this.search.subject=this.searchtickId.trim();
     this.search.status=this.currentStaus
     console.log(this.search);
     
@@ -132,7 +169,12 @@ export class AgentViewComponent {
       if(res.success){
         console.log(res);
         this.datas=res.data;
+
         this.lengthsearch=this.datas.length; 
+        // Recent Added
+        if(this.lengthsearch<=8){
+          this.page=1;
+        }
         this.messageFilter="No Tickets Are There"
       }
       else{
@@ -142,8 +184,10 @@ export class AgentViewComponent {
     })
 
     this.searchButton=true;
+    this.isSearching = true;
 
   }
+
     Set(val:any){
       console.log(val);
       
@@ -176,18 +220,15 @@ export class AgentViewComponent {
     }
   
 
-    resetData(){
-      this.getTicketDetails();
-      this.searchButton=false;
+    resetData(Status: String){
+      this.Flag=false;
+      // this.currentStaus='';
+      // this.getTicketDetails();
+      // this.searchButton=false;
+      window.location.reload();
     }
     removeValues(){
-      // [routerLink]="['/LoginComponent']"
       this.router.navigate(['landingPage'])
-      // localStorage.removeItem('agentUserId');
-      // localStorage.removeItem('particularTicketId')
-      // localStorage.removeItem('agentChatTicketId')
-      // localStorage.removeItem('customerTicketId')
-      // localStorage.removeItem('Categorys')
       localStorage.clear();
       
 

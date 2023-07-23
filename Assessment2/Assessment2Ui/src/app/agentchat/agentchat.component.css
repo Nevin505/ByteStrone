@@ -130,4 +130,8 @@
     color: #999999;
     margin-top: 5px;
   }
+.description-text {
+    max-width: 600px;
+    word-wrap: break-word;
+  }
   
