@@ -37,20 +37,20 @@ getTicket(){
 }
 
    get(data:any){
-    this.api.setagentChat(data);
-    localStorage.setItem("agentChatTicketId",data);
-    console.log(this.api.getagentChat());
+    // this.api.setagentChat(data);
+    sessionStorage.setItem("agentChatTicketId",data);
+    // console.log(this.api.getagentChat());
     
     this.getTicket()
    console.log("Hai");
    
     this.route.navigate(['agentchat'])
 
-    this.api.setCustomerTicket(data)
+    // this.api.setCustomerTicket(data)
     console.log("From Customer");
-    console.log(this.api.getCustomerTicketInfo());
+    // console.log(this.api.getCustomerTicketInfo());
     
     
-    localStorage.setItem("customerTicketId",data);
+    sessionStorage.setItem("customerTicketId",data);
    }
 }

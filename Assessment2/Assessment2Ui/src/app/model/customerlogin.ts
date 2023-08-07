@@ -1,6 +1,6 @@
 export class Customerlogin {
     mssg:string='';
-    username:any;
+    userName:any;
     userpassword:string='';
     customerid:number=0;
     role!:string;

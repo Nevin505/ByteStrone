@@ -24,6 +24,7 @@ import jakarta.persistence.TemporalType;
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private int ticketId;
 	private String subject;
 	@Column(length = 2000)

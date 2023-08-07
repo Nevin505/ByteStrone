@@ -14,14 +14,9 @@ import { Chat } from '../model/chat';
 })
 export class AgentAssiginationComponent {
   ticketId!: any;
-
   ticketData!: any;
-
   agentData!: any;
-
   ticketDa: Ticketassigination = new Ticketassigination();
-
-
 
   constructor(private api: ApiService, private route: ActivatedRoute) {
 
@@ -30,40 +25,29 @@ export class AgentAssiginationComponent {
   ticketsCategory: TicketsCategory = new TicketsCategory();
 
 
-  ticketCategory!:any;
+  ticketCategory!: any;
   ngOnInit() {
-
-
     this.api.getSpecificTicket().subscribe((res: any) => {
       if (res.success) {
         this.ticketDa = res.data;
-        this.ticketCategory=res.data.categoryId.category_name
-        console.log(this.ticketCategory);
-        
-        console.log(this.ticketDa);
+        this.ticketCategory = res.data.categoryId.category_name
       }
       else {
         alert(res.mssg);
       }
-
     })
-    console.log(this.ticketDa);
 
     this.api.getAgentList().subscribe((res: any) => {
-
       console.log(res);
       if (res.success) {
-        this.agentData = res.data.filter((value:any)=>{ 
-          return  value.category.some((name:any)=>name.category_name==this.ticketCategory)
+        this.agentData = res.data.filter((value: any) => {
+          return value.category.some((name: any) => name.category_name == this.ticketCategory)
         });
         console.log(this.agentData);
-        
       }
       else {
         alert(res.mssg);
       }
-
-
     })
 
 
@@ -74,15 +58,13 @@ export class AgentAssiginationComponent {
 
   apival!: any;
   Assgination(agentNames: any) {
-    console.log(agentNames);
-    console.log(this.agentData);
-
+    // console.log(agentNames);
+    // console.log(this.agentData);
     this.dat = this.agentData.filter((agedata: any) => {
-      return JSON.stringify(agedata.agentName)
+      return JSON.stringify(agedata.userName)
         === JSON.stringify(agentNames)
     })
-
-    const agentIDs = this.dat.map((agedata: any) => agedata.agentID);
+    const agentIDs = this.dat.map((agedata: any) => agedata.id);
     console.log(agentIDs[0]);
 
 

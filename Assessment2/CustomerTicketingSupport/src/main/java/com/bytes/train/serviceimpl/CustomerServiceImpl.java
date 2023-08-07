@@ -23,8 +23,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer checkAccess(String userName, String password) {
-		Customer userdata = customerRepository.findByUsername(userName);
-		if ((userdata.getUsername().equals(userName)) && (userdata.getUserpassword().equals(password))) {
+		Customer userdata = customerRepository.findByUserName(userName);
+		if ((userdata.getUserName().equals(userName)) && (userdata.getUserPassword().equals(password))) {
 			return userdata;
 		}
 		return null;
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<Ticket> getTicketDetails(int id) {
-		return ticketRepository.findByCustomerId(id);
+		return ticketRepository.findByCustomer_id(id);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Ticket> getFilteredCustomerTickets(int cutsomerId, String status) {
 		System.out.println(cutsomerId);
-		List<Ticket> filterTickets = ticketRepository.findByCustomer_customeridAndStatus(cutsomerId, status);
+		List<Ticket> filterTickets = ticketRepository.findByCustomer_idAndStatus(cutsomerId, status);
 		return filterTickets;
 	}
 

@@ -39,11 +39,11 @@ export class CustomerShowTicketsComponent {
 
   getMessageData(item: any) {
     this.router.navigate(['customerchat']);
-    this.api.setCustomerTicket(item);
+    // this.api.setCustomerTicket(item);
     localStorage.setItem("customerViewTicketId",item);
-    console.log(this.api.getCustomerTicketInfo());
+    // console.log(this.api.getCustomerTicketInfo());
 
-    console.log(this.api.getCustomerTicketInfo());
+    // console.log(this.api.getCustomerTicketInfo());
 
   }
 

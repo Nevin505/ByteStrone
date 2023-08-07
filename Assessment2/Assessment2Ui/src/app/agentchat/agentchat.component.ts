@@ -26,7 +26,7 @@ export class AgentchatComponent {
   
 
   ngOnInit(){
-    this.ticketId=this.api.getagentChat();
+    // this.ticketId=this.api.getagentChat();
     this.api.getTicketChat().subscribe((res)=>{
       if(res.success){
         this.ticketChatData=res.data;
@@ -44,7 +44,7 @@ export class AgentchatComponent {
     })
 // getAgentCustomerChats
 
-    this.api.getagentChat()
+    // this.api.getagentChat()
       this.api.getAgentCustomerChats().subscribe((res:any)=>{
         if(res.success){
           this.chatContents=res.data;
@@ -57,27 +57,37 @@ export class AgentchatComponent {
       })
 
   }
-
-  sendChat(){
+sendChat(){
   this.chat.content=this.chatContent;
-    this.chat.author='Agent';
+  this.chat.author='Agent';
+  this.api.addAgentChatMessage(this.chat).subscribe((res:any)=>{
+    console.log(res);
+    window.location.reload()
+  })
+  
+}
+
+// window.location.reload()
+  // sendChat(){
+  // this.chat.content=this.chatContent;
+  //   this.chat.author='Agent';
    
-   this.api.getChatMessage(this.chat).subscribe((res:any)=>{
-        if(res.success){
-          if(res.data==null){
-            alert(res.mssg);
-          }
-          else{
-            alert(res.mssg)
-          }
-        }
-        else{
-          alert(res.mssg)
-        }
-  }) 
-   window.location.reload();
+  //  this.api.getChatMessage(this.chat).subscribe((res:any)=>{
+  //       if(res.success){
+  //         if(res.data==null){
+  //           alert(res.mssg);
+  //         }
+  //         else{
+  //           alert(res.mssg)
+  //         }
+  //       }
+  //       else{
+  //         alert(res.mssg)
+  //       }
+  // }) 
+  // //  window.location.reload();
    
-  }
+  // }
 
   closeTickets(){
     this.api.closeTicketss().subscribe((res:any)=>{

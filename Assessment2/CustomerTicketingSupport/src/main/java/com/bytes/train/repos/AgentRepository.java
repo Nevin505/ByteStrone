@@ -9,7 +9,7 @@ import com.bytes.train.entities.Category;
 
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 	
-	Agent findByAgentName(String agentName);
+//	Agent findByUserName(String agentName);
 	
 	List<Agent> findByCategoryIn(List<Category> agentCategories);
 	

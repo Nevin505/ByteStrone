@@ -49,7 +49,7 @@ export class SuperVisorComponent {
       }
 
     })
-    this.superVisorName = this.api.getAgentName();
+    // this.superVisorName = this.api.getAgentName();
 
     //To get All The Tickets Recived So Far
     this.api.getTicketVolumes().subscribe((res: any) => {

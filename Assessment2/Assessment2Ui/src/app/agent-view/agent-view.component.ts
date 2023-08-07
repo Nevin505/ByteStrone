@@ -35,23 +35,26 @@ export class AgentViewComponent {
    
     this.api.getAgentList().subscribe(res => {
       this.agentList = res;
+    
     })
+    // console.log(this.agentList);
+    
     this.selected = true;
 
-   this.agentName=JSON.parse (localStorage.getItem("agentName") || "") 
-   this.cates=JSON.parse( localStorage.getItem("Categorys") || "")
+   this.agentName=JSON.parse(sessionStorage.getItem("agentName") || "") 
+   this.cates=JSON.parse(sessionStorage.getItem("Categorys") || "")
   }
   lengtharray!: number;
   agentName:String='';
   cates!:any;
   getTicketDetails() {
-     this.agentName= this.api.getAgentName();
+    //  this.agentName= this.api.getAgentName();
     this.api.getTicket().subscribe((res:any) => {
       if(res.success){
         this.datas = res.data;
         this.lengtharray=this.datas.length;
         this.lengthsearch=this.datas.length;
-        this.cate = this.api.agentCategoryGetter();
+        // this.cate = this.api.agentCategoryGetter();
         console.log(this.datas);
        
       }
@@ -191,8 +194,8 @@ export class AgentViewComponent {
     Set(val:any){
       console.log(val);
       
-      localStorage.setItem("particularTicketId",val);
-    this.api.particularTicketSetter(val);
+      sessionStorage.setItem("particularTicketId",val);
+    // this.api.particularTicketSetter(val);
   }
  
   sortColumn(): void{
@@ -229,7 +232,7 @@ export class AgentViewComponent {
     }
     removeValues(){
       this.router.navigate(['landingPage'])
-      localStorage.clear();
+      sessionStorage.clear();
       
 
     }

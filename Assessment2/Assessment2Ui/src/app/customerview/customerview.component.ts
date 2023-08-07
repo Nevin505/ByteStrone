@@ -61,21 +61,23 @@ export class CustomerviewComponent {
      this.raiseValue=true;   
   }
   removeDate(){
+    sessionStorage.clear();
+    
     this.route.navigate(['/landingPage'])
 
     // localStorage.clear();
-    if (localStorage.getItem("customerUserId") !== null) {
-      localStorage.removeItem("customerUserId");
-    }
-    // } 
+    // if (localStorage.getItem("customerUserId") !== null) {
+    //   localStorage.removeItem("customerUserId");
+    // }
+    // // } 
     
-    if (localStorage.getItem("customerViewTicketId") !== null) {
-      localStorage.removeItem("customerViewTicketId");
-    }
+    // if (localStorage.getItem("customerViewTicketId") !== null) {
+    //   localStorage.removeItem("customerViewTicketId");
+    // }
    
-    if(localStorage.getItem("customerName")!=null){
-      localStorage.removeItem("customerName");
-    }
+    // if(localStorage.getItem("customerName")!=null){
+    //   localStorage.removeItem("customerName");
+    // }
     
   }
   addedValue(){

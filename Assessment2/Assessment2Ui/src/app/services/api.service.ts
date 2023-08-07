@@ -1,3 +1,4 @@
+import { UserDetails } from './../model/user-details';
 import { Chat } from './../model/chat';
 import { Injectable } from '@angular/core';
 import { Customerlogin } from '../model/customerlogin';
@@ -8,7 +9,7 @@ import { Agentlogin } from '../model/agentlogin';
 import { SearchCriteria } from '../model/search-criteria';
 import { filter } from 'rxjs';
 import { PriorityCount } from '../model/priority-count';
-
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -26,71 +27,71 @@ export class ApiService {
 
 
 
-  customerIdGetter() {
-    return this.customerId;
-  }
-  customerIdSetter(Id: number) {
-    this.customerId = Id;
-  }
+  // customerIdGetter() {
+  //   return this.customerId;
+  // }
+  // customerIdSetter(Id: number) {
+  //   this.customerId = Id;
+  // }
 
-  agentIdGetter() {
-    return this.agentId;
-  }
-  agentIdSetter(Id: number) {
-    this.agentId = Id;
-  }
-  agentCategoryGetter() {
-    return this.agentCategory
-  }
-  agentCategorySetter(category: string) {
-    this.agentCategory = category;
-  }
+  // agentIdGetter() {
+  //   return this.agentId;
+  // }
+  // agentIdSetter(Id: number) {
+  //   this.agentId = Id;
+  // }
+  // agentCategoryGetter() {
+  //   return this.agentCategory
+  // }
+  // agentCategorySetter(category: string) {
+  //   this.agentCategory = category;
+  // }
 
-  agentTicketId!: any;
-  agentTicketIdGetter() {
-    return this.agentTicketId;
-  }
-  agentTicketIdSetter(Id: any) {
-    this.agentTicketId = Id;
-  }
-  AgentName: String = '';
+  // agentTicketId!: any;
+  // agentTicketIdGetter() {
+  //   return this.agentTicketId;
+  // }
+  // agentTicketIdSetter(Id: any) {
+  //   this.agentTicketId = Id;
+  // }
+  // AgentName: String = '';
 
-  setAgentName(agentName: String) {
-    this.AgentName = agentName;
-  }
-  getAgentName() {
-    return this.AgentName;
-  }
-  agentcha!: any;
-  getagentChat() {
-    return this.agentcha;
-  }
-  setagentChat(agechat: any) {
-    this.agentcha = agechat;
-  }
+  // setAgentName(agentName: String) {
+  //   this.AgentName = agentName;
+  // }
+  // getAgentName() {
+  //   return this.AgentName;
+  // }
+  // agentcha!: any;
+  // getagentChat() {
+  //   return this.agentcha;
+  // }
+  // setagentChat(agechat: any) {
+  //   this.agentcha = agechat;
+  // }
 
-  particularTicketId!: any;
+  // particularTicketId!: any;
 
-  getparticularTicketId() {
-    return this.particularTicketId
-  }
-  particularTicketSetter(Id: any) {
-    this.particularTicketId = Id;
-  }
-  customerTicket!: any;
-
-
-  setCustomerTicket(ticketCustomerId: any) {
-    this.customerTicket = ticketCustomerId;
-  }
-  getCustomerTicketInfo() {
-    return this.customerTicket;
-  }
+  // getparticularTicketId() {
+  //   return this.particularTicketId
+  // }
+  // particularTicketSetter(Id: any) {
+  //   this.particularTicketId = Id;
+  // }
+  // customerTicket!: any;
 
 
+  // setCustomerTicket(ticketCustomerId: any) {
+  //   this.customerTicket = ticketCustomerId;
+  // }
+  // getCustomerTicketInfo() {
+  //   return this.customerTicket;
+  // }
 
-  validateCustomer(customerlogin: Customerlogin) {
-    return this.http.post<Customerlogin>("http://localhost:8080/customer/access", customerlogin)
+
+
+  validatelogin(user:UserDetails) {
+    return this.http.post("http://localhost:8080/userLogin/Access",user);
   }
   customerName!: String;
   getCustomerName() {
@@ -112,64 +113,71 @@ export class ApiService {
     return this.http.get<Category[]>('http://localhost:8080/ticket/values');
   }
 
+//Customer View
   addTicket(ticket: any) {
-    console.log(this.customerId);
-    console.log(ticket);
-    const storedValue = localStorage.getItem("customerUserId");
-    const userId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('customerId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const userId = parseInt(decryptedData, 10);
     return this.http.post(`http://localhost:8080/ticket/addticket/${userId}`, ticket)
   }
 
   getCustomerTicketDetails() {
-    // this.customerId
-    // http://localhost:8080/customer/getCustomerTicketDetails/${this.customerId}
-    const storedValue = localStorage.getItem("customerUserId");
-    const userId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('customerId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const userId = parseInt(decryptedData, 10);
     return this.http.get(`http://localhost:8080/customer/getCustomerTicketDetails/${userId}`)
   }
 
-  agentloginService(agent: Agentlogin) {
-    return this.http.post('http://localhost:8080/agents/Access', agent)
-  }
+  // agentloginService(agent: Agentlogin) {
+  //   return this.http.post('http://localhost:8080/agents/Access', agent)
+  // }
 
   //// Agent Section 
   getTicket() {
     // this.agentId
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+     // const storedValue = localStorage.getItem("agentUserId");
+    // const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     return this.http.get(`http://localhost:8080/agents/categorytickets/${agentId}`)
   }
-
   // Added New To get Open Tickets
   getOpenTicke() {
-    // this.agentId;
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     return this.http.get(`http://localhost:8080/agents/getOpentickets/${agentId}`)
   }
   // Close Tickets
   getCloseFullTickets() {
-    //  // this.agentId;
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
-
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     return this.http.get(`http://localhost:8080/agents/getCloseTickets/${agentId}`)
   }
 
   I: any;
   assignTickets(agentId: any) {
     this.I = agentId;
-    const storedValue = localStorage.getItem("particularTicketId");
+    const storedValue = sessionStorage.getItem("particularTicketId");
     const partTicketId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     return this.http.put(`http://localhost:8080/agents/${partTicketId}/assign/${this.I}`, { responseType: 'text' })
   }
 
   closeTicketss() {
-    const storedValue = localStorage.getItem("customerTicketId");
+    const storedValue = sessionStorage.getItem("customerTicketId");
     const custTicketId = storedValue !== null ? parseInt(storedValue, 10) : 0;
 
-    const storeValue = localStorage.getItem("agentUserId");
-    const agentId = storeValue !== null ? parseInt(storeValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     //  http://localhost:8080/agents/${this.customerTicket}/closedticket/${this.agentId}`,{ responseType:'text' })
     return this.http.put(`http://localhost:8080/agents/${custTicketId}/closedticket/${agentId}`, { responseType: 'text' })
   }
@@ -177,14 +185,18 @@ export class ApiService {
 
 
   getAgentList() {
-    const storedValue = localStorage.getItem("agentUserId");
-    const userId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const userId = parseInt(decryptedData, 10);
+    // const storedValue = localStorage.getItem("agentUserId");
+    // const userId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     // // this.agentId
     return this.http.get(`http://localhost:8080/agents/agentsCategory/${userId}`)
   }
 
   getSpecificTicket() {
-    const storedValue = localStorage.getItem("particularTicketId");
+    const storedValue = sessionStorage.getItem("particularTicketId");
     const partTicketId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     // http://localhost:8080/agents/specificticket/${this.particularTicketId}
     return this.http.get(`http://localhost:8080/agents/specificticket/${partTicketId}`)
@@ -192,15 +204,17 @@ export class ApiService {
 
   getAssiginedTickets() {
     // this.agentId
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     return this.http.get(`http://localhost:8080/agents/assignedTickets/${agentId}`)
   }
 
   getTicketChat() {
     // agentChatId
     // this.http.get<Ticket>(`http://localhost:8080/agents/specificticket/${this.agentcha}`)
-    const storedValue = localStorage.getItem("agentChatTicketId");
+    const storedValue = sessionStorage.getItem("agentChatTicketId");
     const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     return this.http.get<Ticket>(`http://localhost:8080/agents/specificticket/${agentId}`)
   }
@@ -217,12 +231,12 @@ export class ApiService {
   }
 
 
-  getOpenTickets() {
-    return this.http.get(`http://localhost:8080/agents/getOpenTickets/${this.agentId}`)
-  }
-  getClosedTickets() {
-    return this.http.get(`http://localhost:8080/agents/getCloseTickets/${this.agentId}`)
-  }
+  // getOpenTickets() {
+  //   return this.http.get(`http://localhost:8080/agents/getOpenTickets/${this.agentId}`)
+  // }
+  // getClosedTickets() {
+  //   return this.http.get(`http://localhost:8080/agents/getCloseTickets/${this.agentId}`)
+  // }
 
 
 
@@ -230,8 +244,10 @@ export class ApiService {
 
 
   getSearch(search: SearchCriteria) {
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
     //  this.agentId
     return this.http.post(`http://localhost:8080/agents/search/${agentId}`, search)
   }
@@ -256,8 +272,14 @@ export class ApiService {
   // Customer Functionalities Filter Open And Closed Tickets
 
   getCustomerFilterTickets(filter: any) {
-    const storedValue = localStorage.getItem("customerUserId");
-    const customerId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('customerId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const customerId = parseInt(decryptedData, 10);
+
+    // const storedValue = localStorage.getItem("customerUserId");
+    // const customerId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     //  this.customerId
 
     return this.http.post(`http://localhost:8080/customer/filtercustomertickets/${customerId}`, filter)
@@ -292,15 +314,28 @@ export class ApiService {
   // Comment Section
 
   getChatMessage(chat: Chat) {
-    // http://localhost:8080/comment/addcomments/${this.agentId}/${this.agentcha}`,chat
-    const storedValue = localStorage.getItem("agentUserId");
-    const agentId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
 
-    const storeValue = localStorage.getItem("agentChatTicketId");
+    const storeValue = sessionStorage.getItem("agentChatTicketId");
     const agentTicket = storeValue !== null ? parseInt(storeValue, 10) : 0;
-    // const Value = localStorage.getItem("agentChatId");
-    // const agentChatId = storedValue !== null ? parseInt(storedValue, 10) : 0;
+    
     return this.http.post(`http://localhost:8080/comment/addcomments/${agentId}/${agentTicket}`, chat)
+  }
+
+
+  addAgentChatMessage(chat: Chat) {
+    const secretKey = 'your-secret-key';
+    const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
+    const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);
+    const agentId = parseInt(decryptedData, 10);
+
+    const storeValue = sessionStorage.getItem("agentChatTicketId");
+    const agentTicket = storeValue !== null ? parseInt(storeValue, 10) : 0;
+    
+    return this.http.post(`http://localhost:8080/comment/addcomments/${agentId}/${agentTicket}`,chat)
   }
 
   getAllTicketComments() {
@@ -329,7 +364,7 @@ export class ApiService {
   }
 
   getAgentCustomerChats() {
-    const storedValue = localStorage.getItem("agentChatTicketId");
+    const storedValue = sessionStorage.getItem("agentChatTicketId");
     const acustomerTicketId = storedValue !== null ? parseInt(storedValue, 10) : 0;
     // http://localhost:8080/comment/agentCustomerConversation/${ this.customerTicket}
     return this.http.get(`http://localhost:8080/comment/agentCustomerConversation/${acustomerTicketId}`)

@@ -24,6 +24,10 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	
+	
+
 
 	@Override
 	public List<Agent> getFullInfo() {
@@ -204,7 +208,7 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 	@Override
 	public Ticket closeTickets(int ticketid, int agentId)  {
 		Ticket ticket = ticketRepository.findById(ticketid).orElseThrow();
-		if (ticket.getAgentId().getAgentID() == agentId && (ticket.getStatus().equals("Assigined"))) {
+		if (ticket.getAgentId().getId() == agentId && (ticket.getStatus().equals("Assigined"))) {
 			ticket.setStatus("Closed");
 			ticket.closeTicket();
 			ticketRepository.save(ticket);
@@ -241,20 +245,7 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 		categoryRepository.save(category);
 	}
 
-	@Override
-	public Agent checkAccess(String userName, String password) throws Exception {
-		Agent userdata = agentRepository.findByAgentName(userName);
-		if(userdata==null) { 
-			throw new Exception("No Data Is THere"); 
-		}
-		if ((userdata.getAgentName().equals(userName)) && (userdata.getAgentPassword().equals(password))) {
-			
-			System.out.println("Getting data from db="+userdata);
-			return userdata;
-		}
-		
-		return null;
-	}
+	
 
 	public List<Ticket> searchFullAgentTickets(int agentId, SearchCriteria searchCriteria) {
 
@@ -318,20 +309,18 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 	}
 
 }
-
+//
 //@Override
-//public List<Ticket> testService(int agentId, SearchCriteria searchCriteria) {
-//	// getting agent cateogry
-//	Agent agent = agentRepository.findById(agentId).orElse(null);
-//	List<Category> category = agent.getCategory();
-//	String status = searchCriteria.getStatus();
-//
-////	if(status!="Reset") {
-//	List<Ticket> tickets = ticketRepository.findAllByCategoryIdIn(category);
-////	}else {
-//
-////	}
-//
-//	return tickets;
+//public Agent checkAccess(String userName, String password) throws Exception {
+//	Agent userdata = agentRepository.findByUserName(userName);
+//	if(userdata==null) { 
+//		throw new Exception("No Data Is THere"); 
+//	}
+//	if ((userdata.getUserName().equals(userName)) && (userdata.getUserPassword().equals(password))) {
+//		
+//		System.out.println("Getting data from db="+userdata);
+//		return userdata;
+//	}
+//	
+//	return null;
 //}
-

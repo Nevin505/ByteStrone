@@ -17,7 +17,7 @@
     <tbody>
       <tr>
         <td >{{ ticketDa.ticketId }}</td>
-        <td >{{ ticketDa.customer.username }}</td>
+        <td >{{ ticketDa.customer.userName}}</td>
         <td >{{ ticketDa.subject }}</td>
         <td class="description-cell " >{{ ticketDa.description }}</td>
         <td >{{ ticketDa.priority }}</td>
@@ -26,7 +26,7 @@
         <td  *ngIf="ticketDa.status!=='Closed'">
           <div style="display: flex;flex-direction: row;">
           <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;">
-            <option *ngFor="let option of agentData" [value]="option.agentName">{{ option.agentName }}</option>
+            <option *ngFor="let option of agentData" [value]="option.userName">{{ option.userName }}</option>
           </select>
           <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
         </div>
@@ -80,6 +80,10 @@
     
   </div>
 </div>
+
+
+
+
   <!-- style="text-align: left; flex: 0 0 70%;" -->
   <!--  style="text-align: left; flex: 0 0 30%;" -->
 

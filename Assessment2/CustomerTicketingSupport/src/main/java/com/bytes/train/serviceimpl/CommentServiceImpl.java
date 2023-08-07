@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
 		Agent agent = agentRepository.findById(agentId).orElseThrow();
 		Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
-		if (ticket.getAgentId().getAgentID() == agent.getAgentID()) {
+		if (ticket.getAgentId().getId() == agent.getId()) {
 			ticket.setAgentId(agent);
 			comment.setTicket(ticket);
 			comment.setTimeStamp(new Date());
@@ -66,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
 			throw new Exception("Ticket Id Doesn't Exist");
 		}
 
-		if (ticket.getAgentId() != null && ticket.getCustomer().getCustomerid() == customer.getCustomerid()) {
+		if (ticket.getAgentId() != null && ticket.getCustomer().getId() == customer.getId()) {
 			System.out.println("Here");
 			comment.setTicket(ticket);
 			comment.setTimeStamp(new Date());

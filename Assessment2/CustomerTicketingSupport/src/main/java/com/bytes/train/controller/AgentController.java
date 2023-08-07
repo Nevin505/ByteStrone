@@ -18,6 +18,8 @@ import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Response;
 import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
+import com.bytes.train.entities.UserDetails;
+import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.service.AgentCategoryService;
 
 @RestController
@@ -27,22 +29,22 @@ public class AgentController {
 
 	@Autowired
 	AgentCategoryService agentService;
-
-	// To Check Agent Access for login
-	@PostMapping("/Access")
-	public ResponseEntity<Response> checkLogin(@RequestBody Agent agent) {
-		try {  
-			String userName = agent.getAgentName(); 
-			String password = agent.getAgentPassword();
-			Agent response = agentService.checkAccess(userName, password);
-			if (response == null) { 
-				return ResponseEntity.ok(new Response("Invalid Login", null, false));
-			} 
-			return ResponseEntity.ok(new Response("Login Successfull", response, true));
-		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("Invalid Login", null, false));
-		}
+	
+	@Autowired
+	AgentRepository agentRepository;
+   
+	@PostMapping("/add")
+	public Agent createAgents(@RequestBody Agent agent){
+		return  agentRepository.save(agent);
+		
 	}
+	
+	@GetMapping("/adds/{id}")
+	public Agent createAgentss(@PathVariable int id){
+		return  agentRepository.findById(id).orElseThrow();
+		
+	}
+
 
 // To get the list of Tickets Which belongs to Agents Categories
 	@GetMapping("/categorytickets/{agentId}")
@@ -64,7 +66,7 @@ public class AgentController {
 			List<Ticket> openTickets = agentService.getticketsOpen(agentId);
 			return ResponseEntity.ok(new Response("The Open Tickets Are", openTickets, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
 		}
 	}
 
@@ -88,7 +90,7 @@ public class AgentController {
 			List<Ticket> searchTickets = agentService.getSearch(agentId, searchCriteria);
 			return ResponseEntity.ok(new Response("The Search Result Is", searchTickets, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("Error", null, false));
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
 		}
 	}
 
@@ -179,3 +181,22 @@ public class AgentController {
 	}
 
 }
+
+
+
+
+////To Check Agent Access for login
+//	@PostMapping("/Access")
+//	public ResponseEntity<Response> checkLogin(@RequestBody UserDetails userDetails) {
+//		try {  
+//			String userName = userDetails.getUserName(); 
+//			String password = userDetails.getUserPassword();
+//			Agent response = agentService.checkAccess(userName, password);
+//			if (response == null) { 
+//				return ResponseEntity.ok(new Response("Invalid Login", null, false));
+//			} 
+//			return ResponseEntity.ok(new Response("Login Successfull", response, true));
+//		} catch (Exception e) {
+//			return ResponseEntity.ok(new Response("Invalid Login", null, false));
+//		}
+//	}

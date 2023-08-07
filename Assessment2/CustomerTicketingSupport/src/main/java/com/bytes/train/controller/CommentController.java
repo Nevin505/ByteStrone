@@ -70,7 +70,7 @@ public class CommentController {
 			List<Comment> agentCustomerChat = commentService.getAgentCustomerChat(ticketId);
 			return ResponseEntity.ok(new Response("The Agent Customer Chats", agentCustomerChat, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("Wrong", null, false));
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
 		}
 	}
 

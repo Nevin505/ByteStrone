@@ -33,8 +33,8 @@ public class CustomerController {
 	@PostMapping("/access")
 	public ResponseEntity<Response> checkAccess(@RequestBody Customer customer) {
 		try {
-		String userName=customer.getUsername();
-		String password=customer.getUserpassword();
+		String userName=customer.getUserName();
+		String password=customer.getUserPassword();
 		Customer response = customerService.checkAccess(userName, password);	
 		if(response == null) {
 			return ResponseEntity.ok(new Response("Invalid Login",null,false));

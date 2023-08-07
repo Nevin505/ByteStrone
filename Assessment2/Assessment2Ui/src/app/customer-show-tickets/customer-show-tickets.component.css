@@ -35,7 +35,9 @@
     width: 100px; 
   }
   .column-250 {
-    width: 200px; 
+    width: 250px; 
+    word-wrap: break-word;
+   
   }
   
   .column-150 {
