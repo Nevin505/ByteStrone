@@ -12,95 +12,80 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./customerview.component.css']
 })
 export class CustomerviewComponent {
-  value1:number=0;
- raiseValue:boolean=false;
- categoryList!:Category[];
- Subject!:string;
- Description!:string;
- priority!:string;
+  value1: number = 0;
+  raiseValue: boolean = false;
+  categoryList!: Category[];
+  Subject!: string;
+  Description!: string;
+  priority!: string;
 
- categoryName!:string;
- 
- response:any;
- 
- cateName!:string;
- ticket:Ticket=new Ticket();
- category:Category=new Category();
- details:any;
-  
+  categoryName!: string;
+
+  response: any;
+
+  cateName!: string;
+  ticket: Ticket = new Ticket();
+  category: Category = new Category();
+  details: any;
 
 
- ticketForm = new FormGroup({
-  subject: new FormControl('',Validators.required),
-  description: new FormControl('',Validators.required),
-  priority: new FormControl('',Validators.required),
-  categoryName: new FormControl('',Validators.required),
-})
 
- constructor(private api:ApiService, private route:Router){
-
- }
- agentName:String='';
- time!:Date;
- ngOnInit(){
-  this.api.getCategory().subscribe((res:any)=>{
-    if(res.success){
-      this.categoryList = res.data;   
-    }else{
-      alert(res.mssg)
-    }
-    
+  ticketForm = new FormGroup({
+    subject: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    priority: new FormControl('', Validators.required),
+    categoryName: new FormControl('', Validators.required),
   })
-  this.agentName=this.api.getCustomerName();
-  this.time=new Date();
 
-  this.agentName=localStorage.getItem("customerName") as String;
-}
+  constructor(private api: ApiService, private route: Router) {
 
-  onRaiseTicket(){
-     this.raiseValue=true;   
   }
-  removeDate(){
-    sessionStorage.clear();
-    
-    this.route.navigate(['/landingPage'])
-
-    // localStorage.clear();
-    // if (localStorage.getItem("customerUserId") !== null) {
-    //   localStorage.removeItem("customerUserId");
-    // }
-    // // } 
-    
-    // if (localStorage.getItem("customerViewTicketId") !== null) {
-    //   localStorage.removeItem("customerViewTicketId");
-    // }
-   
-    // if(localStorage.getItem("customerName")!=null){
-    //   localStorage.removeItem("customerName");
-    // }
-    
-  }
-  addedValue(){
-    this.api.addTicket(this.ticketForm.value).subscribe((res:any)=>{
-      this.details=res
-      console.log(this.details);
-      
-      if(res.success){
-       alert(res.mssg)
-      }else{
+  customerName: String = '';
+  time!: Date;
+  ngOnInit() {
+    this.api.getCategory().subscribe((res: any) => {
+      if (res.success) {
+        this.categoryList = res.data;
+      } else {
         alert(res.mssg)
       }
 
-      
-    });
-    }
-    
-    
+    })
+    this.time = new Date();
 
-   
+    this.customerName = sessionStorage.getItem("customerName") as String;
+  }
+
+  onRaiseTicket() {
+    this.raiseValue = true;
+  }
+  removeData() {
+    sessionStorage.clear();
+
+    this.route.navigate(['/landingPage'])
 
   }
-  
- 
+  addedValue() {
+    this.api.addTicket(this.ticketForm.value).subscribe((res: any) => {
+      this.details = res
+      console.log(this.details);
+
+      if (res.success) {
+        alert(res.mssg)
+      } else {
+        alert(res.mssg)
+      }
+
+
+    });
+  }
+
+
+
+
+
+}
+
+
 
 

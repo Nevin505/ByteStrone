@@ -14,7 +14,7 @@ public interface AgentCategoryService {
 
 	Ticket getSpecificTicketId(int id) throws Exception;
 
-	public List<Ticket> getParticularCategoryList(int agentId);
+	public List<Ticket> getParticularCategoryList(int agentId) throws Exception;
 
 	public Ticket closeTickets(int ticketid, int agentId) throws Exception;
 

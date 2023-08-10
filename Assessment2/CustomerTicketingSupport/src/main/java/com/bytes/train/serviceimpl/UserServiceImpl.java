@@ -19,11 +19,9 @@ public class UserServiceImpl implements UserService{
 		UserDetails userDetails=userRepository.findByUserName(userName);
 		System.out.println("Here");
 		if(userDetails==null) { 
-			throw new Exception("No Data Is THere"); 
+			throw new Exception("Invlaid Crentials"); 
 		}
 		if ((userDetails.getUserName().equals(userName)) && (userDetails.getUserPassword().equals(userPassword))) {
-			
-//			System.out.println("Getting data from db="+userDetails);
 			return userDetails;
 		}
 		

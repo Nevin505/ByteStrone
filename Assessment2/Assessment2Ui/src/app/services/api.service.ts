@@ -173,7 +173,6 @@ export class ApiService {
   closeTicketss() {
     const storedValue = sessionStorage.getItem("customerTicketId");
     const custTicketId = storedValue !== null ? parseInt(storedValue, 10) : 0;
-
     const secretKey = 'your-secret-key';
     const encryptedData1 = sessionStorage.getItem('AgentId') || ' ';
     const decryptedData = CryptoJS.AES.decrypt(encryptedData1, secretKey).toString(CryptoJS.enc.Utf8);

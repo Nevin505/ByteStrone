@@ -105,7 +105,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of ticketFullData | dateorder">
+                <tr *ngFor="let item of ticketFullData | dateorder | paginate:{
+                    itemsPerPage:tablesize,
+                    currentPage:page,
+                    totalItems:count 
+                } ">
                     <td>{{item.ticketId}}</td>
                     <td>{{item.subject}}</td>
                     <td>{{item.priority}}</td>
@@ -122,6 +126,12 @@
             </tbody>
 
         </table>
+
+
+        <div *ngIf="lengtharray>8">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onData()">
+            </pagination-controls>
+          </div>
 
     </div>
 

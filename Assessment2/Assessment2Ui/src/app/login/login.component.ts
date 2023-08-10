@@ -39,12 +39,16 @@ export class LoginComponent {
    
     this.loginForm = new FormGroup({
       agentName: new FormControl('', [Validators.required]),
-      agentPassword: new FormControl('', [Validators.required]),
-      role: new FormControl('', [Validators.required])
+      agentPassword: new FormControl('', [Validators.required])
+      // role: new FormControl('', [Validators.required])
     });
     
   }
-  
+
+
+  ngOnInit(){
+    sessionStorage.clear();
+  }
   
 
     // loginAgent() {
@@ -104,25 +108,30 @@ export class LoginComponent {
      
     this.api.validatelogin(this.userDetails).subscribe((res:any)=>{
     if(res.success){
+      sessionStorage.setItem('token','t');
         if(res.data.role=='Agent'){
           const secretKey = 'your-secret-key';
-          const dataToEncrypt = res.data.id;
-          const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
+          const dataToEncrypt = res.data.id.toString();
+          const wordArray = CryptoJS.enc.Utf8.parse(dataToEncrypt);
+          const encryptedData = CryptoJS.AES.encrypt(wordArray, secretKey).toString();
           sessionStorage.setItem('AgentId', encryptedData);
+          
+          sessionStorage.setItem("agentName",res.data.userName);
+          sessionStorage.setItem("Categorys",JSON.stringify(res.data.category));
           this.router.navigate(['agentView']);
           alert("Agent")
         }
-        // else{
-        //   sessionStorage.setItem("superVisorId",res.data.id);
-        //   this.router.navigate(['supervisor']);
-        // }    
-      
+        else if(res.data.role==='Supervisor'){
+          sessionStorage.setItem("superVisorId",res.data.id);
+          this.router.navigate(['supervisor']);
+        }      
       else if(res.data.role==='Customer'){
         const secretKey = 'your-secret-key';
         const dataToEncrypt = res.data.id.toString();
         const wordArray = CryptoJS.enc.Utf8.parse(dataToEncrypt);
         const encryptedData = CryptoJS.AES.encrypt(wordArray, secretKey).toString();
         sessionStorage.setItem('customerId', encryptedData);
+        sessionStorage.setItem('customerName',res.data.userName);
         this.router.navigate(['customerview']);
         alert("Customer")
       }

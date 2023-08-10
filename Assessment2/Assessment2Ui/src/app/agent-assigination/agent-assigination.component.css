@@ -71,8 +71,25 @@
     margin-top: 6px;
   }
   
+  .column-100 {
+    width: 100px; 
+  }
+  .column-200{
+    width: 170px;
+  }
+  
+  .column-600 {
+      max-width: 500px;
+      word-wrap: break-word;     
+  }
+  .column-150{
+   width: 140px;
+  }
+
   .no-chats {
     text-align: center;
     margin-top: 20px;
   }
+
+
 

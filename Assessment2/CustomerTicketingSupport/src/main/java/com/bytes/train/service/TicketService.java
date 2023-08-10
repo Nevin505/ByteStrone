@@ -15,4 +15,6 @@ public interface TicketService {
 
 	public Ticket getCustomerSingleTicket(int ticketId);
 
+	public void assiginationTickets( int ticketId);
+
 }

@@ -20,7 +20,7 @@ export class AgentViewComponent {
 
   page: number = 1;
   count: number = 0;
-  tablesize: number = 8;
+  tablesize: number = 9;
   datas!: any;
   response!: any;
   cate!: any;
@@ -41,8 +41,8 @@ export class AgentViewComponent {
     
     this.selected = true;
 
-   this.agentName=JSON.parse(sessionStorage.getItem("agentName") || "") 
-   this.cates=JSON.parse(sessionStorage.getItem("Categorys") || "")
+   this.agentName=sessionStorage.getItem('agentName') || ""; 
+   this.cates=JSON.parse(sessionStorage.getItem("Categorys") || "");
   }
   lengtharray!: number;
   agentName:String='';
@@ -62,6 +62,11 @@ export class AgentViewComponent {
         alert(res.mssg)
       }
      
+    },
+    (error)=>{
+      console.log(error);
+      alert(error.error.mssg)
+      
     })
   }
 
@@ -142,9 +147,9 @@ export class AgentViewComponent {
   onData(event: any) {
     this.page = event; // Update the current page number
     if (this.isSearching) {
-      this.searchTicket(); // Re-fetch the search results with the updated page number
+      this.searchTicket(); 
     } else {
-      this.filterByStatus(this.currentStaus); // Re-filter the data based on the current status
+      this.filterByStatus(this.currentStaus);
     }
   }
 
@@ -174,7 +179,7 @@ export class AgentViewComponent {
         this.datas=res.data;
 
         this.lengthsearch=this.datas.length; 
-        // Recent Added
+        this.lengtharray=this.lengthsearch
         if(this.lengthsearch<=8){
           this.page=1;
         }
@@ -225,9 +230,6 @@ export class AgentViewComponent {
 
     resetData(Status: String){
       this.Flag=false;
-      // this.currentStaus='';
-      // this.getTicketDetails();
-      // this.searchButton=false;
       window.location.reload();
     }
     removeValues(){

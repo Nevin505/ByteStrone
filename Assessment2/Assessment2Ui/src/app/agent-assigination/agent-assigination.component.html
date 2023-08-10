@@ -1,57 +1,58 @@
 <h6 style="text-align: center;">Agent Assigination</h6>
 <table style="border-collapse: collapse; width: 100%;">
-    <thead>
-      <tr>
-        <th >Ticket Id</th>
-        <th >Customer Name</th>
-        <th >Subject</th>
-        <th >Description</th>
-        <th >Priority</th>
-        <th >Status</th>
-        <th >Creation Date</th>
-        <th *ngIf="ticketDa.status!=='Closed'">Assign</th>
-        <th *ngIf="ticketDa.status==='Closed'">Show More Details</th>
+  <thead>
+    <tr>
+      <th class="column-100">Ticket Id</th>
+      <th  class="column-200">Customer Name</th>
+      <th  class="column-100">Subject</th>
+      <th  class="column-600">Description</th>
+      <th  class="column-100">Priority</th>
+      <th  class="column-100">Status</th>
+      <th  class="column-150">Creation Date</th>
+      <th  class="column-100" *ngIf="ticketDa.status!=='Closed'">Assign</th>
+      <th  class="column-100"*ngIf="ticketDa.status==='Closed'">Show More Details</th>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td >{{ ticketDa.ticketId }}</td>
-        <td >{{ ticketDa.customer.userName}}</td>
-        <td >{{ ticketDa.subject }}</td>
-        <td class="description-cell " >{{ ticketDa.description }}</td>
-        <td >{{ ticketDa.priority }}</td>
-        <td >{{ ticketDa.status }}</td>
-        <td >{{ ticketDa.creation_Date | date }}</td>
-        <td  *ngIf="ticketDa.status!=='Closed'">
-          <div style="display: flex;flex-direction: row;">
-          <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;">
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="column-100">{{ ticketDa.ticketId }}</td>
+      <td class="column-200">{{ ticketDa.customer.userName}}</td>
+      <td class="column-100">{{ ticketDa.subject }}</td>
+      <td class="column-600">{{ ticketDa.description }}</td>
+      <td class="column-100">{{ ticketDa.priority }}</td>
+      <td class="column-100">{{ ticketDa.status }}</td>
+      <td class="column-150">{{ ticketDa.creation_Date | date }}</td>
+      <td class="column-100" *ngIf="ticketDa.status!=='Closed'">
+        <div style="display: flex;flex-direction: row;">
+          <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;border-radius: 20px;">
             <option *ngFor="let option of agentData" [value]="option.userName">{{ option.userName }}</option>
           </select>
           <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
         </div>
-        </td>
-        <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()" style="border-radius: 20px;">Show Details</button> </td>
-      </tr>
-    </tbody>
-  </table>
+      </td>
+      <td *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()" style="border-radius: 20px;">Show
+          Details</button> </td>
+    </tr>
+  </tbody>
+</table>
 
 <div style=" background-color: #f0f0f0; border-radius: 5px;" class="container-fluid w-50">
-  <div *ngIf="closedTicketDetails" class="ticket-details  mt-4" >
+  <div *ngIf="closedTicketDetails" class="ticket-details  mt-4">
     <div style="display: flex; align-items: center; margin-left: 250px;">
       <label style="text-align: left; flex: 0 0 30%;">Closed Date:</label>
       <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.closedDate | date }}</h6>
     </div>
     <div style="display: flex; align-items: center; margin-left: 250px;">
-    <label style="text-align: left; flex: 0 0 30%;">Satisfactory Rating:</label>
-    <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.satisfactionRating }}</h6>
-  </div>
-  <div style="display: flex; align-items: center; margin-left: 250px;">
-    <label style="text-align: left; flex: 0 0 30%;">Handled By:</label>
-    <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.agentId.agentName }}</h6>
-  </div>
+      <label style="text-align: left; flex: 0 0 30%;">Satisfactory Rating:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.satisfactionRating }}</h6>
+    </div>
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <label style="text-align: left; flex: 0 0 30%;">Handled By:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.agentId.agentName }}</h6>
+    </div>
 
-<h5 style="text-align: center;" class="mt-2">Chats</h5>
+    <h5 style="text-align: center;" class="mt-2">Chats</h5>
     <div *ngFor="let item of chat;" style="display: flex; flex-direction: column;">
 
       <div class="column">
@@ -62,7 +63,7 @@
               <h6>{{ item.content }} <sub>{{item.timeStamp|date:'h:mm a'}}</sub></h6>
             </div>
           </div>
-          <div class="col-6" >
+          <div class="col-6">
             <div style="align-self: flex-start;margin-top: 6px;float: right;" *ngIf="item.author === 'Customer'">
               <label>{{ item.author }}:</label>
               <h6>{{ item.content }}</h6>
@@ -70,24 +71,24 @@
           </div>
         </div>
       </div>
-      
-     
+
+
     </div>
     <div *ngIf="chat.length==0" style="text-align: center;">
       <b>No Chats Were There For This Ticket</b>
     </div>
-    
-    
+
+
   </div>
 </div>
 
 
 
 
-  <!-- style="text-align: left; flex: 0 0 70%;" -->
-  <!--  style="text-align: left; flex: 0 0 30%;" -->
+<!-- style="text-align: left; flex: 0 0 70%;" -->
+<!--  style="text-align: left; flex: 0 0 30%;" -->
 
-      <!-- <div *ngFor="let item of chat;" style="display: flex;flex-direction: column;">
+<!-- <div *ngFor="let item of chat;" style="display: flex;flex-direction: column;">
       <div style="float: right;">
         <label *ngIf="item.author === 'Agent'">{{ item.author }}:</label>
         <h6  *ngIf="item.author === 'Agent'">{{ item.content }}</h6>

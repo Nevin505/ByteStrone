@@ -3,11 +3,13 @@ package com.bytes.train.serviceimpl;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Category;
 import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
+import com.bytes.train.execptions.CustomException;
 import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.repos.CategoryRepository;
 import com.bytes.train.repos.TicketRepository;
@@ -46,8 +48,11 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 
 	// To get the list of Tickets Which belongs to particular Categories
 	@Override
-	public List<Ticket> getParticularCategoryList(int agentId) { 
-		Agent agent = agentRepository.findById(agentId).orElseThrow();
+	public List<Ticket> getParticularCategoryList(int agentId) throws Exception { 
+		Agent agent = agentRepository.findById(agentId).orElse(null); 
+		if(agent==null) {
+			throw new CustomException("There Exists No Agent",HttpStatus.BAD_REQUEST);  
+		}
 		List<Category> agentCategories = agent.getCategory();
 		System.out.println(agentCategories);
 		String[] status={"Open","Closed"};

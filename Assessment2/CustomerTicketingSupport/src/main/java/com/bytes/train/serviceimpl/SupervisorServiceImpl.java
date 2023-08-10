@@ -60,8 +60,8 @@ public class SupervisorServiceImpl implements SupervisorService {
 	@Override
 	public Map<String, Integer> getStatusCounts() {
 		int lowPriority = (ticketRepository.findStatusPriorityTickets("Low")).size();
-		int highPriority = (ticketRepository.findStatusPriorityTickets("Medium")).size();
-		int MediumPriority = (ticketRepository.findStatusPriorityTickets("High")).size();
+		int MediumPriority = (ticketRepository.findStatusPriorityTickets("Medium")).size();
+		int highPriority = (ticketRepository.findStatusPriorityTickets("High")).size();
 		int allPriority = (ticketRepository.findAll()).size();
 
 		Map<String, Integer> priorityCounts = new HashMap<>();

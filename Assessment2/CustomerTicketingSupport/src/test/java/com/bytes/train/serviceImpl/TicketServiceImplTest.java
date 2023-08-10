@@ -53,7 +53,7 @@ public class TicketServiceImplTest {
 	public void testSaveTicketPostman() throws Exception {
 
 		Customer customer = new Customer();
-		customer.setCustomerid(10);
+		customer.setId(10);
 
 		Category category1 = new Category();
 		category1.setCategoryId(1);
@@ -86,7 +86,7 @@ public class TicketServiceImplTest {
 	public void testNotSaveTicketPostman() throws Exception {
 
 		Customer customer = new Customer();
-		customer.setCustomerid(10);
+		customer.setId(10);
 
 		Category category1 = new Category();
 		category1.setCategoryId(1);

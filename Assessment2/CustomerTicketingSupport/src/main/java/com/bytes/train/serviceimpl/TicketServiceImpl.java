@@ -62,4 +62,14 @@ public class TicketServiceImpl implements TicketService {
 		return ticketRepository.findById(ticketId).orElse(null);
 	}
 
+	@Override
+	public void assiginationTickets(int ticketId) {
+		
+	Ticket ticket=ticketRepository.findByticketId(ticketId);
+	
+		
+		
+		
+	}
+
 }

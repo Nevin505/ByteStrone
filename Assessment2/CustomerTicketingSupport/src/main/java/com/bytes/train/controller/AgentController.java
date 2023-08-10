@@ -2,7 +2,11 @@ package com.bytes.train.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,21 +22,25 @@ import com.bytes.train.entities.Agent;
 import com.bytes.train.entities.Response;
 import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
-import com.bytes.train.entities.UserDetails;
+import com.bytes.train.execptions.CustomException;
 import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.service.AgentCategoryService;
+
+
 
 @RestController
 @RequestMapping("/agents")
 @CrossOrigin("http://localhost:4200")
 public class AgentController {
 
-	@Autowired
+	@Autowired             
 	AgentCategoryService agentService;
 	
 	@Autowired
 	AgentRepository agentRepository;
    
+	 private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
+	
 	@PostMapping("/add")
 	public Agent createAgents(@RequestBody Agent agent){
 		return  agentRepository.save(agent);
@@ -40,22 +48,27 @@ public class AgentController {
 	}
 	
 	@GetMapping("/adds/{id}")
-	public Agent createAgentss(@PathVariable int id){
+	public Agent createAgentss(@PathVariable int id){ 
 		return  agentRepository.findById(id).orElseThrow();
 		
 	}
 
 
 // To get the list of Tickets Which belongs to Agents Categories
-	@GetMapping("/categorytickets/{agentId}")
-	public ResponseEntity<Response> getParticularAgentTickets(@PathVariable int agentId) {
+	@GetMapping("/categorytickets/{agentId}") 
+	public ResponseEntity<Response> getParticularAgentTickets(@PathVariable int agentId) throws Exception {
 		try {
 			List<Ticket> agentsTickets = agentService.getParticularCategoryList(agentId);
 			return ResponseEntity.ok(new Response("The Agents Category Tickets Are", agentsTickets, true));
-		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+		} catch (CustomException e) {
+			logger.error("The Errors Is",e);   
+			return ResponseEntity.status(e.getHttpStatus()).body(new Response(e.getMessage(), null, false));
 		}
-
+		catch (Exception e) { 
+			logger.error("The Errors Is",e);  
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			
+		}
 	}
 
 //	Filters Open and Closed Tickets
@@ -77,7 +90,8 @@ public class AgentController {
 			List<Ticket> closedTickets = agentService.getclosedTickets(agentId);
 			return ResponseEntity.ok(new Response("The Closed Tickets Are", closedTickets, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+//			ResponseEntity.ok(new Response("There Exist No Such Agent Id", null, false));
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
 		}
 
 	}
@@ -127,7 +141,7 @@ public class AgentController {
 			}
 			return ResponseEntity.ok(new Response("Ticket is  Being Closed ", ticket, true));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new Response("No Ticket Is Found", null, false));
+			return ResponseEntity.ok(new Response(e.getMessage(), null, false));
 		}
 	}
 

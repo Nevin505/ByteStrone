@@ -201,6 +201,12 @@ export class SuperVisorComponent {
   agentNames: String = '';
   agentIndex: number = 0;
 
+
+  page: number = 1;
+  count: number = 0;
+  tablesize: number = 9;
+  lengtharray:number=0;
+
   viewVolumes() {
 
     this.graphDisplay = true;
@@ -290,6 +296,10 @@ export class SuperVisorComponent {
     }
 
   }
+onData(){
+  
+}
+
   getChart() {
     var chart = new Chart("myBetweenDayTicketCharts", {
       type: 'bar',

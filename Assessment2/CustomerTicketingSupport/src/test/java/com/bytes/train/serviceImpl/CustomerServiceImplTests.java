@@ -13,17 +13,24 @@ import com.bytes.train.CustomerTicketingSupportApplication;
 import com.bytes.train.entities.Agent;
 import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.repos.TicketRepository;
+import com.bytes.train.repos.UserRepository;
 import com.bytes.train.service.AgentCategoryService;
+import com.bytes.train.service.UserService;
 
 @SpringBootTest(classes = CustomerTicketingSupportApplication.class)
 public class CustomerServiceImplTests {
 
 	@MockBean
 	private AgentRepository agentRepository;
+	
+	@MockBean 
+	private UserRepository userRepository;
 
 	@Autowired
 	private AgentCategoryService agentCategoryServiceImpl;
-
+	
+	@Autowired
+	UserService userService;
 
 	@MockBean
 	private TicketRepository ticketRepository;
@@ -34,9 +41,9 @@ public class CustomerServiceImplTests {
 	void TestcheckAccessCorrect() throws Exception {
 		String name = "n";
 		String password = "n";
-		Mockito.when(agentRepository.findByAgentName(name)).thenReturn(new Agent(0, "n", null, "n", null, null, null));
+		Mockito.when(userRepository.findByUserName(name)).thenReturn(new Agent(0, "n", null, "n", null, null, null, null));
 		System.out.println();
-		assertEquals(password, agentCategoryServiceImpl.checkAccess(name, password).getAgentPassword());
+		assertEquals(password, userService.loginAccess(name, password).getUserPassword());
 	}
 
 //  Login Test Case
@@ -46,9 +53,9 @@ public class CustomerServiceImplTests {
 		CustomerServiceImplTests customer = new CustomerServiceImplTests();
 		String name = "n";
 		String password = "k";
-		Mockito.when(agentRepository.findByAgentName(name)).thenReturn(new Agent(0, "n", null, "k", null, null, null));
+		Mockito.when(userRepository.findByUserName(name)).thenReturn(new Agent(0, "n", null, "k", null, null, null, null));
 		System.out.println();
-		assertEquals(password, agentCategoryServiceImpl.checkAccess(name, password).getAgentPassword());
+		assertEquals(password,userService.loginAccess(name, password).getUserPassword());
 	}
 
 //Login Test Case
@@ -57,9 +64,9 @@ public class CustomerServiceImplTests {
 	void TestcheckAccessNoData() throws Exception {
 		String name = "k";
 		String password = "k";
-		Mockito.when(agentRepository.findByAgentName(name)).thenReturn(null);
+		Mockito.when(userRepository.findByUserName(name)).thenReturn(null);
 		System.out.println();
-		assertEquals(password, agentCategoryServiceImpl.checkAccess(name, password).getAgentPassword());
+		assertEquals(password, userService.loginAccess(name, password).getUserPassword());
 	}
 
 }

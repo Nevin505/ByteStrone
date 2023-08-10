@@ -45,9 +45,9 @@ public class AgentCategoryServiceImplTest {
 	static Agent getDetails() {
 		int agentId = 123;
 		Agent agent = new Agent();
-		agent.setAgentID(agentId);
+		agent.setId(agentId);
 		agent.setAddress(null);
-		agent.setAgentName(null);
+		agent.setUserName(null);
 		return agent;
 	}
 
@@ -66,7 +66,7 @@ public class AgentCategoryServiceImplTest {
 
 	@Test
 //	@Disabled
-	void TestCheckAgentParticularList() {
+	void TestCheckAgentParticularList() throws Exception {
 		int agentId = 123;
 
 		Agent agent = AgentCategoryServiceImplTest.getDetails();
@@ -113,7 +113,7 @@ public class AgentCategoryServiceImplTest {
 //
 	@Test
 	@Disabled
-	public void testGetParticularCategoryListWithNoMatchingTickets() {
+	public void testGetParticularCategoryListWithNoMatchingTickets() throws Exception {
 		// Test data setup
 		int agentId = 1;
 

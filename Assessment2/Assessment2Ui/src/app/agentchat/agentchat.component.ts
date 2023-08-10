@@ -57,12 +57,25 @@ export class AgentchatComponent {
       })
 
   }
+  values:number=0;
 sendChat(){
   this.chat.content=this.chatContent;
   this.chat.author='Agent';
+
+   this.values=this.chatContent.length;
+  const newAgentMessage = {
+    author: 'Agent',
+    content: this.chatContent,
+    timeStamp: new Date()
+  };
+
+  this.chatContents.push(newAgentMessage); 
+
+
+  this.chatContent = '';
   this.api.addAgentChatMessage(this.chat).subscribe((res:any)=>{
     console.log(res);
-    window.location.reload()
+
   })
   
 }

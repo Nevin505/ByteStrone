@@ -10,22 +10,23 @@ import { AgentchatComponent } from './agentchat/agentchat.component';
 import { ViewChatsComponent } from './view-chats/view-chats.component';
 import { LoginComponent } from './login/login.component';
 import { SuperVisorComponent } from './super-visor/super-visor.component';
+import { authGuard } from './shared/auth.guard';
 
 
 const routes: Routes = [
   // {path:'',component:LandingComponent},
-  { path: 'customerview', component:CustomerviewComponent},
-  { path: 'ticketRegister', component:CustomerviewComponent},  
-  { path: 'customerticketShow', component:CustomerShowTicketsComponent},
-  { path: 'agentView', component:AgentViewComponent}, 
-  { path: 'agentTicketAssigination', component:AgentAssiginationComponent},
-  { path: 'agentViewTickets', component:AgentTicketsComponent},
-  { path: 'agentchat', component:AgentchatComponent},
-  { path: 'customerchat', component:ViewChatsComponent},
-  { path: 'supervisor', component:SuperVisorComponent},
-  {path:'landingPage',component:LoginComponent},
+  { path: 'customerview', component:CustomerviewComponent,canActivate:[authGuard]},
+  { path: 'ticketRegister', component:CustomerviewComponent,canActivate:[authGuard]},  
+  { path: 'customerticketShow', component:CustomerShowTicketsComponent,canActivate:[authGuard]},
+  { path: 'agentView', component:AgentViewComponent,canActivate:[authGuard]}, 
+  { path: 'agentTicketAssigination', component:AgentAssiginationComponent,canActivate:[authGuard]},
+  { path: 'agentViewTickets', component:AgentTicketsComponent,canActivate:[authGuard]},
+  { path: 'agentchat', component:AgentchatComponent,canActivate:[authGuard]},
+  { path: 'customerchat', component:ViewChatsComponent,canActivate:[authGuard]},
+  { path: 'supervisor', component:SuperVisorComponent,canActivate:[authGuard]},
+  {path:'landingPage',component:LoginComponent,canActivate:[authGuard]},
   { path: '', component:LoginComponent}, 
-  { path: '**', component:LoginComponent}
+  { path: '**', component:LoginComponent,canActivate:[authGuard]}
   
 ];
 

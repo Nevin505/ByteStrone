@@ -26,8 +26,13 @@ public class Agent extends UserDetails {
 
 	@JoinTable(name = "agent_category", joinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "categoryId"))
    
-	private List<Category> category = new LinkedList<>();
-
+	private List<Category> category = new LinkedList<>(); 
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "agent_skills", joinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "skillId"))
+	private List<Skill> skills = new LinkedList<>();
+	
 	public Agent() {
 	super();
 	}
@@ -53,6 +58,14 @@ public class Agent extends UserDetails {
 
 	public void setCategory(List<Category> category) {
 		this.category = category;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
 	}
 	
 	
