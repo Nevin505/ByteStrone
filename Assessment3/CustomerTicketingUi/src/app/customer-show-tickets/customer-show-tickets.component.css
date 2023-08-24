@@ -1,0 +1,58 @@
+.input-radio{
+  margin-left: 4px;
+}
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th,td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+
+  th {
+    cursor: pointer;
+    background-color: green;
+    color: white;
+  }
+
+  th:hover {
+    background-color: darkgreen;
+  }
+
+  .description-cell {
+    word-wrap: break-word;
+     }
+
+     .column-80 {
+      width: 80px; 
+    }
+  .column-100 {
+    width: 100px; 
+  }
+  .column-250 {
+    width: 250px; 
+    word-wrap: break-word;
+   
+  }
+  
+  .right-div {
+    display: flex;
+    align-items: center;
+  }
+  .column-150 {
+    width: 150px; 
+  }
+  
+
+  .column-600 {
+    width: 650px;
+  }
+  .round-button {
+    border-radius: 35px;
+    margin-top: 5px;
+  }

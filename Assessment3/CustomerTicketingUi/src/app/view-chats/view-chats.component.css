@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  margin: 0 auto
+}
+
+.ticket-details {
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.ticket-details {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  /* max-width: 550px; */
+}
+
+.ticket-details label {
+  font-weight: bold;
+}
+
+.ticket-details h6 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  /* max-width: 600px; */
+  margin: 20px auto;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.message {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  /* max-width: 70%; */
+}
+
+.customer-message {
+  background-color: #f0f0f0;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.agent-message {
+  background-color: #f0f0f0;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.message label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.message-text {
+  margin: 0;
+}
+
+.input-container {
+  display: flex;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #ccc;
+}
+
+.send-button {
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.rating-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.rating-section label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.rating-section input {
+  margin-right: 10px;
+}
+
+.rating-section button {
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.chat-scroll-container {
+  max-height: 340px; 
+  overflow-y: auto;
+}
+
+.rating-section h5 {
+  margin-top: 10px;
+}
+.description-text {
+  word-wrap: break-word;
+}

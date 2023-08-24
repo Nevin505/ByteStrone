@@ -1,0 +1,23 @@
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  th {
+    cursor: pointer;
+    background-color: green;
+    color: white;
+  }
+
+  th:hover {
+    background-color: darkgreen;
+  }

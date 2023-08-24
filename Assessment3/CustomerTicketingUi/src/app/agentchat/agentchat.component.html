@@ -1,0 +1,71 @@
+<div class="container ">
+  <div class="ticket-details">
+    <label for="">Ticket Id</label>
+    <h6>{{ticket.ticketId}}</h6>
+    <label for="">Subject</label>
+    <h6>{{ticket.subject}}</h6>
+    <label for="">Description</label>
+    <h6 class="description-text">{{ticket.description}}</h6>
+    <label for="">Creation Date</label>
+    <h6 >{{ticket.creation_Date | date}}</h6>
+
+
+
+    <!-- <div class="chat-container " >
+      <div *ngFor="let item of chatContents" class="chat ">
+        <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
+          <label for="">Customer:</label>
+          <p class="message-text">{{item.content}} </p><sub>{{item.timeStamp|date:'h:mm a'}}</sub>
+        </div>
+        <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: right;">
+          <label for="">Agent:</label>
+          <p class="message-text">{{item.content}}  </p><sub>{{item.timeStamp|date:'h:mm a'}}</sub>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="chat-scroll-container">
+      <div class="chat-container">
+        <div *ngFor="let item of chatContents" class="chat">
+          <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
+            <label for="">Customer:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+          <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: right;">
+            <label for="">Agent:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="message-container">
+      <input class="message-input" type="text" name="chatContent" id="Chat" [(ngModel)]="chatContent" placeholder="Type Your Message Here:">
+      <button class="send-button" (click)="sendChat()">Submit</button>
+    </div><br>
+    <button (click)="closeTickets()" [disabled]="buttondisabled">Close Tickets</button>
+  </div>
+</div>
+
+
+
+<!-- <table class="ticket-table">
+    <thead>
+        <tr>
+            <th>Ticket Id</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Close Ticket</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ticket.ticketId}}</td>
+            <td>{{ticket.subject}}</td>
+            <td>{{ticket.description}}</td>
+            <td><button style="border-radius: 40px;" (click)="closeTickets()">Close Tickets</button></td>
+        </tr>
+    </tbody>
+</table> -->
