@@ -8,7 +8,7 @@ export class Agentlogin {
     data!:any;
     mssg!:string;
 
-    // agentName:string='';
+    userName:string='';
     // agentPassword:string='';
 
 }

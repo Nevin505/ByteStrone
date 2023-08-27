@@ -46,7 +46,7 @@ export class SuperVisorComponent {
         console.log(this.valuess);
         this.createChart();
       }
-
+      
     })
     //To get All The Tickets Recived So Far
     this.api.getTicketVolumes().subscribe((res: any) => {
@@ -58,7 +58,7 @@ export class SuperVisorComponent {
 
     this.showPriorityCount();
     this.getTicketStatusChart();
-   
+   this.sortClosedDate();
   }
 
   // To Find Open And Tickets Based on Priority Only For Opened Tickets
@@ -217,8 +217,12 @@ export class SuperVisorComponent {
       this.api.generateHtmlReportBetweenDates(this.startdate, this.enddate).subscribe((res: any) => {
         if (res.success) {
           this.ticketFullData = res.data;
-          this.lengtharray=this.ticketFullData.length;
+          console.log(this.ticketFullData);
+          console.log(this.ticketFullData);
           
+          
+          this.lengtharray=this.ticketFullData.length;
+          // this.ticketFullData=this.sortClosedDate();
           if (this.ticketFullData.length != 0) {
             // console.log(this.ticketFullData[4].agentId.agentName);
             this.categories = [];
@@ -227,7 +231,7 @@ export class SuperVisorComponent {
             this.closedCounts = [];
             this.agentss = [];
             this.agentCounts = [];
-            console.log("Here");
+
 
             console.log(this.ticketFullData);
 
@@ -240,16 +244,19 @@ export class SuperVisorComponent {
             for (let ticket of this.ticketFullData) {
               let category = ticket.categoryId.category_name;
               let status = ticket.status;
+              // agentId
+// : 
+// {id: 101, name: 'Ananthu', userName: 'Ananthu',
               if (ticket.agentId !== null) {
                 console.log("Here");
-                // this.agentNames = ticket.agentId.agentName;
-                console.log(this.agentNames);
+                // this.agentNames = ticket.agentId.userName;
+                // console.log(this.agentNames);
                 // this.agentIndex=this.agentss.indexOf(this.agentNames);
-                this.agentIndex = this.agentss.findIndex((agent: any) => agent.name === this.agentNames);
-                if (this.agentIndex === -1) {
-                  this.agentss.push({ name: this.agentNames, count: 0 });
-                  this.agentIndex = this.agentss.length - 1;
-                }
+                // this.agentIndex = this.agentss.findIndex((agent: any) => agent.name === this.agentNames);
+                // if (this.agentIndex === -1) {
+                //   this.agentss.push({ name: this.agentNames, count: 0 });
+                //   this.agentIndex = this.agentss.length - 1;
+                // }
                 this.agentss[this.agentIndex].count++;
               }
               let index = this.categories.indexOf(category);

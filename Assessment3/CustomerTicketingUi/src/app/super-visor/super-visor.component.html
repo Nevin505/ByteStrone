@@ -118,7 +118,7 @@
                     <td>{{item.closedDate===null?"--":item.closedDate|date}}</td>
                     <td>{{item.closedDate===null?"--":getResponseTime(item)}}</td>
                     <td>{{item.categoryName}}</td>
-                    <td>{{item.agentId===null?"--":item.agentId.agentName}}</td>
+                    <td>{{item.agentId===null?"--":item.agentId.userName}}</td>
                 </tr>
                 <div *ngIf="ticketFullData.length===0" style="text-align: center; margin-left:40px ;">
                     No Records Are There

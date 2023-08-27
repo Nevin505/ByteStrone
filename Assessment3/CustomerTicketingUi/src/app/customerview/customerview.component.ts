@@ -56,7 +56,8 @@ export class CustomerviewComponent {
     })
     this.time = new Date();
 
-    this.customerName = sessionStorage.getItem("customerName") as String;
+    this.customerName = sessionStorage.getItem("customerName") ||' ';
+    
   }
 
   onRaiseTicket() {
@@ -77,9 +78,12 @@ export class CustomerviewComponent {
       },
       error: (error: HttpErrorResponse) => {
         alert(error.error.mssg)
-      }
+      } 
+      
     });
   }
+
+  
 
 }
 

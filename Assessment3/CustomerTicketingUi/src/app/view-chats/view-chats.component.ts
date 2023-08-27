@@ -63,7 +63,8 @@ export class ViewChatsComponent {
   }
 
   AddComments() {
-    if (this.customerMessage.length>1) {
+    this.customerMessage=this.customerMessage.trim();
+    if (this.customerMessage.length!=0) {
       this.chat.author = 'Customer';
       this.chat.content = this.customerMessage;
       const newAgentMessage = {
@@ -72,14 +73,14 @@ export class ViewChatsComponent {
         timeStamp: new Date()
       };
       this.chatContents.push(newAgentMessage);
-
       this.api.setCustomerChat(this.chat).subscribe((res: any) => {
         if (res.success) {
           if (res.data == null) {
             alert(res.mssg)
           }
           else {
-            alert(res.mssg)
+            alert(res.mssg);
+            this.customerMessage='';
           }
         }
         else {
@@ -93,9 +94,6 @@ export class ViewChatsComponent {
     }
 
   }
-  // isCommentEmpty() {
-  //   return this.customerMessage.length > 1;
-  // }
   message: String = '';
   setRating(rating: number) {
     this.api.setTicketRating(rating).subscribe((res: any) => {

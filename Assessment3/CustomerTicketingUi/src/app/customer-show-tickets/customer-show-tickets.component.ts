@@ -65,20 +65,12 @@ export class CustomerShowTicketsComponent {
     if (this.selectedStatus === 'Open'|| this.selectedStatus === 'Assigned' || this.selectedStatus === 'Closed') {   
       this.flag=true;
       console.log("Here");
-      
       this.message="There Exist No"+this.selectedStatus+" ";
       this.api.getCustomerFilterTickets(this.filter).subscribe( {
         next:(res:any)=>{
           if(res.success){
-            this.data = res.data;
-            // if (this.selectedStatus === 'Assigned') {
-            //   this.assignedTicketId = this.data.map(item => item.ticketId);
-            //   console.log(this.assignedTicketId);
-            // }
-            // console.log(this.assignedTicketId);
-            
+            this.data = res.data;            
             this.lengtharray = this.data.length;
-            console.log(this.data);
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -94,6 +86,77 @@ export class CustomerShowTicketsComponent {
   }
 
 
+  onDatachange(event: any) {
+     if (this.selectedStatus=='Open' || this.selectedStatus=='Assigned'||this.selectedStatus=='Closed') {
+     this.getFilter(this.selectedStatus);
+     this.page=event;
+   }
+  // else if(this.selectedStatus=='Assigned'){
+  // this.getFilter(this.selectedStatus);
+  // this.page=event;
+  // } 
+  else if(this.searchPageChange){
+    this.searchTicket();
+    this.page=event;
+  }
+  // else if(this.selectedStatus=='Closed'){
+ 
+  // this.getFilter(this.selectedStatus);
+  // this.page = event;
+  // }
+  else {
+    this.page = event;
+    this.getCustomerTickets();
+  }
+  }
+
+
+  filterOpen: boolean = false;
+  setfilter() {
+      this.filterOpen = !this.filterOpen;
+  }
+
+  searchtickId:any;
+  search:SearchCriteria=new SearchCriteria();
+  searchPageChange:boolean=false;
+ 
+  searchBackButton:boolean=false;
+  searchTicket(){
+  this.searchtickId=this.searchtickId.trim();
+    if(this.searchtickId.length!=0){
+      this.page=1;
+      this.searchPageChange=true;
+      this.searchBackButton=true;
+        this.search.subject=this.searchtickId.trim();
+        this.search.status= this.selectedStatus;      
+        this.api.getCustomerSearchTickets(this.search).subscribe((res:any)=>{
+          if(res.success){
+            console.log(res);
+            this.data=res.data;
+            this.lengtharray=this.data.length; 
+            this.message= `<p><strong>No results found for ${this.searchtickId}</strong></p><p>Please make sure your words are spelled correctly, or use fewer or different keywords.</p>`;
+          }
+          else{
+            alert(res.mssg)
+          }       
+        }) 
+    }
+    else{
+      alert("Please Enter Keyword")
+    }
+
+    }
+
+    reloadPage(){
+      this.searchPageChange=false;
+      this.getFilter(this.selectedStatus);
+    }
+  }
+ 
+
+  
+
+
   // getNotifcations(){
   //   for (let index = 0; index < this.assignedTicketId.length; index++) {
   //     const element = this.assignedTicketId[index];
@@ -106,127 +169,3 @@ export class CustomerShowTicketsComponent {
 
   
   // }
-
-  onDatachange(event: any) {
-    
-     if (this.selectedStatus=='Open') {
-     this.getFilter(this.selectedStatus);
-     this.page=event;
-  }
-  else if(this.selectedStatus=='Assigned'){
-  this.getFilter(this.selectedStatus);
-  this.page=event;
-  } 
-  else if(this.searchPageChange){
-    this.searchTicket();
-    this.page=event;
-  }
-  else if(this.selectedStatus=='Closed'){
- 
-  this.getFilter(this.selectedStatus);
-  this.page = event;
-  }
-  else {
-    this.page = event;
-    this.getCustomerTickets();
-  }
-  }
-
-
-  filterOpen: boolean = false;
-  setfilter() {
-    if (this.filterOpen === true) {
-      this.filterOpen = false
-    }
-    else {
-      this.filterOpen = true;
-    }
-
-  }
-  searchtickId:any;
-
-  search:SearchCriteria=new SearchCriteria();
-  
-  searchPageChange:boolean=false;
-
-  searchTicket(){
-    this.page=1;
-    this.searchPageChange=true;
-      console.log("Value of searchtickId:", this.searchtickId);
-      console.log("Type of searchtickId:", typeof this.searchtickId);
-      
-      this.search.subject=this.searchtickId;
-      this.search.status= this.selectedStatus;
-      console.log(this.search);
-      
-      this.api.getCustomerSearchTickets(this.search).subscribe((res:any)=>{
-        if(res.success){
-          console.log(res);
-          this.data=res.data;
-          this.lengtharray=this.data.length; 
-          this.message="There Exist No Tickets"
-          // this.messageFilter="No Tickets Are There"
-        }
-        else{
-          alert(res.mssg)
-        }
-        
-      })
-  
-      // this.searchButton=true;
-  
-    }
-
-
-   
-    
-
-  }
-
-// }
-
-
-    // else if (status === 'Assigned') {
-    //   // this.page=1
-    //   this.filter.status = 'Assigned'
-    //   this.Status=status
-
-    //   this.selectedStatus=status
-
-    //   this.flag=true;
-      
-    //   this.api.getCustomerFilterTickets(this.filter).subscribe( {
-    //     next:(res:any)=>{
-    //       if(res.success){
-    //         this.data = res.data
-    //         this.lengtharray = this.data.length;
-    //         console.log(this.data);
-    //       }
-    //     },
-    //     error: (error: HttpErrorResponse) => {
-    //       alert(error.error.mssg)
-    //     }
-    //   })
-    // }
-    // else if (status == 'Closed') {
-    //   // this.page=1
-    //   this.filter.status = 'Closed'
-    //   this.Status=status
-    
-    //   this.selectedStatus=status
-      
-    //   this.flag=true;
-    //   this.api.getCustomerFilterTickets(this.filter).subscribe( {
-    //     next:(res:any)=>{
-    //       if(res.success){
-    //         this.data = res.data
-    //         this.lengtharray = this.data.length;
-    //         console.log(this.data);
-    //       }
-    //     },
-    //     error: (error: HttpErrorResponse) => {
-    //       alert(error.error.mssg)
-    //     }
-    //   })
-
-    // }

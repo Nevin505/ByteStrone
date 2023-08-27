@@ -58,15 +58,17 @@
       <td class="column-100">{{ item.priority}}</td>
       <td class="column-100">{{ item.status}}</td>
       <td class="column-100">{{item.agentId?item.agentId.userName:'Not Assigined'}}</td>
-      <td class="column-100"><button style="border-radius: 40px;" (click)="getMessageData(item.ticketId)">View Details</button></td>
+      <td class="column-100"><button style="border-radius: 40px;" (click)="getMessageData(item.ticketId)">View
+          Details</button></td>
     </tr>
-    <!-- </tr> -->
   </tbody>
 </table>
-<div class="container">
-  <div class="center-content" *ngIf="lengtharray == 0">
-    {{ message }}
+<div class="container" *ngIf="lengtharray == 0">
+  <div class="center-content"  [innerHtml]="message">
   </div>
+</div>
+<div  *ngIf="searchBackButton===true">
+  <button style="border-radius: 20px;" (click)="reloadPage()">Back</button>
 </div>
 <div *ngIf="lengtharray>10">
   <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDatachange($event)">
@@ -75,6 +77,65 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="right-div" style="display: flex; align-items: center;">
+  <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+    style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+  <button (click)="searchTicket()" class="round-button">Search</button>
+</div> -->
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>Ticket Id</th>
+      <th>Subject</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Handled By</th>
+      <th>Info</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data | paginate:{
+        itemsPerPage:tablesize,
+        currentPage:page,
+        totalItems:count 
+    } |dateorder">
+      <td>{{ item.ticketId }}</td>
+      <td>{{ item.subject}}</td>
+      <td>{{ item.description}}</td>
+      <td>{{ item.priority}}</td>
+      <td>{{ item.status}}</td>
+      <td>{{item.agentId?item.agentId.agentName:'Not Assigined'}}</td>
+      <td><button style="border-radius: 40px;" (click)="getMessageData(item.ticketId)">View Details</button></td>
+    </tr>
+
+  </tbody>
+</table> -->
+<!-- 
+<div *ngIf="lengtharray>9">
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onDatachange($event)">
+  </pagination-controls>
+</div> -->
 
 
 

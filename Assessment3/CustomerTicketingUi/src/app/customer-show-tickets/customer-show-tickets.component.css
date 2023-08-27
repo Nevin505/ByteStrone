@@ -56,3 +56,15 @@
     border-radius: 35px;
     margin-top: 5px;
   }
+  .container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    height: 200px; /* Set a height if needed */
+  }
+
+  .center-content {
+    text-align: center;
+
+  }

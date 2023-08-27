@@ -16,14 +16,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent {
 
-  // loginform=new FormGroup({
-  //   username:new FormControl('',Validators.required),
-  //   Password:new FormControl('',Validators.required),
-  //   Role:new FormControl('',Validators.required)
-
-
-  // })
-
   UserName!:string;
   Password!:string;
   customerId:number=0;
@@ -36,14 +28,11 @@ export class LoginComponent {
   loginForm:FormGroup;
 
 
-  constructor(private api:ApiService,private router:Router){
-   
+  constructor(private api:ApiService,private router:Router){   
     this.loginForm = new FormGroup({
       agentName: new FormControl('', [Validators.required]),
       agentPassword: new FormControl('', [Validators.required])
-      // role: new FormControl('', [Validators.required])
-    });
-    
+    });  
   }
 
 
@@ -55,7 +44,7 @@ export class LoginComponent {
     loginAgent() {
       this.userDetails.userName = this.loginForm.value.agentName.trim();
       this.userDetails.userPassword = this.loginForm.value.agentPassword.trim();
-    this.api.validatelogin(this.userDetails).subscribe({
+      this.api.validatelogin(this.userDetails).subscribe({
       next: (res: any) => {
         if(res.success){
           sessionStorage.setItem('token','t');
@@ -72,6 +61,7 @@ export class LoginComponent {
             }
             else if(res.data.role==='Supervisor'){
               sessionStorage.setItem("superVisorId",res.data.id);
+              sessionStorage.setItem("superVisorName",res.data.userName);
               this.router.navigate(['supervisor']);
             }      
           else if(res.data.role==='Customer'){

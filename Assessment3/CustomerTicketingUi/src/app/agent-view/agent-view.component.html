@@ -106,13 +106,17 @@
 
   </tbody>
 </table>
-<div *ngIf="lengtharray===0" style="margin-left:100px ;margin-top: 10px; ">
+<!-- <div *ngIf="lengtharray===0" style="margin-left:100px ;margin-top: 10px; ">
   <h5>{{messageFilter}}</h5>
+</div> -->
+<div class="container" *ngIf="lengtharray == 0">
+  <div class="center-content"  [innerHtml]="messageFilter">
+  </div>
 </div>
 <div>
   <button style="border-radius: 40px;" *ngIf="searchButton" (click)=" resetData('')">Back</button>
 </div>
-<div *ngIf="lengtharray>8">
+<div *ngIf="lengtharray>9">
   <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onData($event)">
   </pagination-controls>
 </div>

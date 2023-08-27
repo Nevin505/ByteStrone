@@ -40,7 +40,7 @@
 
   <div class="rating-section" *ngIf="sticket.status==='Closed'">
     <label for="">Enter The Satisfactory Rating:</label>
-    <input type="number" [(ngModel)]="rating">
+    <input style="height: 40px;" type="number" [(ngModel)]="rating">
     <button (click)="setRating(rating)">Set Rating</button>
     <h5>{{message}}</h5>
   </div>

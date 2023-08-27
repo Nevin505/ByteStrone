@@ -99,7 +99,7 @@
     <h5 style="text-align: center;" class="mt-2">Chats</h5>
 
     <div class="chat-scroll-container">
-      <div class="chat-container">
+      <!-- <div class="chat-container"> -->
         <div *ngFor="let item of chat" class="chat">
           <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
             <label for="">Customer:</label>
@@ -110,7 +110,7 @@
             <p class="message-text">{{ item.content }}</p><sub>{{ item.timeStamp | date:'h:mm a' }}</sub>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
 
     <div *ngIf="chat.length == 0" style="text-align: center;">
