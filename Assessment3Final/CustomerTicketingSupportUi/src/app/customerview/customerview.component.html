@@ -1,0 +1,83 @@
+<!-- <div style="float:right; margin-right: 15px;display: flex;flex-direction: column;">
+  <div>
+    {{time|date:'dd-MMMM-yyyy'}}
+  </div>
+  <div>
+    {{time|date:'hh:mm:ss a':'+0530'}}
+  </div> -->
+<!-- </div> -->
+<div style="margin-left: 100px;margin-top: 40px;">
+  <h4>Hello,{{customerName}}</h4>
+  <button style="float:right;border-radius: 40px;margin-right: 10px;" (click)="removeData()"><i
+      class="bi bi-box-arrow-right"></i>LogOut</button>
+</div>
+
+<div style="margin-top: 100px; margin-left: 500px;">
+  <button (click)="onRaiseTicket()" class="custom-button" style="margin-right: 100px;">Raise Ticket</button>
+  <button routerLink="/customerticketShow" class="btn btn-primary">To View Tickets Raised</button>
+</div>
+
+<div class="container-fluid w-50">
+  <div *ngIf="raiseValue" class="container-fluid w-75 mt-4 ml-5 custom-container">
+    <form [formGroup]="ticketForm" (ngSubmit)="addedValue()" class="form-control">
+      <div class="input-container">
+
+        <input type="text" placeholder="Enter The Subject" formControlName="subject" class="form-control">
+        <div class="valid" *ngIf="ticketForm.controls.subject.invalid && ticketForm.controls.subject.touched">
+          Enter The Subject
+        </div>
+        <br>
+        <textarea type="text" placeholder="Enter The Description" class="form-control description-height"
+          formControlName="description"></textarea>
+        <div class="valid" *ngIf="ticketForm.controls.description.invalid && ticketForm.controls.description.touched">
+          Enter The Description
+        </div>
+      </div>
+
+      <label for="priority" class="custom-label">Priority</label>
+      <select id="priority" formControlName="priority" class="form-control">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <div class="valid" *ngIf="ticketForm.controls.priority.invalid && ticketForm.controls.priority.touched">
+        Enter The Priority
+      </div>
+      <label for="category" class="custom-label">Category</label>
+      <select id="category" name="categoryName" formControlName="categoryName" class="custom-select">
+        <option *ngFor="let option of categoryList" [value]="option.category_name">{{ option.category_name }}</option>
+      </select>
+      <div class="valid" *ngIf="ticketForm.controls.categoryName.invalid && ticketForm.controls.categoryName.touched">
+        Enter The Category
+      </div> <br>
+      <button style="margin-left: 50%;" class="btn btn-success" [disabled]="ticketForm.invalid">Submit</button>
+    </form>
+  </div>
+</div>
+<!-- Your existing code above -->
+
+<!-- <footer style="background-color: #f8f8f8; padding: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>About Us</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fringilla libero ac dictum ultricies.</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Connect With Us</h4>
+        <div>
+          <a href="#" style="margin-right: 10px;"><i class="bi bi-facebook"></i></a>
+          <a href="#" style="margin-right: 10px;"><i class="bi bi-twitter"></i></a>
+          <a href="#" style="margin-right: 10px;"><i class="bi bi-instagram"></i></a>
+          <a href="#" style="margin-right: 10px;"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-12 text-center">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+ -->
