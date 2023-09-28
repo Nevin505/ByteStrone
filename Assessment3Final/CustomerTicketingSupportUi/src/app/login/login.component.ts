@@ -51,8 +51,8 @@ export class LoginComponent {
     this.api.validatelogin(this.userDetails).subscribe({
       next: (res: Common) => {
         if (res.success) {
-          sessionStorage.setItem('token', 't');
           if (res.data.role == 'Agent') {
+            sessionStorage.setItem('role', 'Agent');
             const secretKey = 'your-secret-key';
             const dataToEncrypt = res.data.id.toString();
             const wordArray = CryptoJS.enc.Utf8.parse(dataToEncrypt);
@@ -65,11 +65,13 @@ export class LoginComponent {
             alert("Agent")
           }
           else if (res.data.role === 'Supervisor') {
+            sessionStorage.setItem('role', 'Supervisor');
             sessionStorage.setItem("superVisorId", res.data.id);
             sessionStorage.setItem("superVisorName", res.data.userName);
             this.router.navigate(['supervisor']);
           }
           else if (res.data.role === 'Customer') {
+            sessionStorage.setItem('role', 'Customer');
             const secretKey = 'your-secret-key';
             const dataToEncrypt = res.data.id.toString();
             const wordArray = CryptoJS.enc.Utf8.parse(dataToEncrypt);

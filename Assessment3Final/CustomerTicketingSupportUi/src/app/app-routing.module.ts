@@ -10,25 +10,23 @@ import { AgentchatComponent } from './agentchat/agentchat.component';
 import { ViewChatsComponent } from './view-chats/view-chats.component';
 import { LoginComponent } from './login/login.component';
 import { SuperVisorComponent } from './super-visor/super-visor.component';
-import { authGuard } from './shared/auth.guard';
-import { customerguardGuard } from './shared/customerguard.guard';
-import { ageentguardGuard } from './shared/ageentguard.guard';
+import { guardGuard } from './shared/guard.guard';
 
 
 const routes: Routes = [
   // {path:'',component:LandingComponent},
-  { path: 'customerview', component:CustomerviewComponent,canActivate:[authGuard,customerguardGuard]},
-  { path: 'ticketRegister', component:CustomerviewComponent,canActivate:[authGuard,customerguardGuard]},  
-  { path: 'customerticketShow', component:CustomerShowTicketsComponent,canActivate:[authGuard,customerguardGuard]},
-  { path: 'agentView', component:AgentViewComponent,canActivate:[authGuard,ageentguardGuard]}, 
-  { path: 'agentTicketAssigination', component:AgentAssiginationComponent,canActivate:[authGuard,ageentguardGuard]},
-  { path: 'agentViewTickets', component:AgentTicketsComponent,canActivate:[authGuard,ageentguardGuard]},
-  { path: 'agentchat', component:AgentchatComponent,canActivate:[authGuard,ageentguardGuard]},
-  { path: 'customerchat', component:ViewChatsComponent,canActivate:[authGuard,customerguardGuard]},
-  { path: 'supervisor', component:SuperVisorComponent,canActivate:[authGuard]},
+  { path: 'customerview', component:CustomerviewComponent,canActivate:[guardGuard],data: { roles: 'Customer' }},
+  { path: 'ticketRegister', component:CustomerviewComponent,canActivate:[guardGuard],data: { roles: 'Customer' }},  
+  { path: 'customerticketShow', component:CustomerShowTicketsComponent,canActivate:[guardGuard],data: { roles: 'Customer'}},
+  { path: 'agentView', component:AgentViewComponent,canActivate:[guardGuard],data: { roles: 'Agent' }}, 
+  { path: 'agentTicketAssigination', component:AgentAssiginationComponent,canActivate:[guardGuard],data: { roles: 'Agent' }},
+  { path: 'agentViewTickets', component:AgentTicketsComponent,canActivate:[guardGuard],data: { roles: 'Agent' }},
+  { path: 'agentchat', component:AgentchatComponent,canActivate:[guardGuard],data: { roles: 'Agent' }},
+  { path: 'customerchat', component:ViewChatsComponent,canActivate:[guardGuard],data: { roles: 'Agent' }},
+  { path: 'supervisor', component:SuperVisorComponent,canActivate:[guardGuard],data: { roles: 'Supervisor' }},
   {path:'landingPage',component:LoginComponent},
   { path: '', component:LoginComponent}, 
-  { path: '**', component:LoginComponent,canActivate:[authGuard]}
+  { path: '**', component:LoginComponent,canActivate:[guardGuard]}
   
 ];
 

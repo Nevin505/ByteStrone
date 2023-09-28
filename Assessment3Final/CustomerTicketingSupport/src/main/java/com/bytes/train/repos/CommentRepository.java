@@ -11,6 +11,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
 	
 	 public List<Comment> findByTicket(Ticket ticket);
 
-	public List<Comment> findByTicket_ticketId(int ticket);
+ 	public List<Comment> findByTicket_ticketId(int ticket);
 	
 }

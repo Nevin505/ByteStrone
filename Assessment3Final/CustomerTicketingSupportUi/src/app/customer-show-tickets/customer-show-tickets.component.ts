@@ -29,9 +29,6 @@ export class CustomerShowTicketsComponent {
 
   ngOnInit() {
     this.getCustomerTickets();
-
-
-    
   }
   getCustomerTickets() {
     this.api.getCustomerTicketDetails().subscribe((res: any) => {
@@ -142,6 +139,15 @@ export class CustomerShowTicketsComponent {
       this.searchPageChange=false;
       this.getFilter(this.selectedStatus);
     }
+
+    showFullDescription(item: any) {
+      item.showFullDescription = true;
+    }
+    
+    showLessDescription(item: any) {
+      item.showFullDescription = false;
+    }
+    
   }
  
 

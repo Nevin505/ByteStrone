@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { SuperVisorComponent } from './super-visor/super-visor.component';
 import { DateorderPipe } from './pipes/dateorder.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PermissionDeniedComponent } from './permission-denied/permission-denied.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ViewChatsComponent,
     LoginComponent,
     SuperVisorComponent,
-    DateorderPipe
+    DateorderPipe,
+    PermissionDeniedComponent
   ],
   imports: [
     BrowserModule,

@@ -209,7 +209,7 @@ export class SuperVisorComponent {
   count: number = 0;
   tablesize: number = 9;
   lengtharray: number = 0;
-
+ data:any;
   viewVolumes() {
 
     this.graphDisplay = true;
@@ -218,14 +218,25 @@ export class SuperVisorComponent {
       this.api.generateHtmlReportBetweenDates(this.startdate, this.enddate).subscribe((res: any) => {
         if (res.success) {
           this.ticketFullData = res.data;
+          this.ticketFullData.sort((a, b) => {
+            if (a.status === "closed" && b.status !== "closed") {
+              return -1; // a comes before b
+            } else if (a.status !== "closed" && b.status === "closed") {
+              return 1; // b comes before a
+            } else {
+              return 0; // no change in order
+            }
+          });
+          
           console.log(this.ticketFullData);
-          console.log(this.ticketFullData);
-
-
+          console.log(this.sortClosedDate());
+          console.log("The Sorted data");
+          // console.log(this.data);
           this.lengtharray = this.ticketFullData.length;
-          // this.ticketFullData=this.sortClosedDate();
+          this.data=this.sortClosedDate();
+          console.log(this.data);
           if (this.ticketFullData.length != 0) {
-            // console.log(this.ticketFullData[4].agentId.agentName);
+      
             this.categories = [];
             this.openCounts = [];
             this.assignedCounts = [];
@@ -235,7 +246,6 @@ export class SuperVisorComponent {
 
 
             console.log(this.ticketFullData);
-
             console.log(res);
             console.log("Here");
 
@@ -443,7 +453,7 @@ export class SuperVisorComponent {
 
   sortClosedDate() {
     this.closedTicketSort = true;
-    this.ticketFullData.sort((a, b) => {
+    return this.ticketFullData.sort((a, b) => {
       const dateA = a.closedDate !== null ? new Date(a.closedDate).getTime() : null;
       const dateB = b.closedDate !== null ? new Date(b.closedDate).getTime() : null;
       if (dateA && dateB) {
@@ -458,7 +468,10 @@ export class SuperVisorComponent {
         return 0;
       }
     })
+   
   }
+
+  
 
 }
 

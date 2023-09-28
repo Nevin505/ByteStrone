@@ -4,7 +4,7 @@
 <div class="container-fluid" class="mt-4">
   <div style="display: flex;">
     <div class="col-3">
-      <h2 style="float: left;margin-left: 10px;">Hello {{agentName}}</h2> 
+      <h2 style="float: left;margin-left: 10px;">Hello {{agentName}}</h2>
     </div>
     <div class="col-8">
       <h2>
@@ -54,62 +54,89 @@
 
   </div>
   <div class="right-div" style="display: flex; align-items: center;">
-    <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+    <input type="number" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
       style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+    <input type="text" class="form-control" placeholder="Enter the Subject to be Searched"
+      style="width: 420px; margin-right: 10px;" [(ngModel)]="searchticketSubject">
     <button (click)="searchTicket()" class="round-button">Search</button>
   </div>
+
+
+  <!-- <form [formGroup]="searchFrom" (ngSubmit)="searchTicket()">
+    <div class="right-div" style="display: flex; align-items: center;">
+      <div>
+        <input type="number"  style="width: 420px; margin-right: 10px;" class="form-control"id="ticketId" formControlName="ticketId">
+        <div *ngIf="searchFrom.get('ticketId')?.invalid && searchFrom.get('ticketId')?.dirty">
+          <div *ngIf="searchFrom.get('ticketId')?.hasError('required')">Ticket ID is required.</div>
+          <div *ngIf="searchFrom.get('ticketId')?.hasError('invalidTicketId')">Ticket ID must contain only numbers.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <input type="text" style="width: 420px; margin-right: 10px;" class="form-control" id="ticketSubject" formControlName="ticketSubject">
+        <div *ngIf="searchFrom.get('ticketSubject')?.invalid && searchFrom.get('ticketSubject')?.dirty">
+          <div *ngIf="searchFrom.get('ticketSubject')?.hasError('ticketSubject')">Subject is required.</div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="searchFrom.invalid">Submit</button>
+    </div>
+  </form> -->
+
 </div>
 
 
 
+<div class="table-responsive">
+  <table style="margin-top: 28px;">
+    <thead>
+      <tr>
+        <th class="column-100">Ticket Id</th>
+        <th class="column-150">Customer Name</th>
+        <th class="column-100">Subject</th>
+        <th class="column-600">Description</th>
+        <th class="column-100">Category</th>
 
-<table style="margin-top: 28px;">
-  <thead>
-    <tr>
-      <th class="column-100">Ticket Id</th>
-      <th class="column-150">Customer Name</th>
-      <th class="column-100">Subject</th>
-      <th class="column-600">Description</th>
-      <th class="column-100">Category</th>
+        <th class="column-100">
+          Priority
+          <button class="sort-button" (click)=" onsortHigh()">▲ </button>
+          <button class="sort-button" (click)=" onsortlow()">▼</button>
+        </th>
 
-      <th class="column-100">
-        Priority
-        <button class="sort-button"  (click)=" onsortHigh()">▲ </button>
-        <button class="sort-button"  (click)=" onsortlow()">▼</button>
-      </th>
-      
-      <th class="column-100">Status</th>
-      <th class="column-100">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of agentCategoryTicket| dateorder| paginate:{
+        <th class="column-100">Status</th>
+        <th class="column-100">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of agentCategoryTicket| dateorder| paginate:{
       itemsPerPage:tablesize,
       currentPage:page,
       totalItems:count 
   } ">
-      <td class="column-100">{{ item.ticketId }}</td>
-      <td class="column-150">{{ item.customer.name}}</td>
-      <td class="column-100">{{ item.subject }}</td>
-      <td class=" column-600 ">{{item.description }}</td>
-      <td class="column-100">{{item.categoryId. category_name}}</td>
-      <td class="column-100">{{ item.priority }}</td>
-      <td class="column-100">{{ item.status }}</td>
-      <td class="column-200">
-        <button [routerLink]="['/agentTicketAssigination']" (click)="Set(item.ticketId)"
-          [disabled]="item.status==='Assigined'" style="border-radius: 35px; margin-top: 5px;">Show Details<i
-            class="bi bi-eye-fill"></i></button>
-      </td>
+        <td class="column-100">{{ item.ticketId }}</td>
+        <td class="column-150">{{ item.customer.name}}</td>
+        <td class="column-100">{{ item.subject }}</td>
+        <td class=" column-600 ">{{item.description }}</td>
+        <td class="column-100">{{item.categoryId. category_name}}</td>
+        <td class="column-100">{{ item.priority }}</td>
+        <td class="column-100">{{ item.status }}</td>
+        <td class="column-200">
+          <button [routerLink]="['/agentTicketAssigination']" (click)="Set(item.ticketId)"
+            [disabled]="item.status==='Assigined'" style="border-radius: 35px; margin-top: 5px;">Show Details<i
+              class="bi bi-eye-fill"></i></button>
+        </td>
 
-    </tr>
+      </tr>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 <!-- <div *ngIf="lengtharray===0" style="margin-left:100px ;margin-top: 10px; ">
   <h5>{{messageFilter}}</h5>
 </div> -->
 <div class="container" *ngIf="lengtharray == 0">
-  <div class="center-content"  [innerHtml]="messageFilter">
+  <div class="center-content" [innerHtml]="messageFilter">
   </div>
 </div>
 <div>

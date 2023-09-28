@@ -42,10 +42,10 @@ public class CommentController {
 			return ResponseEntity.ok(new Response("The Comment Was Added", comment2, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 
 	}
@@ -57,10 +57,10 @@ public class CommentController {
 			return ResponseEntity.ok(new Response("The Comments Related To These Tickets", comments, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}
 
@@ -76,7 +76,7 @@ public class CommentController {
 			}
 		} catch (Exception e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	} 
 
@@ -87,7 +87,7 @@ public class CommentController {
 			return ResponseEntity.ok(new Response("The Agent Customer Chats", agentCustomerChat, true));
 		} catch (Exception e) {
 			logger.error("The Error",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}
 

@@ -12,7 +12,6 @@ import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.execptions.ResourceNotFoundException;
 import com.bytes.train.repos.AgentRepository;
-import com.bytes.train.repos.CategoryRepository;
 import com.bytes.train.repos.TicketRepository;
 import com.bytes.train.service.AgentCategoryService;
 
@@ -21,8 +20,7 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 
 	@Autowired
 	private AgentRepository agentRepository;
-	@Autowired
-	private CategoryRepository categoryRepository;
+	
 	@Autowired
 	private TicketRepository ticketRepository;
 
@@ -52,51 +50,91 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 		return filteredTickets;
 	}
 
+//	@Override
+//	public List<Ticket> getSearch(int agentId, SearchCriteria searchCriteria) throws Exception {
+//		Agent agent = agentRepository.findById(agentId).orElse(null);
+//		if (agent == null) {
+//			throw new ResourceNotFoundException("There Exist No Agent");
+//		}
+//		List<Category> category = agent.getCategory();
+//		if (searchCriteria.getStatus().equalsIgnoreCase("Open")||searchCriteria.getStatus().equalsIgnoreCase("Closed")) {
+//			String searchStatus = searchCriteria.getStatus();
+//			List<Ticket> searchResult = new LinkedList<>();
+//			if (isNumeric(searchCriteria.getSubject())) {
+//				int ticketId = Integer.parseInt(searchCriteria.getSubject());
+//				searchResult = ticketRepository.findByCategoryIdInAndStatusAndTicketId(category,searchStatus,ticketId);
+//			} else {
+//				searchResult=ticketRepository.findByCategoryIdInAndStatusAndSubjectIgnoreCaseContaining(category,searchStatus,searchCriteria.getSubject());
+//			}
+//			return searchResult;
+//		} 
+//		else {
+//			System.out.println("Here");
+//			String[] status = {"Open","Closed"};
+//			List<Ticket> searchResult = new LinkedList<>();
+//				if (isNumeric(searchCriteria.getSubject())) {
+//					int ticketId = Integer.parseInt(searchCriteria.getSubject());
+//					searchResult=ticketRepository.findAllByCategoryIdInAndStatusInAndAndTicketId(category,status,ticketId);
+//				} else {
+//					searchResult=ticketRepository.findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContaining(category,status,searchCriteria.getSubject());
+//				}
+//			return searchResult;
+//		}
+//	}
+//	
+//	public boolean isNumeric(String str) {
+//		try {
+//			Long.parseLong(str);
+//			return true;
+//		} catch (NumberFormatException e) {
+//			return false;
+//		}
+//	}
+//	
 	@Override
 	public List<Ticket> getSearch(int agentId, SearchCriteria searchCriteria) throws Exception {
+		System.out.println(searchCriteria.getTicketId());
+		System.out.println(searchCriteria.getTicketId());
 		Agent agent = agentRepository.findById(agentId).orElse(null);
 		if (agent == null) {
 			throw new ResourceNotFoundException("There Exist No Agent");
 		}
 		List<Category> category = agent.getCategory();
 		if (searchCriteria.getStatus().equalsIgnoreCase("Open")||searchCriteria.getStatus().equalsIgnoreCase("Closed")) {
-			System.out.println("In Here");
 			String searchStatus = searchCriteria.getStatus();
-			List<Ticket> searchResult = new LinkedList<>();
-			List<Ticket> tickets = ticketRepository.findAllByCategoryIdInAndStatus(category,searchStatus);
-			if (isNumeric(searchCriteria.getSubject())) {
-				int ticketId = Integer.parseInt(searchCriteria.getSubject());
-				searchResult = ticketRepository.findByCategoryIdInAndStatusAndTicketId(category,searchStatus,ticketId);
-			} else {
-				for (Ticket ticket : tickets) {
-					if (ticket.getSubject().toLowerCase().contains(searchCriteria.getSubject().toLowerCase())) {
-						searchResult.add(ticket);
-					}
-				}
+			String serachTicketSubject=searchCriteria.getSubject();
+			int serachTicketId=searchCriteria.getTicketId();
+			if(searchCriteria.getSubject().trim().length()!=0 && searchCriteria.getTicketId()>0) {
+				System.out.println("Here");
+				 return ticketRepository.findByCategoryIdInAndStatusAndSubjectIgnoreCaseContainingOrTicketId(category,searchStatus,serachTicketSubject,serachTicketId);
 			}
-			return searchResult;
+			if(searchCriteria.getSubject().trim().length()!=0) {
+				return ticketRepository.findByCategoryIdInAndStatusAndSubjectIgnoreCaseContaining(category,searchStatus,serachTicketSubject);
+				
+			}
+			return ticketRepository.findByCategoryIdInAndStatusAndTicketId(category,searchStatus,serachTicketId);
+			 
 		} 
 		else {
-			System.out.println("Here");
-			String[] status = { "Open", "Closed" };
-			List<Ticket> tickets = ticketRepository.findAllByCategoryIdInAndStatusIn(category, status);
-			String search;
-			search = searchCriteria.getSubject();
-			List<Ticket> searchResult = new LinkedList<>();
-			for (Ticket ticket : tickets) {
-				if (isNumeric(search)) {
-					int ticketId = Integer.parseInt(search);
-					if (ticket.getTicketId() == ticketId) {
-						searchResult.add(ticket);
-						return searchResult;
-					}
-				} else {
-					if ((ticket.getSubject().toLowerCase()).contains((searchCriteria.getSubject()).toLowerCase())) {
-						searchResult.add(ticket);
-					}
-				}
+			String[] status = {"Open","Closed"};
+			String serachTicketSubject=searchCriteria.getSubject();
+			if(serachTicketSubject.trim().length()!=0 && searchCriteria.getTicketId()>0) {
+				int serachTicketId=searchCriteria.getTicketId();
+				 return ticketRepository.findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContainingOrTicketId(category,status,serachTicketSubject,serachTicketId);
 			}
-			return searchResult;
+			if(serachTicketSubject.trim().length()!=0) {
+				return ticketRepository.findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContaining(category,status,serachTicketSubject);
+			}
+			int serachTicketId=searchCriteria.getTicketId();
+			return ticketRepository.findAllByCategoryIdInAndStatusInAndAndTicketId(category,status,serachTicketId);
+			
+//				if (isNumeric(searchCriteria.getSubject())) {
+//					int ticketId = Integer.parseInt(searchCriteria.getSubject());
+//					searchResult=ticketRepository.findAllByCategoryIdInAndStatusInAndAndTicketId(category,status,ticketId);
+//				} else {
+//					searchResult=ticketRepository.findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContaining(category,status,searchCriteria.getSubject());
+//				}
+//			return searchResult;
 		}
 	}
 	

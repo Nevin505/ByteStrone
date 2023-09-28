@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,7 @@ import { Filter } from '../model/filter';
 import { Agent } from '../model/agent';
 import { Ticket } from '../model/ticket';
 import { Common } from '../model/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agent-view',
@@ -17,9 +18,23 @@ import { Common } from '../model/common';
 
 export class AgentViewComponent {
 
+  searchFrom: FormGroup;
   constructor(private api: ApiService, private router: Router) {
-
+    this.searchFrom = new FormGroup({
+      ticketId: new FormControl('', [Validators.required, this.validateTicketId]),
+      ticketSubject: new FormControl('', [Validators.required])
+    });
   }
+  validateTicketId(control: { value: any; }) {
+    const value = control.value;
+
+    if (!/^[0-9]+$/.test(value)) {
+      return { invalidTicketId: true };
+    }
+
+    return null;
+  }
+  
 
   page: number = 1;
   count: number = 0;
@@ -34,8 +49,8 @@ export class AgentViewComponent {
   ticketAssiginedCount: number = 0;
   // datas: Ticket[] = [];
   agentCategoryTicket: Ticket[] = [];
-  agentList: Agent[]=[];
-  ticketIds:number[]=[];
+  agentList: Agent[] = [];
+  ticketIds: number[] = [];
 
   ngOnInit() {
     this.getTicketDetails()
@@ -54,15 +69,15 @@ export class AgentViewComponent {
     this.selected = true;
     this.agentName = sessionStorage.getItem('agentName') || "";
     this.cates = JSON.parse(sessionStorage.getItem("Categorys") || "");
-   
-    
+
+
     this.api.getAssiginedTickets().subscribe({
       next: (res: Common) => {
         if (res.success) {
           this.ticketAssiginedCount = res.data.length;
           // To get The Assigined Ticket TicketId's
-          this.ticketIds = res.data.map((item:any) => item.ticketId);
-          console.log(this.ticketIds);       
+          this.ticketIds = res.data.map((item: any) => item.ticketId);
+          console.log(this.ticketIds);
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -86,7 +101,7 @@ export class AgentViewComponent {
           this.lengtharray = this.agentCategoryTicket.length;
           // this.lengthsearch = this.datas.length;
           this.lengthsearch = this.agentCategoryTicket.length;
-          console.log(this.agentCategoryTicket);        
+          console.log(this.agentCategoryTicket);
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -117,10 +132,10 @@ export class AgentViewComponent {
             // this.datas = res.data;
             this.agentCategoryTicket = res.data;
             // this.lengthsearch = this.datas.length;
-             // this.lengtharray = this.datas.length;
-          this.lengtharray = this.agentCategoryTicket.length;
-          // this.lengthsearch = this.datas.length;
-          this.lengthsearch = this.agentCategoryTicket.length;
+            // this.lengtharray = this.datas.length;
+            this.lengtharray = this.agentCategoryTicket.length;
+            // this.lengthsearch = this.datas.length;
+            this.lengthsearch = this.agentCategoryTicket.length;
 
             // this.lengtharray = this.datas.length;
             if (this.lengtharray < this.tablesize) {
@@ -178,7 +193,8 @@ export class AgentViewComponent {
     }
   }
 
-  searchtickId!: any;
+  searchtickId: any=null;
+  searchticketSubject: String = '';
   search: SearchCriteria = new SearchCriteria();
   lengthsearch: number = 0;
   searchButton: boolean = false;
@@ -186,26 +202,27 @@ export class AgentViewComponent {
   isSearching: boolean = false;
 
   searchTicket() {
-    this.searchtickId = this.searchtickId.trim();
-    if (this.searchtickId.length != 0) {
+    this.searchticketSubject = this.searchticketSubject.trim();
+
+    if ((this.searchtickId!=null ) || this.searchticketSubject.trim().length != 0) {
+      console.log(this.searchtickId);
+      console.log(this.searchticketSubject);
+      
+      
       this.page = 1;
       this.na = true;
-      this.search.subject = this.searchtickId;
+      this.search.ticketId = this.searchtickId;
+      this.search.subject = this.searchticketSubject;
+
       this.search.status = this.currentStaus
       this.api.getSearch(this.search).subscribe({
         next: (res: any) => {
           if (res.success) {
             console.log(res);
-            // this.datas = res.data;
             this.agentCategoryTicket = res.data;
-            // this.lengthsearch = this.datas.length;
-            // this.lengtharray = this.lengthsearch
-              // this.lengtharray = this.datas.length;
-          this.lengtharray = this.agentCategoryTicket.length;
-          // this.lengthsearch = this.datas.length;
-          this.lengthsearch = this.agentCategoryTicket.length;
-
-            this.messageFilter = `<p><strong>No results found for ${this.searchtickId}</strong></p><p>Please make sure your words are spelled correctly, or use fewer or different keywords.</p>`;
+            this.lengtharray = this.agentCategoryTicket.length;
+            this.lengthsearch = this.agentCategoryTicket.length;
+            this.messageFilter = `<p><strong>No results found for ${this.searchtickId=== null?this.searchticketSubject:this.searchtickId}</strong></p><p>Please make sure your words are spelled correctly, or use fewer or different keywords.</p>`;
           }
         },
         error: (error: HttpErrorResponse) => {

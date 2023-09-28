@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
 import com.bytes.train.entities.Response;
 import com.bytes.train.entities.UserDetails;
@@ -40,11 +39,11 @@ public class UserController {
 		}
 			catch (ResourceNotFoundException e) {
 				 logger.error("The Issue is",e);
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Login Unsccessfull", null, false));
 			}
 		 catch (Exception e) {
 			 logger.error("The Issue is",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}
 }

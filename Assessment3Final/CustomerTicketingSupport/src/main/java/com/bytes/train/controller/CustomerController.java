@@ -40,11 +40,11 @@ public class CustomerController {
 			return ResponseEntity.ok(new Response("The Customer Tickets Are", customerTickets, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body((new Response(e.getMessage(), null, false)));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body((new Response("Some Error Occurred", null, false)));
 		} catch (Exception e) {
 			logger.error("The Issue Is", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body((new Response(e.getMessage(), null, false)));
+					.body((new Response("Some Error Occurred", null, false)));
 		}
 	}
 
@@ -57,11 +57,11 @@ public class CustomerController {
 			return ResponseEntity.ok(new Response(mssg, null, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body((new Response(e.getMessage(), null, false)));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body((new Response("Some Error Occurred", null, false)));
 		} catch (Exception e) {
 			logger.error("The Issue Is", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body((new Response(e.getMessage(), null, false)));
+					.body((new Response("Some Error Occurred", null, false)));
 		}
 
 	}
@@ -76,11 +76,11 @@ public class CustomerController {
 			return ResponseEntity.ok(new Response("The Opened Tickets Are", customerOpenedTickets, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Issue Is", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new Response(e.getMessage(), null, false));
+					.body(new Response("Some Error Occurred", null, false));
 		}
 
 	}
@@ -93,11 +93,11 @@ public class CustomerController {
 			return ResponseEntity.ok(new Response("The Search Result Is", searchTickets, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Issue Is", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new Response(e.getMessage(), null, false));
+					.body(new Response("Some Error Occurred", null, false));
 
 		}
 	}

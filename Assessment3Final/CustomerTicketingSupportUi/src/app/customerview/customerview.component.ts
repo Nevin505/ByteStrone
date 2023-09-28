@@ -30,8 +30,9 @@ export class CustomerviewComponent {
   details: any;
 
   ticketForm = new FormGroup({
-    subject: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    subject: new FormControl('', [Validators.required, Validators.pattern(/\S/)]),
+    description: new FormControl('',[Validators.required, Validators.pattern(/\S/)]),
+    
     priority: new FormControl('', Validators.required),
     categoryName: new FormControl('', Validators.required),
   })
@@ -56,10 +57,14 @@ export class CustomerviewComponent {
     })
     this.time = new Date();
 
-    this.customerName = sessionStorage.getItem("customerName") ||' ';
-    
-  }
+    this.customerName = sessionStorage.getItem("customerName") || ' ';
 
+  }
+  // noWhitespaceValidator(control) {
+  //   const isWhitespace = (control.value || '').trim().length === 0;
+  //   const isValid = !isWhitespace;
+  //   return isValid ? null : { 'whitespace': true };
+  // }
   onRaiseTicket() {
     this.raiseValue = true;
   }
@@ -69,8 +74,8 @@ export class CustomerviewComponent {
 
   }
   addedValue() {
-    this.api.addTicket(this.ticketForm.value).subscribe( {
-      next:(res: any) =>{
+    this.api.addTicket(this.ticketForm.value).subscribe({
+      next: (res: any) => {
         if (res.success) {
           alert(res.mssg)
           this.ticketForm.reset();
@@ -78,12 +83,12 @@ export class CustomerviewComponent {
       },
       error: (error: HttpErrorResponse) => {
         alert(error.error.mssg)
-      } 
-      
+      }
+
     });
   }
 
-  
+
 
 }
 

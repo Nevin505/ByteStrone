@@ -63,52 +63,29 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findById(customerId).orElse(null);
 		if (customer == null) {
 			throw new ResourceNotFoundException("No Customer Is Found");
-		}
+		}  
+		
 		if (searchCriteria.getStatus().equalsIgnoreCase("Open") || searchCriteria.getStatus().equalsIgnoreCase("Closed")
 				|| searchCriteria.getStatus().equalsIgnoreCase("Assigned")) {
 			String searchStatus = searchCriteria.getStatus();
 			List<Ticket> searchResult = new LinkedList<>();
-			List<Ticket> custTickets = ticketRepository.findByStatusAndCustomer(searchStatus, customer);
 			if (isNumeric(searchCriteria.getSubject())) {
 				int ticketId = Integer.parseInt(searchCriteria.getSubject());
-				for (Ticket ticket : custTickets) {
-					if (ticket.getTicketId() == ticketId) {
-						searchResult.add(ticket);
-						return searchResult;
-					}
-				}
+				searchResult=ticketRepository.findByStatusAndCustomerAndTicketId(searchStatus,customer,ticketId);
 			} else {
-
-				for (Ticket ticket : custTickets) {
-					if ((ticket.getSubject().toLowerCase()).contains((searchCriteria.getSubject().toLowerCase()))) {
-						searchResult.add(ticket);
-					}
-				}
+					searchResult=ticketRepository.findByStatusAndCustomerAndSubjectIgnoreCaseContaining(searchStatus,customer,searchCriteria.getSubject());
 			}
-
 			return searchResult;
-
 		} else {
-			System.out.println(searchCriteria.getSubject());
-			List<Ticket> tickets = ticketRepository.findByCustomer(customer);
-			String search;
-			search = searchCriteria.getSubject();
+			String search=searchCriteria.getSubject();
 			List<Ticket> searchResult = new LinkedList<>();
-			for (Ticket ticket : tickets) {
 				if (isNumeric(search)) {
 					int ticketId = Integer.parseInt(search);
-					if (ticket.getTicketId() == ticketId) {
-						searchResult.add(ticket);
-						return searchResult;
-					}
+					searchResult=ticketRepository.findByCustomerAndTicketId(customer, ticketId);
 				} else {
-					if ((ticket.getSubject().toLowerCase()).contains((searchCriteria.getSubject()).toLowerCase())) {
-						searchResult.add(ticket);
-					}
+					searchResult=ticketRepository.findByCustomerAndSubjectIgnoreCaseContaining(customer, search);
 				}
-			}
 			return searchResult;
-
 		}
 	}
 

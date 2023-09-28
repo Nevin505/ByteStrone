@@ -48,7 +48,7 @@ public class AgentCategoryServiceImplTest {
 	@MockBean
 	private TicketRepository ticketRepository;
 
-	static Agent getDetails() {
+	 Agent getDetails() {
 		int agentId = 123;
 		Agent agent = new Agent();
 		agent.setId(agentId);
@@ -103,7 +103,7 @@ public class AgentCategoryServiceImplTest {
 	void testGetParticularCategoryList() throws Exception {
 		int agentId = 123;
 
-		Agent mockAgent = AgentCategoryServiceImplTest.getDetails();
+		Agent mockAgent =getDetails();
 
 		List<Category> categories = AgentCategoryServiceImplTest.getCategoryDetails();
 

@@ -35,8 +35,8 @@
   <thead>
     <tr>
 
-      <th class="column-100" scope="col">Ticket Id</th>
-      <th class="column-100" scope="col">Subject</th>
+      <th class="column-80"  scope="col">Ticket Id</th>
+      <th class="column-180" scope="col">Subject</th>
       <th class="column-600" scope="col">Description</th>
       <th class="column-100" scope="col">Priority</th>
       <th class="column-100" scope="col">Status</th>
@@ -51,8 +51,18 @@
       totalItems:count 
   } ">
       <td class="column-80">{{ item.ticketId }}</td>
-      <td class="column-250">{{ item.subject}}</td>
+      <td class="column-180">{{ item.subject}}</td>
       <td class="description-cell column-600" style="width: 850px;">{{ item.description}}</td>
+      <!-- <td class="description-cell column-600" style="width: 850px;">
+        <div *ngIf="!item.showFullDescription">
+          {{ item.description | slice:0:180 }} 
+          <button (click)="showFullDescription(item)">Read More</button>
+        </div>
+        <div *ngIf="item.showFullDescription">
+          {{ item.description }}
+          <button (click)="showLessDescription(item)">Read Less</button>
+        </div>
+      </td> -->
       <td class="column-100">{{ item.priority}}</td>
       <td class="column-100">{{ item.status}}</td>
       <td class="column-100">{{item.agentId?item.agentId.userName:'Not Assigined'}}</td>

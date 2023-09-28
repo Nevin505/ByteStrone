@@ -10,8 +10,6 @@ import com.bytes.train.entities.Skill;
 
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 	
-//	Agent findByUserName(String agentName);
-	
 	List<Agent> findByCategoryIn(List<Category> agentCategories);
 	
 	List<Agent> findBySkillsInAndActive(List<Skill> skills,String active);

@@ -49,7 +49,24 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	List<Ticket> findAllByCategoryIdInAndStatus(List<Category> category, String status);
 	
 //	
+	List<Ticket> findBySubjectIgnoreCaseContaining(String subject);	
+
+	
+//	Search Jpa's
 	List<Ticket> findByCategoryIdInAndStatusAndTicketId(List<Category> category, String status,int ticketId);
+	
+	List<Ticket> findByCategoryIdInAndStatusAndSubjectIgnoreCaseContaining(List<Category> category, String status,String subject);
+	
+	List<Ticket> findAllByCategoryIdInAndStatusInAndAndTicketId(List<Category> category,String[] Status,int ticketId);
+	
+	List<Ticket> findByCategoryIdInAndStatusAndSubjectIgnoreCaseContainingOrTicketId(List<Category> category, String status,String subject,int ticketId);
+	
+	List<Ticket> findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContaining(List<Category> category, String[] status,String subject);
+	
+	List<Ticket> findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContainingOrTicketId(List<Category> category, String[] status,String subject,int ticketId);
+	
+	 @Query("SELECT t FROM Ticket t WHERE (:ticketId IS NULL OR t.ticketId = :ticketId) OR (:subject IS NULL OR t.subject = :subject)")
+	   List<Ticket> findTickets(@Param("ticketId") int ticketId, @Param("subject") String subject);
 //
 
 	List<Ticket> findByCustomer_idAndStatus(int cutsomerId, String status);
@@ -65,8 +82,16 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
 	@Query("SELECT t FROM Ticket t WHERE DATE(t.creation_Date) BETWEEN :startDate AND :endDate OR DATE(t.closedDate) BETWEEN :startDate AND :endDate")
 	List<Ticket> findTicketsByClosedOpenedDateRange(Date startDate, Date endDate);
+	
+//	Customer Search JPA Query
+	List<Ticket> findByStatusAndCustomerAndTicketId(String status,Customer cutsomer,int ticketId);
+	
+	List<Ticket> findByStatusAndCustomerAndSubjectIgnoreCaseContaining(String status,Customer cutsomer,String subject);
+	
+	List<Ticket> findByCustomerAndTicketId(Customer cutsomer,int ticketId);
+	
+	List<Ticket> findByCustomerAndSubjectIgnoreCaseContaining(Customer cutsomer,String subject);
 
 }
 
-//@Query("Select Count(t) from Ticket t Where t.status = :status")
-//int findByStatus(@Param("status") String status);
+

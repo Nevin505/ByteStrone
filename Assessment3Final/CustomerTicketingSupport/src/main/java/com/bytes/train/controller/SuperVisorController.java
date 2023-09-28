@@ -27,9 +27,6 @@ import com.bytes.train.service.SupervisorService;
 public class SuperVisorController {
 	
 	@Autowired
-	private TicketRepository ticketRepository;
-	
-	@Autowired
 	private SupervisorService supervisorService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SuperVisorController.class);
@@ -43,7 +40,7 @@ public class SuperVisorController {
 		}
 		catch (Exception e) {
 			logger.error("The Issue is ",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}		
 	}
 	
@@ -57,7 +54,7 @@ public class SuperVisorController {
 		}
 		catch (Exception e) {
 			logger.error("The Issue is ",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}		
 	}
 		
@@ -69,7 +66,7 @@ public class SuperVisorController {
 		}
 		catch (Exception e) {
 			logger.error("The Issue is ",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 		
 	}
@@ -82,7 +79,7 @@ public class SuperVisorController {
 		}
 		catch (Exception e) {
 			logger.error("The Issue is ",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 		
 	}
@@ -96,7 +93,7 @@ public class SuperVisorController {
 		}
 		catch (Exception e) {
 			logger.error("The Issue is ",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 		
 	}

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +22,6 @@ import com.bytes.train.entities.Response;
 import com.bytes.train.entities.SearchCriteria;
 import com.bytes.train.entities.Ticket;
 import com.bytes.train.execptions.ResourceNotFoundException;
-import com.bytes.train.repos.AgentRepository;
 import com.bytes.train.service.AgentCategoryService;
 
 @RestController
@@ -34,8 +32,6 @@ public class AgentController {
 	@Autowired
 	private AgentCategoryService agentService;
 
-	@Autowired
-	private AgentRepository agentRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
 
@@ -47,10 +43,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Agents Category Tickets Are", agentsTickets, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue Is", e); 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 
 		}
 	}
@@ -64,10 +60,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Filtered Tickets Are", filterTickets, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}	
 
@@ -80,11 +76,11 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Search Result Is", searchTickets, true));
 		}
 		catch (ResourceNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((new Response(e.getMessage(), null, false)));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((new Response("Some Error Occurred", null, false)));
 		}
 	}
 
@@ -96,10 +92,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Agents List Are", agentList, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 
 	}
@@ -112,10 +108,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response(res, null, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}   
 	}
 
@@ -131,9 +127,9 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("Ticket is  Being Closed ", ticket, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}
 
@@ -145,10 +141,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Assigined Tickets Are", agentTicket, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	}
 
@@ -160,10 +156,10 @@ public class AgentController {
 			return ResponseEntity.ok(new Response("The Ticket Details", ticket, true));
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Errors Is", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 	} 
 //	

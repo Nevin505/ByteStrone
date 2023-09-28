@@ -34,11 +34,6 @@ public class TicketingController {
 	@Autowired
 	private TicketService ticketService;
 
-	@Autowired
-	private SkillRepository skillRepository;
-
-	@Autowired
-	private AgentRepository agentRepository;
 	
 	private static final Logger logger = LoggerFactory.getLogger(TicketingController.class);
 
@@ -51,16 +46,15 @@ public class TicketingController {
 	@PostMapping("/addticket/{id}")
 	public ResponseEntity<Response> saveTicketByPostman(@PathVariable int id, @RequestBody Ticket ticket) {
 		try {
-			System.out.println(ticket);
 			Ticket newTicket = ticketService.saveTicketPostman(id, ticket);
 			return ResponseEntity.ok(new Response("The Ticket Was Being Added", newTicket, true));
 
 		} catch (ResourceNotFoundException e) {
 			logger.error("The Issue is",e);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			logger.error("The Issue is",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 
 	}
@@ -71,10 +65,10 @@ public class TicketingController {
 			return ResponseEntity.ok(
 					new Response("The Ticket is being Assigned", ticketService.assiginationTickets(ticketId), true));
 		} catch (ResourceNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Some Error Occurred", null, false));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new Response(e.getMessage(), null, false));
+					.body(new Response("Some Error Occurred", null, false));
 		}
 	}
 
@@ -85,7 +79,7 @@ public class TicketingController {
 			return ResponseEntity.ok(new Response("The Ticket is", singleTicket, true));
 		} catch (Exception e) {
 			logger.error("The Issue is",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 
 	}
@@ -98,7 +92,7 @@ public class TicketingController {
 			return ResponseEntity.ok(new Response("The Tickets Category Are", category, true));
 		} catch (Exception e) {
 			logger.error("The Issue is",e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(e.getMessage(), null, false));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Some Error Occurred", null, false));
 		}
 
 	}

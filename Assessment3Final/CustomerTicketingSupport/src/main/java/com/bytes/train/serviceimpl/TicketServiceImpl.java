@@ -51,15 +51,16 @@ public class TicketServiceImpl implements TicketService {
 			throw new ResourceNotFoundException("No Customer Is Found");
 		}
 		Category category = categoryRespository.findByCategoryName(ticket.getCategoryName());
-		if (ticket.getPriority() == null || ticket.getSubject() == null || ticket.getDescription() == null) {
+		if (ticket.getPriority().trim().length() == 0 || ticket.getSubject().trim().length() == 0 || ticket.getDescription().trim().length() == 0) {
 			throw new Exception("Please Enter Details");
 		}
 		ticket.setCategoryId(category);
 		ticket.setCustomer(customer);
 		System.out.println(ticket);
 		return ticketRepository.save(ticket);
+		
 	}
-
+   
 	@Override
 	public List<Category> optionsvalue() {
 		return categoryRespository.findAll();

@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
 			throw new ResourceNotFoundException("There Exist No Ticket");
 		}
 		System.out.println(comment.getContent().length());
-		if (ticket.getAgentId().getId() == agent.getId()&& ticket.getStatus().equals("Assigned") &&comment.getContent().length()!=0){
+		if (ticket.getAgentId().getId() == agent.getId()&& ticket.getStatus().equals("Assigned") && comment.getContent().length()!=0){
 			ticket.setAgentId(agent);
 			comment.setTicket(ticket);
 			comment.setSeen("Not Seen");
