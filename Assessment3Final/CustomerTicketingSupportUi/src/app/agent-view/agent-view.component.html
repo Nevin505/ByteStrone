@@ -60,30 +60,6 @@
       style="width: 420px; margin-right: 10px;" [(ngModel)]="searchticketSubject">
     <button (click)="searchTicket()" class="round-button">Search</button>
   </div>
-
-
-  <!-- <form [formGroup]="searchFrom" (ngSubmit)="searchTicket()">
-    <div class="right-div" style="display: flex; align-items: center;">
-      <div>
-        <input type="number"  style="width: 420px; margin-right: 10px;" class="form-control"id="ticketId" formControlName="ticketId">
-        <div *ngIf="searchFrom.get('ticketId')?.invalid && searchFrom.get('ticketId')?.dirty">
-          <div *ngIf="searchFrom.get('ticketId')?.hasError('required')">Ticket ID is required.</div>
-          <div *ngIf="searchFrom.get('ticketId')?.hasError('invalidTicketId')">Ticket ID must contain only numbers.
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <input type="text" style="width: 420px; margin-right: 10px;" class="form-control" id="ticketSubject" formControlName="ticketSubject">
-        <div *ngIf="searchFrom.get('ticketSubject')?.invalid && searchFrom.get('ticketSubject')?.dirty">
-          <div *ngIf="searchFrom.get('ticketSubject')?.hasError('ticketSubject')">Subject is required.</div>
-        </div>
-      </div>
-
-      <button type="submit" [disabled]="searchFrom.invalid">Submit</button>
-    </div>
-  </form> -->
-
 </div>
 
 

@@ -98,31 +98,37 @@ export class CustomerShowTicketsComponent {
   }
   }
 
-
+  searchticketSubject:String='';
+  
   filterOpen: boolean = false;
   setfilter() {
       this.filterOpen = !this.filterOpen;
   }
 
-  searchtickId:any;
+  searchtickId:any=null;
   search:SearchCriteria=new SearchCriteria();
   searchPageChange:boolean=false;
  
   searchBackButton:boolean=false;
   searchTicket(){
-  this.searchtickId=this.searchtickId.trim();
-    if(this.searchtickId.length!=0){
+  this.searchticketSubject=this.searchticketSubject.trim();
+  console.log(this.searchtickId);
+  console.log(this.searchticketSubject);
+  
+  
+    if((this.searchtickId!=null&&this.searchtickId>=0)||this.searchticketSubject.length!=0){
       this.page=1;
       this.searchPageChange=true;
       this.searchBackButton=true;
-        this.search.subject=this.searchtickId.trim();
+        this.search.ticketId=this.searchtickId;
+        this.search.subject=this.searchticketSubject;
         this.search.status= this.selectedStatus;      
         this.api.getCustomerSearchTickets(this.search).subscribe((res:any)=>{
           if(res.success){
             console.log(res);
             this.data=res.data;
             this.lengtharray=this.data.length; 
-            this.message= `<p><strong>No results found for ${this.searchtickId}</strong></p><p>Please make sure your words are spelled correctly, or use fewer or different keywords.</p>`;
+            this.message= `<p><strong>No results found for ${this.searchtickId===null?this.searchticketSubject:this.searchtickId}</strong></p><p>Please make sure your words are spelled correctly, or use fewer or different keywords.</p>`;
           }
           else{
             alert(res.mssg)

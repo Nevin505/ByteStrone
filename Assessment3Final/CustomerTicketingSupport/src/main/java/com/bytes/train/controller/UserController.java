@@ -1,5 +1,7 @@
 package com.bytes.train.controller;
 
+import java.util.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,9 @@ public class UserController {
 		try {   
 			String userName = userDetails.getUserName(); 
 			String password = userDetails.getUserPassword();
-			UserDetails response = userService.loginAccess(userName, password);
+			byte[] decodedBytes = Base64.getDecoder().decode(password);
+			String decodedPassword = new String(decodedBytes);
+			UserDetails response = userService.loginAccess(userName,decodedPassword);
 			if(response==null) {
 				return ResponseEntity.ok(new Response("Login Unsccessfull", null, false));
 			}

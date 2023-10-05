@@ -2,8 +2,10 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
   <button (click)="setfilter()" style="border-radius: 40px;">Filter Tickets:</button>
   <div class="right-div" style="display: flex; align-items: center;">
-    <input type="text" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
-      style="width: 420px; margin-left: 10px;" [(ngModel)]="searchtickId">
+    <input type="number" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+    style="width: 420px; margin-left: 10px;" [(ngModel)]="searchtickId">
+    <input type="text" class="form-control" placeholder="Enter the Subject to be Searched"
+      style="width: 420px; margin-left: 10px;" [(ngModel)]="searchticketSubject">
     <button (click)="searchTicket()" class="round-button">Search</button>
   </div>
 </div>

@@ -63,39 +63,37 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findById(customerId).orElse(null);
 		if (customer == null) {
 			throw new ResourceNotFoundException("No Customer Is Found");
-		}  
-		
+		}
 		if (searchCriteria.getStatus().equalsIgnoreCase("Open") || searchCriteria.getStatus().equalsIgnoreCase("Closed")
 				|| searchCriteria.getStatus().equalsIgnoreCase("Assigned")) {
 			String searchStatus = searchCriteria.getStatus();
 			List<Ticket> searchResult = new LinkedList<>();
-			if (isNumeric(searchCriteria.getSubject())) {
-				int ticketId = Integer.parseInt(searchCriteria.getSubject());
-				searchResult=ticketRepository.findByStatusAndCustomerAndTicketId(searchStatus,customer,ticketId);
+			if (searchCriteria.getSubject().trim().length() != 0 && searchCriteria.getTicketId() > 0) {
+				searchResult = ticketRepository.findByStatusAndCustomerAndSubjectIgnoreCaseContainingOrTicketId(
+						searchStatus, customer, searchCriteria.getSubject(), searchCriteria.getTicketId());
+				return searchResult;
+			} else if (searchCriteria.getSubject().trim().length() != 0) {
+				searchResult = ticketRepository.findByStatusAndCustomerAndSubjectIgnoreCaseContaining(searchStatus,
+						customer, searchCriteria.getSubject());
+				return searchResult;
 			} else {
-					searchResult=ticketRepository.findByStatusAndCustomerAndSubjectIgnoreCaseContaining(searchStatus,customer,searchCriteria.getSubject());
+				searchResult = ticketRepository.findByStatusAndCustomerAndTicketId(searchStatus, customer,
+						searchCriteria.getTicketId());
+				return searchResult;
 			}
-			return searchResult;
 		} else {
-			String search=searchCriteria.getSubject();
+//			String serachTicketSubject = searchCriteria.getSubject();
 			List<Ticket> searchResult = new LinkedList<>();
-				if (isNumeric(search)) {
-					int ticketId = Integer.parseInt(search);
-					searchResult=ticketRepository.findByCustomerAndTicketId(customer, ticketId);
-				} else {
-					searchResult=ticketRepository.findByCustomerAndSubjectIgnoreCaseContaining(customer, search);
-				}
-			return searchResult;
+			if (searchCriteria.getSubject().trim().length() != 0 && searchCriteria.getTicketId() > 0) {
+				searchResult = ticketRepository.findByCustomerAndSubjectIgnoreCaseContainingOrTicketId(customer,
+						searchCriteria.getSubject(), searchCriteria.getTicketId());
+				return searchResult;
+			}
+			if (searchCriteria.getSubject().trim().length() != 0) {
+				return ticketRepository.findByCustomerAndSubjectIgnoreCaseContaining(customer, searchCriteria.getSubject());
+			}
+			int serachTicketId = searchCriteria.getTicketId();
+			return ticketRepository.findByCustomerAndTicketId(customer, serachTicketId);
 		}
 	}
-
-	private boolean isNumeric(String str) {
-		try {
-			Long.parseLong(str);
-			return true;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
-
 }

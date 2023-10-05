@@ -1,6 +1,5 @@
 package com.bytes.train.serviceimpl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 
 	// To get the list of Tickets Which belongs to particular Categories
 	@Override
-	public List<Ticket> getParticularCategoryList(int agentId) throws Exception {
+	public List<Ticket> getParticularCategoryList(int agentId) throws Exception{
 		Agent agent = agentRepository.findById(agentId).orElse(null);
 		if (agent == null) { 
 			throw new ResourceNotFoundException("There Exists No Agent");
@@ -105,15 +104,16 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 			String serachTicketSubject=searchCriteria.getSubject();
 			int serachTicketId=searchCriteria.getTicketId();
 			if(searchCriteria.getSubject().trim().length()!=0 && searchCriteria.getTicketId()>0) {
-				System.out.println("Here");
 				 return ticketRepository.findByCategoryIdInAndStatusAndSubjectIgnoreCaseContainingOrTicketId(category,searchStatus,serachTicketSubject,serachTicketId);
 			}
-			if(searchCriteria.getSubject().trim().length()!=0) {
+			else if(searchCriteria.getSubject().trim().length()!=0) {
 				return ticketRepository.findByCategoryIdInAndStatusAndSubjectIgnoreCaseContaining(category,searchStatus,serachTicketSubject);
 				
 			}
-			return ticketRepository.findByCategoryIdInAndStatusAndTicketId(category,searchStatus,serachTicketId);
-			 
+			else {
+				return ticketRepository.findByCategoryIdInAndStatusAndTicketId(category,searchStatus,serachTicketId);
+			}
+				
 		} 
 		else {
 			String[] status = {"Open","Closed"};
@@ -137,15 +137,15 @@ public class AgentCategoryServiceImpl implements AgentCategoryService {
 //			return searchResult;
 		}
 	}
-	
-	public boolean isNumeric(String str) {
-		try {
-			Long.parseLong(str);
-			return true;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
+//	
+//	public boolean isNumeric(String str) {
+//		try {
+//			Long.parseLong(str);
+//			return true;
+//		} catch (NumberFormatException e) {
+//			return false;
+//		}
+//	}
 	
 	
 	@Override

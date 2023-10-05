@@ -1,7 +1,7 @@
 package com.bytes.train.entities;
 
 
-public class Response {
+public class Response{
 	
 	private String mssg;
 	private Object data;

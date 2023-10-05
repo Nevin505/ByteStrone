@@ -85,7 +85,7 @@ public class TicketServiceImpl implements TicketService {
 			System.out.println("Here Open High");
 			List<Agent> agentsWithSameSkills = agentRespo.findBySkillsInAndActive(Collections.singletonList(allSkills),
 					"Yes");
-			Collections.sort(agentsWithSameSkills, new AgentExperienceComparator());
+			Collections.sort(agentsWithSameSkills);
 			int countThreshold = 4;
 			Agent selectedAgent = agentsWithSameSkills.get(0);
 			System.out.println(agentsWithSameSkills);
@@ -111,7 +111,7 @@ public class TicketServiceImpl implements TicketService {
 			System.out.println("Medium Started");
 			List<Agent> agentsWithSameSkills = agentRespo.findBySkillsInAndActive(Collections.singletonList(allSkills),
 					"Yes");
-			Collections.sort(agentsWithSameSkills, Collections.reverseOrder(new AgentExperienceComparator()));
+			Collections.sort(agentsWithSameSkills);
 			int countThreshold = 6;
 			System.out.println("Medium");
 			System.out.println(agentsWithSameSkills);
@@ -142,12 +142,6 @@ public class TicketServiceImpl implements TicketService {
 			return "The Ticket Was Not Assigined";
 		} else {
 			return "The Ticket Is Not Opened";
-		}
-	}
-
-	private static class AgentExperienceComparator implements Comparator<Agent> {
-		public int compare(Agent agent1, Agent agent2) {
-			return Integer.compare(agent2.getExperiance(), agent1.getExperiance());
 		}
 	}
 

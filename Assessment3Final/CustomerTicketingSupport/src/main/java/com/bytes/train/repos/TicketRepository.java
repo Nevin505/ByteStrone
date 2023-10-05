@@ -66,7 +66,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	List<Ticket> findAllByCategoryIdInAndStatusInAndAndSubjectIgnoreCaseContainingOrTicketId(List<Category> category, String[] status,String subject,int ticketId);
 	
 	 @Query("SELECT t FROM Ticket t WHERE (:ticketId IS NULL OR t.ticketId = :ticketId) OR (:subject IS NULL OR t.subject = :subject)")
-	   List<Ticket> findTickets(@Param("ticketId") int ticketId, @Param("subject") String subject);
+	 List<Ticket> findTickets(@Param("ticketId") int ticketId, @Param("subject") String subject);
 //
 
 	List<Ticket> findByCustomer_idAndStatus(int cutsomerId, String status);
@@ -88,9 +88,18 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	
 	List<Ticket> findByStatusAndCustomerAndSubjectIgnoreCaseContaining(String status,Customer cutsomer,String subject);
 	
+	List<Ticket> findByStatusAndCustomerAndSubjectIgnoreCaseContainingOrTicketId(String status,Customer cutsomer,String subject,int ticketId);
+	
 	List<Ticket> findByCustomerAndTicketId(Customer cutsomer,int ticketId);
 	
 	List<Ticket> findByCustomerAndSubjectIgnoreCaseContaining(Customer cutsomer,String subject);
+	
+	List<Ticket> findByCustomerAndSubjectIgnoreCaseContainingOrTicketId(Customer cutsomer,String subject,int ticketId);
+	
+	
+	
+	
+//	findByCustomerAndSubjectIgnoreCaseContainingOrTicketId
 
 }
 

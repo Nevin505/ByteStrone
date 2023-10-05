@@ -93,11 +93,12 @@
   .column-200{
     width: 180px;
   }
+  
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
-  margin: 0; /* Optional: Remove margin for Chrome */
+  margin: 0; 
 }
   .column-600 {
       max-width: 600px;

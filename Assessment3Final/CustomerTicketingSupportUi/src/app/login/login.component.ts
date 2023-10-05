@@ -47,7 +47,8 @@ export class LoginComponent {
 
   loginAgent() {
     this.userDetails.userName = this.loginForm.value.agentName.trim();
-    this.userDetails.userPassword = this.loginForm.value.agentPassword.trim();
+    // this.userDetails.userPassword = this.loginForm.value.agentPassword.trim();
+    this.userDetails.userPassword = btoa(this.loginForm.value.agentPassword.trim());
     this.api.validatelogin(this.userDetails).subscribe({
       next: (res: Common) => {
         if (res.success) {

@@ -1,27 +1,21 @@
 package com.bytes.train.entities;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.MapKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table
 
-public class Agent extends UserDetails {
+public class Agent extends UserDetails implements Comparable<Agent> {
 
 	@Embedded
 	private Address address;
@@ -31,6 +25,7 @@ public class Agent extends UserDetails {
 	private String active;
 	
     private int experiance;
+    
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "agent_category", joinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "categoryId"))
@@ -68,6 +63,7 @@ public class Agent extends UserDetails {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	
 	}
 
 	public List<Category> getCategory() {
@@ -106,6 +102,12 @@ public class Agent extends UserDetails {
 	}
 	public void setExperiance(int experiance) {
 		this.experiance = experiance;
+	}
+
+	@Override
+	public int compareTo(Agent agent2) {	
+		return Integer.compare(agent2.getExperiance(), this.getExperiance());
+		
 	}
 
 	

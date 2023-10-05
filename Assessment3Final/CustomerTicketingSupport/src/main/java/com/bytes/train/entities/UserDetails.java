@@ -9,7 +9,6 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class UserDetails {
 
 	@Id
