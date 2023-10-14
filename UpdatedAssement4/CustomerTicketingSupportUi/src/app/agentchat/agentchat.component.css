@@ -1,0 +1,153 @@
+/* .chat-container {
+  max-width: 600px;
+  margin: 20px auto;
+} */
+
+.chat {
+  margin-bottom: 10px;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.customer-message {
+  flex-direction: row-reverse;
+}
+
+.agent-message {
+  flex-direction: row;
+}
+
+.message-text {
+  background-color: #f2f2f2;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  width: 600px;
+
+}
+
+.ticket-details {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 800px;
+}
+
+.ticket-details label {
+  font-weight: bold;
+}
+
+.ticket-details h6 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.ticket-details button {
+  border-radius: 40px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1px;
+}
+
+.message {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 60%;
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
+}
+
+
+.customer-message {
+  background-color: #f0f0f0;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.agent-message {
+  background-color: #f0f0f0;
+  align-self: flex-end;
+  text-align: right;
+
+}
+
+.message label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.message-text {
+  margin: 0;
+}
+
+.message-container {
+  display: flex;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #ccc;
+}
+
+.send-button {
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+
+sub {
+  font-size: 12px;
+  color: #999999;
+  margin-top: 5px;
+}
+
+.description-text {
+  max-width: 600px;
+  word-wrap: break-word;
+}
+
+
+.chat-scroll-container {
+  max-height: 400px; 
+  overflow-y: auto; 
+}
+
+.chat {
+  margin: 10px 0;
+}
+
+.customer-message {
+  background-color: #f0f0f0;
+  float: left;
+}
+
+.message-text {
+  margin: 0;
+}
+

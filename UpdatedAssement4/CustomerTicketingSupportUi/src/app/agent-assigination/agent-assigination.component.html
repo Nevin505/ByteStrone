@@ -1,0 +1,143 @@
+<h6 style="text-align: center;">Agent Assigination</h6>
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th class="column-100">Ticket Id</th>
+      <th  class="column-150">Customer Name</th>
+      <th  class="column-100">Subject</th>
+      <th  class="column-600">Description</th>
+      <th  class="column-100">Priority</th>
+      <th  class="column-100">Status</th>
+      <th  class="column-150">Creation Date</th>
+      <th  class="column-100" *ngIf="ticketDa.status!=='Closed'">Assign</th>
+      <th  class="column-150" *ngIf="ticketDa.status==='Closed'">Show  Details</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="column-100">{{ ticketDa.ticketId }}</td>
+      <td class="column-150">{{ ticketDa.customer.userName}}</td>
+      <td class="column-100">{{ ticketDa.subject }}</td>
+      <td class="column-600">{{ ticketDa.description }}</td>
+      <td class="column-100">{{ ticketDa.priority }}</td>
+      <td class="column-100">{{ ticketDa.status }}</td>
+      <td class="column-150">{{ ticketDa.creation_Date | date }}</td>
+      <td class="column-100" *ngIf="ticketDa.status!=='Closed'">
+        <div style="display: flex;flex-direction: row;">
+          <select id="" name="categoryName1" class="custom-select" #selectedOption style="width: 80px;border-radius: 20px;">
+            <option *ngFor="let option of agentData" [value]="option.userName">{{ option.userName }}</option>
+          </select>
+          <button (click)="Assgination(selectedOption.value)" style="border-radius: 40px;">Assign</button>
+        </div>
+      </td>
+      <td  *ngIf="ticketDa.status==='Closed'"><button (click)="showMore()" style="border-radius: 20px;">Show
+          Details</button> </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div class="container-fluid w-50" style="background-color: #f0f0f0; border-radius: 5px;">
+  <div *ngIf="closedTicketDetails" class="ticket-details mt-4">
+
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <div style="flex: 0 0 30%; text-align: left;"><strong>Closed Date:</strong></div>
+      <div style="flex: 0 0 70%; text-align: left;">{{ ticketDa.closedDate | date }}</div>
+    </div>
+    
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <div style="flex: 0 0 30%; text-align: left;"><strong>Satisfactory Rating:</strong></div>
+      <div style="flex: 0 0 70%; text-align: left;">{{ ticketDa.satisfactionRating }}</div>
+    </div>
+    
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <div style="flex: 0 0 30%; text-align: left;"><strong>Handled By:</strong></div>
+      <div style="flex: 0 0 70%; text-align: left;">{{ ticketDa.agentId.userName }}</div>
+    </div>
+    
+
+    <h5 style="text-align: center;" class="mt-2">Chats</h5>
+
+    <div class="chat-scroll-container">
+        <div *ngFor="let item of chat" class="chat">
+          <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
+            <label for="">Customer:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+          <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: right;">
+            <label for="">Agent:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="chat.length == 0" style="text-align: center;">
+      <b>No Chats Were There For This Ticket</b>
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- <div *ngFor="let item of chat;" style="display: flex; flex-direction: column;"> -->
+
+      <!-- <div class="column">
+        <div class="row">
+          <div class="col-6">
+            <div style="align-self: flex-end; margin-top: 6px;" *ngIf="item.author === 'Agent' ">
+              <label>{{ item.author }}:</label>
+              <h6>{{ item.content }} <sub>{{item.timeStamp|date:'h:mm a'}}</sub></h6>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="align-self: flex-start;margin-top: 6px;float: right;" *ngIf="item.author === 'Customer'">
+              <label>{{ item.author }}:</label>
+              <h6>{{ item.content }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div> -->
+
+    <!-- <div style=" background-color: #f0f0f0; border-radius: 5px;" class="container-fluid w-50">
+  <div *ngIf="closedTicketDetails" class="ticket-details  mt-4">
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <label style="text-align: left; flex: 0 0 30%;">Closed Date:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.closedDate | date }}</h6>
+    </div>
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <label style="text-align: left; flex: 0 0 30%;">Satisfactory Rating:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.satisfactionRating }}</h6>
+    </div>
+    <div style="display: flex; align-items: center; margin-left: 250px;">
+      <label style="text-align: left; flex: 0 0 30%;">Handled By:</label>
+      <h6 style="text-align: left; flex: 0 0 70%;">{{ ticketDa.agentId.agentName }}</h6>
+    </div>
+
+    <h5 style="text-align: center;" class="mt-2">Chats</h5>
+
+
+    <div class="chat-scroll-container">
+      <div class="chat-container">
+        <div *ngFor="let item of chat" class="chat">
+          <div *ngIf="item.author === 'Customer'" class="message customer-message" style="text-align: left;">
+            <label for="">Customer:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+          <div *ngIf="item.author === 'Agent'" class="message agent-message" style="text-align: right;">
+            <label for="">Agent:</label>
+            <p class="message-text">{{item.content}}</p><sub>{{item.timeStamp | date:'h:mm a'}}</sub>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="chat.length==0" style="text-align: center;">
+      <b>No Chats Were There For This Ticket</b>
+    </div>
+
+
+  </div>
+</div> -->
