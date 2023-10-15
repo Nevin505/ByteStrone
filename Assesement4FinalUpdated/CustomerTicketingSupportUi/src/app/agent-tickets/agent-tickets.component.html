@@ -1,0 +1,37 @@
+<h5 style="text-align: center;">Tickets Assigined:</h5>
+<table style="border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th class="column-100" style="text-align: center;">Ticket Id</th>
+            <th class="column-100" style="text-align: center;">Subject</th>
+            <th class="column-600" style="width: 850px;text-align: center;">Description</th>
+            <th class="column-100" style="text-align: center;">Category</th>
+            <th class="column-100" style="text-align: center;">Priority</th>
+            <th class="column-100" style="text-align: center;">Status</th>
+            <th class="column-100" style="text-align: center;">Show Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of agentAssiginedTickets | paginate:{
+            itemsPerPage:tablesize,
+            currentPage:page,
+            totalItems:count 
+        }">
+            <td class="column-100">{{item.ticketId}}</td>
+            <td class="column-100">{{item.subject}}</td>
+            <td class="column-600" style="text-align: center;">{{item.description}}</td>
+            <td class="column-100">{{item.categoryId.category_name}}</td>
+            <td class="column-100">{{item.priority}} </td>
+            <td class="column-100">{{item.status}}</td>
+            <td class="column-100"><button (click)="get(item.ticketId)" style="border-radius: 20px;">Show
+                    Details</button></td>
+        </tr>
+
+    </tbody>
+
+</table>
+<h4 *ngIf="lengthTickets===0" style="text-align: center;margin-top: 10px;">No Tickets Has Be Assigined</h4>
+<div *ngIf="lengthTickets>9" style="text-align: center;">
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onData($event)">
+    </pagination-controls>
+  </div>

@@ -1,0 +1,121 @@
+<!-- Added Values -->
+
+
+<div class="container-fluid" class="mt-4">
+  <div style="display: flex;">
+    <div class="col-2">
+      <h2 style="float: left;margin-left: 10px;">Hello {{agentName}}</h2>
+    </div>
+    <div class="col-9">
+      <h2>
+        <span *ngFor="let item of cates; let last = last">
+          <span class="category">{{item.category_name}}</span>
+          <span *ngIf="!last"> | </span>
+        </span>
+        <span class="tickets "> Tickets</span>
+      </h2>
+    </div>
+    <div class="col-1">
+      <div style="display: flex; margin-top: 5px;">
+        <button style="margin-left: 10px;border-radius: 40px;" (click)="removeValues()"><i
+            class="bi bi-box-arrow-right">LogOut</i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display: flex;justify-content: space-between;">
+  <div class="center-div" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+
+    <div style="display: flex;flex-direction: column;">
+      <div class="left-div" style="display: flex; align-items: center;">
+
+        <button style="margin-right: 10px;border-radius: 30px;" (click)="getFilter()">Filter By:</button>
+        <br><br>
+
+        <button [routerLink]="['/agentViewTickets']" style="border-radius: 35px; margin-left: 10px;">View Assigned
+          Tickets <i class="bi bi-bell"></i><b>{{ticketAssiginedCount}}</b></button>
+
+      </div>
+      <div *ngIf="Flag">
+        <div style="display: flex; align-items: center; ">
+          <input type="radio" id="radio1" name="filter" (click)="filterByStatus('Open')">
+          <label for="radio1">Open</label>
+          <input type="radio" id="radio2" name="filter" (click)="filterByStatus('Closed')">
+          <label for="radio2">Closed</label>
+          <div *ngIf="ResetButton">
+            <input type="radio" id="radio2" name="filter" (click)="filterByStatus('')">
+            <label for="radio2">Reset</label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="right-div" style="display: flex; align-items: center;">
+    <input type="number" class="form-control" placeholder="Enter the Ticket Id's Of the Tickets to be Searched"
+      style="width: 420px; margin-right: 10px;" [(ngModel)]="searchtickId">
+    <input type="text" class="form-control" placeholder="Enter the Subject to be Searched"
+      style="width: 420px; margin-right: 10px;" [(ngModel)]="searchticketSubject">
+    <button (click)="searchTicket()" class="round-button">Search</button>
+  </div>
+</div>
+
+
+
+<div class="table-responsive">
+  <table style="margin-top: 28px;">
+    <thead>
+      <tr>
+        <th class="column-100">Ticket Id</th>
+        <th class="column-100">Customer Name</th>
+        <th class="column-150">Subject</th>
+        <th class="column-600">Description</th>
+        <th class="column-100">Category</th>
+
+        <th class="column-100">
+          Priority
+          <button class="sort-button" (click)=" onsortHigh()">▲ </button>
+          <button class="sort-button" (click)=" onsortlow()">▼</button>
+        </th>
+
+        <th class="column-100">Status</th>
+        <th class="column-100">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of agentCategoryTicket| dateorder| paginate:{
+      itemsPerPage:tablesize,
+      currentPage:page,
+      totalItems:count 
+  } ">
+        <td class="column-100">{{ item.ticketId }}</td>
+        <td class="column-100">{{ item.customer.name}}</td>
+        <td class="column-150">{{ item.subject }}</td>
+        <td class=" column-600 ">{{item.description }}</td>
+        <td class="column-100">{{item.categoryId. category_name}}</td>
+        <td class="column-100">{{ item.priority }}</td>
+        <td class="column-100">{{ item.status }}</td>
+        <td class="column-200">
+          <button [routerLink]="['/agentTicketAssigination']" (click)="Set(item.ticketId)"
+            [disabled]="item.status==='Assigined'" style="border-radius: 35px; margin-top: 5px;">Show Details<i
+              class="bi bi-eye-fill"></i></button>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="container" *ngIf="lengtharray == 0">
+  <div class="center-content" [innerHtml]="messageFilter">
+  </div>
+</div>
+<div>
+  <button style="border-radius: 40px;" *ngIf="searchButton" (click)=" resetData('')">Back</button>
+</div>
+<div *ngIf="lengtharray>9" style="text-align: center;">
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onData($event)">
+  </pagination-controls>
+</div>
