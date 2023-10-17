@@ -34,7 +34,7 @@ public class Ticket {
 	private String priority;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status;
+	private StatusEnum status=StatusEnum.Open;
 	
 	 private float satisfactionRating;
 
