@@ -1,0 +1,35 @@
+<div>
+
+
+  <div class="main">
+    <div class="container-fluid w-75">
+      <h1 style="color: white;text-align: center;">TicketEase</h1>
+      <p style="color: white;">TicketEase is a user-friendly customer ticket support system that streamlines issue
+        resolution. It enables
+        businesses to efficiently track, assign, and collaborate on support tickets for timely customer support. With
+        features like ticket categorization and status tracking, TicketEase optimizes workflow and enhances
+        communication. It empowers support teams to deliver personalized assistance, resulting in improved customer
+        satisfaction. TicketEase is the solution to simplify customer support and provide exceptional experiences. </p>
+    </div>
+
+
+
+    <form [formGroup]="loginForm" (ngSubmit)="loginAgent()">
+      <label for="agentName" style="color: white;">Enter The User Name</label>
+      <input type="text" class="form-control" id="agentName" formControlName="agentName">
+      <div *ngIf="loginForm.get('agentName')?.invalid && loginForm.get('agentName')?.touched" style="color: red;">
+        Username is required.
+      </div>
+
+      <label for="agentPassword" style="color: white;">Enter The Password :</label>
+      <input type="password" class="form-control" id="agentPassword" formControlName="agentPassword">
+      <div *ngIf="loginForm.get('agentPassword')?.invalid && loginForm.get('agentPassword')?.touched"
+        style="color: red;">
+        Password is required.
+      </div>
+
+      <button class="btn btn-primary mt-3 d-block mx-auto" [disabled]="loginForm.invalid">Submit</button>
+    </form>
+
+  </div>
+</div>
