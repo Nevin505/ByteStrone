@@ -34,12 +34,6 @@ public class Agent extends UserDetails {
 	@JoinTable(name = "agent_skills", joinColumns = @JoinColumn(name = "agent_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "skillId"))
 	private List<Skill> skills = new LinkedList<>();
 	
-//	@ElementCollection
-//    @CollectionTable(name = "agent_skill_expertise", joinColumns = @JoinColumn(name = "agent_id"))
-//    @MapKeyJoinColumn(name = "skill_id")
-//    @Column(name = "expertise_level")
-//    private Map<Skill, Integer> skillExpertiseLevels = new HashMap<>();
-
 	public Agent() {
 		super();
 	}
