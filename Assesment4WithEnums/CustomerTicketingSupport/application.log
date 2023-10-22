@@ -3327,3 +3327,9 @@ com.bytes.train.execptions.ResourceNotFoundException: Invlaid Login
 2023-10-22T17:53:59.247+05:30  WARN 5784 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-10-22T17:53:59.513+05:30  INFO 5784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2023-10-22T17:53:59.524+05:30  INFO 5784 --- [main] .b.t.CustomerTicketingSupportApplication : Started CustomerTicketingSupportApplication in 4.36 seconds (process running for 4.986)
+2023-10-22T18:14:21.740+05:30  WARN 5784 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m24s245ms238µs300ns).
+2023-10-22T18:16:29.841+05:30  INFO 5784 --- [RMI TCP Connection(19)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-10-22T18:16:29.857+05:30  INFO 5784 --- [RMI TCP Connection(19)-127.0.0.1] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-22T18:16:29.866+05:30  INFO 5784 --- [RMI TCP Connection(19)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-22T18:16:29.869+05:30  INFO 5784 --- [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-10-22T18:16:29.879+05:30  INFO 5784 --- [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
